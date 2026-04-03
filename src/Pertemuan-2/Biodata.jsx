@@ -53,7 +53,7 @@ function Biodata() {
     <div className="card">
       <h2>Biodata</h2>
 
-      <Nama />
+      <Nama/> 
       <NIM />
       <Prodi />
       <Tanggal />
