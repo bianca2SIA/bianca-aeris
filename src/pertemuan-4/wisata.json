@@ -1,0 +1,409 @@
+[
+  {
+    "id": 1,
+    "name": "Danau Toba",
+    "category": "Alam",
+    "description": "Danau vulkanik terbesar di Indonesia",
+    "image": "https://picsum.photos/400/300?random=1",
+    "location": {
+      "city": "Sumatera Utara",
+      "country": "Indonesia"
+    },
+    "rating": {
+      "score": 4.8,
+      "review": 1200
+    },
+    "contact": {
+      "phone": "08123456789",
+      "email": "info@danautoba.com"
+    },
+    "tags": ["Alam", "Danau", "Populer"]
+  },
+  {
+    "id": 2,
+    "name": "Raja Ampat",
+    "category": "Pantai",
+    "description": "Surga diving Indonesia",
+  "image": "https://picsum.photos/400/300?random=2",
+    "location": {
+      "city": "Papua Barat",
+      "country": "Indonesia"
+    },
+    "rating": {
+      "score": 4.9,
+      "review": 2000
+    },
+    "contact": {
+      "phone": "08123456789",
+      "email": "info@rajaampat.com"
+    },
+    "tags": ["Pantai", "Diving", "Populer"]
+  },
+  {
+    "id": 3,
+    "name": "Gunung Bromo",
+    "category": "Gunung",
+    "description": "Gunung berapi terkenal di Jawa Timur",
+    "image": "https://picsum.photos/400/300?random=3",
+    "location": {
+      "city": "Jawa Timur",
+      "country": "Indonesia"
+    },
+    "rating": {
+      "score": 4.7,
+      "review": 1500
+    },
+    "contact": {
+      "phone": "08123456780",
+      "email": "info@bromo.com"
+    },
+    "tags": ["Gunung", "Sunrise", "Populer"]
+  },
+  {
+    "id": 4,
+    "name": "Pulau Komodo",
+    "category": "Pulau",
+    "description": "Habitat komodo terbesar",
+   "image": "https://picsum.photos/400/300?random=4",
+    "location": {
+      "city": "NTT",
+      "country": "Indonesia"
+    },
+    "rating": {
+      "score": 4.9,
+      "review": 1800
+    },
+    "contact": {
+      "phone": "08123456781",
+      "email": "info@komodo.com"
+    },
+    "tags": ["Pulau", "Komodo", "Populer"]
+  },
+  {
+    "id": 5,
+    "name": "Pantai Kuta",
+    "category": "Pantai",
+    "description": "Pantai terkenal di Bali",
+    "image": "https://picsum.photos/400/300?random=5",
+    "location": {
+      "city": "Bali",
+      "country": "Indonesia"
+    },
+    "rating": {
+      "score": 4.6,
+      "review": 1300
+    },
+    "contact": {
+      "phone": "08123456782",
+      "email": "info@kuta.com"
+    },
+    "tags": ["Pantai", "Bali", "Sunset"]
+  },
+
+  {
+    "id": 6,
+    "name": "Candi Borobudur",
+    "category": "Sejarah",
+    "description": "Candi Buddha terbesar di dunia",
+   "image": "https://picsum.photos/400/300?random=6",
+    "location": {
+      "city": "Magelang",
+      "country": "Indonesia"
+    },
+    "rating": {
+      "score": 4.8,
+      "review": 2100
+    },
+    "contact": {
+      "phone": "08123456783",
+      "email": "info@borobudur.com"
+    },
+    "tags": ["Candi", "Sejarah", "Budaya"]
+  },
+
+  {
+    "id": 7,
+    "name": "Labuan Bajo",
+    "category": "Pantai",
+    "description": "Destinasi wisata populer di NTT",
+  "image": "https://picsum.photos/400/300?random=7",
+    "location": {
+      "city": "NTT",
+      "country": "Indonesia"
+    },
+    "rating": {
+      "score": 4.7,
+      "review": 1000
+    },
+    "contact": {
+      "phone": "08123456784",
+      "email": "info@labuanbajo.com"
+    },
+    "tags": ["Pantai", "Pulau", "Populer"]
+  },
+
+  {
+    "id": 8,
+    "name": "Taman Mini Indonesia",
+    "category": "Taman",
+    "description": "Taman budaya Indonesia",
+    "image": "https://picsum.photos/400/300?random=8",
+    "location": {
+      "city": "Jakarta",
+      "country": "Indonesia"
+    },
+    "rating": {
+      "score": 4.5,
+      "review": 900
+    },
+    "contact": {
+      "phone": "08123456785",
+      "email": "info@tmii.com"
+    },
+    "tags": ["Taman", "Budaya", "Keluarga"]
+  },
+
+  {
+    "id": 9,
+    "name": "Kawah Ijen",
+    "category": "Gunung",
+    "description": "Blue fire terkenal",
+"image": "https://picsum.photos/400/300?random=9",
+    "location": {
+      "city": "Banyuwangi",
+      "country": "Indonesia"
+    },
+    "rating": {
+      "score": 4.7,
+      "review": 950
+    },
+    "contact": {
+      "phone": "08123456786",
+      "email": "info@ijen.com"
+    },
+    "tags": ["Gunung", "Blue Fire", "Populer"]
+  },
+
+  {
+    "id": 10,
+    "name": "Pantai Pink",
+    "category": "Pantai",
+    "description": "Pantai pasir merah muda",
+   "image": "https://picsum.photos/400/300?random=10",
+    "location": {
+      "city": "NTT",
+      "country": "Indonesia"
+    },
+    "rating": {
+      "score": 4.6,
+      "review": 800
+    },
+    "contact": {
+      "phone": "08123456787",
+      "email": "info@pinkbeach.com"
+    },
+    "tags": ["Pantai", "Unik", "Populer"]
+  }
+  ,
+  {
+    "id": 11,
+    "name": "Pulau Weh",
+    "category": "Pulau",
+    "description": "Pulau indah di Aceh",
+    "image": "https://picsum.photos/400/300?random=11",
+    "location": {
+      "city": "Aceh",
+      "country": "Indonesia"
+    },
+    "rating": {
+      "score": 4.6,
+      "review": 700
+    },
+    "contact": {
+      "phone": "08123456788",
+      "email": "info@pulauweh.com"
+    },
+    "tags": ["Pulau", "Pantai", "Alam"]
+  },
+  {
+    "id": 12,
+    "name": "Bukit Tinggi",
+    "category": "Alam",
+    "description": "Wisata alam Sumatera Barat",
+  "image": "https://picsum.photos/400/300?random=12",
+    "location": {
+      "city": "Sumatera Barat",
+      "country": "Indonesia"
+    },
+    "rating": {
+      "score": 4.5,
+      "review": 650
+    },
+    "contact": {
+      "phone": "08123456789",
+      "email": "info@bukittinggi.com"
+    },
+    "tags": ["Bukit", "Alam", "Populer"]
+  },
+  {
+    "id": 13,
+    "name": "Pantai Parangtritis",
+    "category": "Pantai",
+    "description": "Pantai terkenal di Jogja",
+    "image": "https://picsum.photos/400/300?random=13",
+    "location": {
+      "city": "Yogyakarta",
+      "country": "Indonesia"
+    },
+    "rating": {
+      "score": 4.4,
+      "review": 900
+    },
+    "contact": {
+      "phone": "08123456790",
+      "email": "info@parangtritis.com"
+    },
+    "tags": ["Pantai", "Jogja", "Sunset"]
+  },
+  {
+    "id": 14,
+    "name": "Gunung Rinjani",
+    "category": "Gunung",
+    "description": "Gunung terkenal di Lombok",
+  "image": "https://picsum.photos/400/300?random=14",
+    "location": {
+      "city": "Lombok",
+      "country": "Indonesia"
+    },
+    "rating": {
+      "score": 4.8,
+      "review": 1100
+    },
+    "contact": {
+      "phone": "08123456791",
+      "email": "info@rinjani.com"
+    },
+    "tags": ["Gunung", "Hiking", "Populer"]
+  },
+  {
+    "id": 15,
+    "name": "Tangkuban Perahu",
+    "category": "Gunung",
+    "description": "Gunung wisata di Bandung",
+    "image": "https://picsum.photos/400/300?random=15",
+    "location": {
+      "city": "Bandung",
+      "country": "Indonesia"
+    },
+    "rating": {
+      "score": 4.5,
+      "review": 850
+    },
+    "contact": {
+      "phone": "08123456792",
+      "email": "info@tangkubanperahu.com"
+    },
+    "tags": ["Gunung", "Bandung", "Wisata"]
+  },
+  {
+    "id": 16,
+    "name": "Pantai Pangandaran",
+    "category": "Pantai",
+    "description": "Pantai populer di Jawa Barat",
+    "image": "https://picsum.photos/400/300?random=16",
+    "location": {
+      "city": "Jawa Barat",
+      "country": "Indonesia"
+    },
+    "rating": {
+      "score": 4.6,
+      "review": 780
+    },
+    "contact": {
+      "phone": "08123456793",
+      "email": "info@pangandaran.com"
+    },
+    "tags": ["Pantai", "Populer", "Alam"]
+  },
+  {
+    "id": 17,
+    "name": "Air Terjun Tumpak Sewu",
+    "category": "Air Terjun",
+    "description": "Air terjun indah di Jawa Timur",
+   "image": "https://picsum.photos/400/300?random=17",
+    "location": {
+      "city": "Lumajang",
+      "country": "Indonesia"
+    },
+    "rating": {
+      "score": 4.9,
+      "review": 950
+    },
+    "contact": {
+      "phone": "08123456794",
+      "email": "info@tumpaksewu.com"
+    },
+    "tags": ["Air Terjun", "Alam", "Populer"]
+  },
+  {
+    "id": 18,
+    "name": "Pulau Belitung",
+    "category": "Pulau",
+    "description": "Pulau indah dengan batu granit",
+   "image": "https://picsum.photos/400/300?random=18",
+    "location": {
+      "city": "Belitung",
+      "country": "Indonesia"
+    },
+    "rating": {
+      "score": 4.7,
+      "review": 820
+    },
+    "contact": {
+      "phone": "08123456795",
+      "email": "info@belitung.com"
+    },
+    "tags": ["Pulau", "Pantai", "Populer"]
+  },
+  {
+    "id": 19,
+    "name": "Pantai Karimunjawa",
+    "category": "Pantai",
+    "description": "Pantai indah di Jawa Tengah",
+    "image": "https://picsum.photos/400/300?random=19",
+    "location": {
+      "city": "Jepara",
+      "country": "Indonesia"
+    },
+    "rating": {
+      "score": 4.8,
+      "review": 900
+    },
+    "contact": {
+      "phone": "08123456796",
+      "email": "info@karimunjawa.com"
+    },
+    "tags": ["Pantai", "Pulau", "Populer"]
+  },
+  {
+    "id": 20,
+    "name": "Candi Prambanan",
+    "category": "Sejarah",
+    "description": "Candi Hindu terbesar di Indonesia",
+   "image": "https://picsum.photos/400/300?random=20",
+    "location": {
+      "city": "Yogyakarta",
+      "country": "Indonesia"
+    },
+    "rating": {
+      "score": 4.8,
+      "review": 1500
+    },
+    "contact": {
+      "phone": "08123456797",
+      "email": "info@prambanan.com"
+    },
+    "tags": ["Candi", "Sejarah", "Budaya"]
+  }
+
+]
