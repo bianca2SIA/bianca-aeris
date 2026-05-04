@@ -5,9 +5,61 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>bianca-aeris</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', "sans-serif"],
+            },
+            colors: {
+              brand: {
+                accent: "#C49C74",
+                accentHover: "#B08860",
+                dark: "#1E1E1E",
+                gray: "#757575",
+                lightGray: "#F5F5F5",
+                border: "#E0E0E0",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .bg-image-full {
+        background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCtQIPoNXjQiqaJHY69lbykFiY5oeiFknzsDjJIKwz9X8CAJnXswI5JfWGvIFfnB3xk9s5xh_gNBTxhrZxEPq5ydkDxdAjoGNj5_dNU7EaVg56qDKbx3QbU7hyJY9eSCtuUD_uMf4iPmHQIk7Dua1QNGj3N8nryekIvO79N_MNOpIZSp1fUdjLtkJ-66MmZhuqHvkCBBe0MhA0Rjibi35cSSkZe4VwZ_U8sOjmDavC5AjkC9yRxGmgQs-sk7ut3a9Zu6AL5cvyLm0k);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
-   <script type="module" src="/src/pertemuan-3/main.jsx"></script>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

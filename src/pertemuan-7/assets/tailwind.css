@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap");
+@import "tailwindcss";
+
+:root {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  --brand-dark: #252525;
+  --brand-gray: #6b7280;
+  --brand-lightGray: #f3f4f6;
+  --brand-border: #e5e7eb;
+  --brand-accent: #c49c74;
+  --brand-accentHover: #b68c64;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+}
+
+/* glass effect card */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+}
+
+/* hide scrollbar utility */
+@layer utilities {
+  /* Chrome Safari Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* IE Edge Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

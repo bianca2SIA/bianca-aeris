@@ -1,0 +1,10 @@
+import { ImSpinner2 } from "react-icons/im";
+
+export default function Loading() {
+  return (
+    <div className="flex flex-col items-center justify-center h-screen bg-white/80 backdrop-blur-sm">
+      <ImSpinner2 className="animate-spin text-4xl text-[#C49C74]" />
+      <p className="mt-3 text-[#C49C74] font-semibold">Loading...</p>
+    </div>
+  );
+}
