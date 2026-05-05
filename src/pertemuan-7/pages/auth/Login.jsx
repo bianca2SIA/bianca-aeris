@@ -2,11 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -14,125 +15,154 @@ export default function Login() {
     setError("");
     setLoading(true);
 
-    // VALIDASI KOSONG
     if (!email || !password) {
       setError("Email and password are required");
       setLoading(false);
       return;
     }
 
-    // CEK LOGIN
     setTimeout(() => {
-      if (
-        email === "bianca24si@mahasiswa.pcr.ac.id" &&
-        password === "travelagent"
-      ) {
+      if (email === "admin@mail.com" && password === "123") {
         navigate("/");
       } else {
-        setError("Invalid email or password");
+        setError("Incorrect email or password");
       }
       setLoading(false);
-    }, 1000);
+    }, 1200);
   };
 
   return (
-    <div className="w-full max-w-md flex flex-col overflow-hidden glass-panel shadow-2xl rounded-3xl p-8 lg:p-12">
-      {/* Logo */}
-      <div className="flex items-center justify-center flex-col mb-8">
-        <span className="text-2xl font-bold tracking-tight">TravelGo.</span>
+    <div className="flex w-full h-screen overflow-hidden font-[Plus_Jakarta_Sans]">
+
+      {/* LEFT */}
+      <div
+        className="hidden lg:flex w-1/2 relative bg-cover bg-center"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e')",
+        }}
+      >
+        <div className="absolute inset-0 bg-[var(--primary)]/20 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+
+        <div className="absolute bottom-12 left-12 text-white max-w-md">
+          <h2 className="text-4xl font-bold mb-4 leading-tight">
+            Discover Your Next Adventure
+          </h2>
+          <p className="text-lg opacity-90">
+            Explore the world's most beautiful destinations with TravelGo.
+          </p>
+        </div>
       </div>
 
-      {/* Header */}
-      <div className="mb-8 text-center">
-        <h2 className="text-3xl font-bold text-brand-dark mb-2">
-          Welcome Back
-        </h2>
-        <p className="text-brand-gray text-sm">
-          Please enter your details to sign in.
-        </p>
+      {/* RIGHT */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center px-8 lg:px-24 bg-white">
+        <div className="w-full max-w-md">
+
+          {/* HEADER */}
+          <div className="mb-12">
+            <div className="flex items-center gap-2 mb-8">
+              <span className="material-symbols-outlined text-[var(--primary)] text-3xl">
+                location_on
+              </span>
+              <span className="text-2xl font-bold text-[var(--dark)]">
+                TravelGo.
+              </span>
+            </div>
+
+            <h1 className="text-3xl font-bold text-[var(--dark)] mb-2">
+              Welcome back
+            </h1>
+            <p className="text-[var(--secondary)]">
+              Please enter your details to sign in.
+            </p>
+          </div>
+
+          {/* ERROR */}
+          {error && (
+            <div className="mb-4 p-4 bg-[var(--error)]/20 text-[var(--error)] rounded-lg flex items-center gap-2">
+              <span className="material-symbols-outlined">
+                error
+              </span>
+              {error}
+            </div>
+          )}
+
+          {/* FORM */}
+          <form onSubmit={handleLogin} className="space-y-6">
+
+            {/* EMAIL */}
+            <div>
+              <label className="block mb-2 text-sm font-medium text-[var(--dark)]">
+                Email Address
+              </label>
+              <div className="relative">
+                <span className="material-symbols-outlined absolute left-3 top-3 text-[var(--secondary)]">
+                  mail
+                </span>
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="w-full pl-10 pr-4 py-3 bg-white border border-[var(--secondary)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] outline-none"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+            </div>
+
+            {/* PASSWORD */}
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <label className="text-sm font-medium text-[var(--dark)]">
+                  Password
+                </label>
+                <span className="text-[var(--primary)] text-sm cursor-pointer">
+                  Forgot?
+                </span>
+              </div>
+
+              <div className="relative">
+                <span className="material-symbols-outlined absolute left-3 top-3 text-[var(--secondary)]">
+                  lock
+                </span>
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                className="w-full pl-10 pr-4 py-3 bg-white border border-[var(--secondary)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] outline-none"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+            </div>
+
+            {/* REMEMBER */}
+            <div className="flex items-center gap-2">
+              <input type="checkbox" />
+              <span className="text-sm text-[var(--secondary)]">
+                Remember me
+              </span>
+            </div>
+
+            {/* BUTTON */}
+            <button
+              type="submit"
+              className="w-full py-3 bg-[var(--primary)] text-white rounded-lg font-semibold hover:opacity-90 transition"
+            >
+              {loading ? "Signing in..." : "Sign In"}
+            </button>
+
+          </form>
+
+          {/* FOOTER */}
+          <div className="mt-8 text-center text-sm text-[var(--secondary)]">
+            Don't have an account?{" "}
+            <span className="text-[var(--primary)] cursor-pointer">
+              Create account
+            </span>
+          </div>
+
+        </div>
       </div>
-      {error && (
-        <div className="bg-red-100 border border-red-200 mb-4 px-4 py-3 text-sm text-red-600 rounded-lg">
-          {error}
-        </div>
-      )}
-
-      {loading && (
-        <div className="bg-gray-100 border border-gray-200 mb-4 px-4 py-3 text-sm text-gray-600 rounded-lg">
-          Please wait, logging in...
-        </div>
-      )}
-      {/* Form */}
-      <form className="space-y-5" onSubmit={handleLogin}>
-        {/* Email Input */}
-        <div>
-          <label
-            className="block text-sm font-semibold text-brand-dark mb-2"
-            htmlFor="email"
-          >
-            Email Address
-          </label>
-          <div className="flex items-center bg-brand-lightGray rounded-xl px-4 py-3.5 focus-within:ring-2 focus-within:ring-brand-accent transition-all border border-transparent focus-within:bg-white">
-            <i className="fa-regular fa-envelope text-brand-gray mr-3"></i>
-            <input
-              className="w-full bg-transparent border-none p-0 focus:ring-0 text-sm font-medium text-brand-dark placeholder-brand-gray"
-              id="email"
-              name="email"
-              placeholder="Enter your email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-        </div>
-
-        {/* Password Input */}
-        <div>
-          <label
-            className="block text-sm font-semibold text-brand-dark mb-2"
-            htmlFor="password"
-          >
-            Password
-          </label>
-          <div className="flex items-center bg-brand-lightGray rounded-xl px-4 py-3.5 focus-within:ring-2 focus-within:ring-brand-accent transition-all border border-transparent focus-within:bg-white">
-            <i className="fa-solid fa-lock text-brand-gray mr-3"></i>
-            <input
-              className="w-full bg-transparent border-none p-0 focus:ring-0 text-sm font-medium text-brand-dark placeholder-brand-gray tracking-wider"
-              id="password"
-              name="password"
-              placeholder="Enter your password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-        </div>
-
-        {/* Forgot Password & Remember Me */}
-        <div className="flex justify-between items-center pt-2">
-          <label className="flex items-center space-x-2 cursor-pointer">
-            <input
-              className="rounded border-brand-border text-brand-accent focus:ring-brand-accent w-4 h-4"
-              type="checkbox"
-            />
-            <span className="text-sm text-brand-gray">Remember me</span>
-          </label>
-          <a
-            className="text-sm text-brand-accent hover:text-brand-accentHover font-semibold transition-colors"
-            href="#"
-          >
-            Forgot password?
-          </a>
-        </div>
-
-        {/* Submit Button */}
-        <button
-          className="w-full bg-brand-dark hover:bg-black text-white font-bold py-4 rounded-xl shadow-lg shadow-brand-dark/20 transition-all focus:outline-none focus:ring-2 focus:ring-brand-dark focus:ring-offset-2 mt-4"
-          type="submit"
-        >
-          Sign In
-        </button>
-      </form>
     </div>
   );
 }
