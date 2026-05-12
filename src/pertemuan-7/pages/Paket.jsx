@@ -1,169 +1,19 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
+import paketData from "../data/paket.json";
+
+import {
+  FaEdit,
+  FaTrash,
+  FaMapMarkerAlt,
+  FaMoneyBillWave,
+  FaSuitcaseRolling,
+} from "react-icons/fa";
 
 export default function Paket() {
-  const [paket, setPaket] = useState([
-    {
-      id: 1,
-      name: "Bali Tour 3D2N",
-      location: "Bali",
-      price: "Rp 2.500.000",
-      duration: "3 Hari",
-      status: "Active",
-    },
-    {
-      id: 2,
-      name: "Lombok Trip",
-      location: "Lombok",
-      price: "Rp 3.200.000",
-      duration: "4 Hari",
-      status: "Active",
-    },
-    {
-      id: 3,
-      name: "Raja Ampat Explore",
-      location: "Papua",
-      price: "Rp 7.800.000",
-      duration: "5 Hari",
-      status: "Inactive",
-    },
-    {
-      id: 4,
-      name: "Bandung Holiday",
-      location: "Bandung",
-      price: "Rp 1.800.000",
-      duration: "2 Hari",
-      status: "Active",
-    },
-    {
-      id: 5,
-      name: "Yogyakarta Trip",
-      location: "Jogja",
-      price: "Rp 2.200.000",
-      duration: "3 Hari",
-      status: "Active",
-    },
-    {
-      id: 6,
-      name: "Bromo Sunrise",
-      location: "Malang",
-      price: "Rp 1.500.000",
-      duration: "2 Hari",
-      status: "Active",
-    },
-    {
-      id: 7,
-      name: "Labuan Bajo",
-      location: "NTT",
-      price: "Rp 5.200.000",
-      duration: "4 Hari",
-      status: "Active",
-    },
-    {
-      id: 8,
-      name: "Malang Trip",
-      location: "Malang",
-      price: "Rp 1.900.000",
-      duration: "3 Hari",
-      status: "Inactive",
-    },
-    {
-      id: 9,
-      name: "Jakarta City Tour",
-      location: "Jakarta",
-      price: "Rp 1.200.000",
-      duration: "1 Hari",
-      status: "Active",
-    },
-    {
-      id: 10,
-      name: "Singapore Tour",
-      location: "Singapore",
-      price: "Rp 6.500.000",
-      duration: "3 Hari",
-      status: "Active",
-    },
-    {
-      id: 11,
-      name: "Thailand Trip",
-      location: "Thailand",
-      price: "Rp 5.800.000",
-      duration: "4 Hari",
-      status: "Active",
-    },
-    {
-      id: 12,
-      name: "Malaysia Tour",
-      location: "Malaysia",
-      price: "Rp 4.300.000",
-      duration: "3 Hari",
-      status: "Inactive",
-    },
-    {
-      id: 13,
-      name: "Bali Luxury",
-      location: "Bali",
-      price: "Rp 8.200.000",
-      duration: "5 Hari",
-      status: "Active",
-    },
-    {
-      id: 14,
-      name: "Medan Trip",
-      location: "Medan",
-      price: "Rp 2.700.000",
-      duration: "3 Hari",
-      status: "Inactive",
-    },
-    {
-      id: 15,
-      name: "Padang Tour",
-      location: "Padang",
-      price: "Rp 3.100.000",
-      duration: "3 Hari",
-      status: "Active",
-    },
-    {
-      id: 16,
-      name: "Makassar Trip",
-      location: "Makassar",
-      price: "Rp 3.600.000",
-      duration: "4 Hari",
-      status: "Active",
-    },
-    {
-      id: 17,
-      name: "Bandung Staycation",
-      location: "Bandung",
-      price: "Rp 1.400.000",
-      duration: "2 Hari",
-      status: "Active",
-    },
-    {
-      id: 18,
-      name: "Jogja Adventure",
-      location: "Jogja",
-      price: "Rp 2.900.000",
-      duration: "3 Hari",
-      status: "Inactive",
-    },
-    {
-      id: 19,
-      name: "Bali Honeymoon",
-      location: "Bali",
-      price: "Rp 9.500.000",
-      duration: "5 Hari",
-      status: "Active",
-    },
-    {
-      id: 20,
-      name: "Lombok Explore",
-      location: "Lombok",
-      price: "Rp 3.800.000",
-      duration: "4 Hari",
-      status: "Active",
-    },
-  ]);
+
+  const [paket, setPaket] = useState(paketData);
 
   const handleDelete = (id) => {
     const confirmDelete = confirm("Yakin mau hapus paket?");
@@ -177,92 +27,284 @@ export default function Paket() {
   };
 
   return (
-    <div className="flex-1 bg-[#f9f9f9] min-h-screen overflow-y-auto">
+    <div className="flex-1 bg-[#f6f6f6] min-h-screen overflow-y-auto">
+
       <div className="p-8">
-        <div className="max-w-7xl mx-auto flex flex-col gap-10">
+
+       <div className="w-full flex flex-col gap-8">
+
           {/* HEADER */}
           <PageHeader
             title="Kelola Paket Wisata"
             breadcrumb="TravelGo."
             actions={
-              <button className="flex items-center gap-2 px-4 py-2 bg-[#C49C74] text-white rounded-lg text-sm shadow hover:shadow-md">
+              <button className="flex items-center gap-2 px-5 py-3 bg-[#C49C74] hover:bg-[#b58b63] text-white rounded-2xl text-sm font-semibold shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105">
+
                 <span className="material-symbols-outlined text-[18px]">
                   add
                 </span>
+
                 Tambah Paket
+
               </button>
             }
           />
 
-          {/* TABLE */}
-          <div className="bg-white border border-stone-200 rounded-2xl shadow-sm overflow-hidden">
-            <table className="w-full">
-              <thead className="bg-[#f9f9f9]">
-                <tr>
-                  <th className="p-4 text-left text-sm font-semibold">ID</th>
-                  <th className="p-4 text-left text-sm font-semibold">
-                    Nama Paket
-                  </th>
-                  <th className="p-4 text-left text-sm font-semibold">
-                    Lokasi
-                  </th>
-                  <th className="p-4 text-left text-sm font-semibold">
-                    Durasi
-                  </th>
-                  <th className="p-4 text-left text-sm font-semibold">Harga</th>
-                  <th className="p-4 text-left text-sm font-semibold">
-                    Status
-                  </th>
-                  <th className="p-4 text-left text-sm font-semibold">Aksi</th>
-                </tr>
-              </thead>
+          {/* TOP CARDS */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 
-              <tbody>
-                {paket.map((item) => (
-                  <tr
-                    key={item.id}
-                    className="border-t hover:bg-gray-50 transition"
-                  >
-                    <td className="p-4">{item.id}</td>
-                    <td className="p-4 font-medium">{item.name}</td>
-                    <td className="p-4">{item.location}</td>
-                    <td className="p-4">{item.duration}</td>
-                    <td className="p-4">{item.price}</td>
+            {/* CARD 1 */}
+            <div className="bg-white rounded-3xl p-6 border border-stone-200 shadow-sm hover:shadow-xl transition duration-300 group">
 
-                    <td className="p-4">
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${
-                          item.status === "Active"
-                            ? "bg-green-100 text-green-600"
-                            : "bg-red-100 text-red-600"
-                        }`}
-                      >
-                        {item.status}
-                      </span>
-                    </td>
+              <div className="flex items-center justify-between">
 
-                    <td className="p-4 flex gap-2">
-                      <button
-                        onClick={() => handleEdit(item)}
-                        className="bg-blue-100 text-blue-600 px-3 py-1 rounded-md text-xs hover:bg-blue-200"
-                      >
-                        Edit
-                      </button>
+                <div>
 
-                      <button
-                        onClick={() => handleDelete(item.id)}
-                        className="bg-red-100 text-red-600 px-3 py-1 rounded-md text-xs hover:bg-red-200"
-                      >
-                        Hapus
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                  <p className="text-gray-400 text-sm">
+                    Total Paket
+                  </p>
+
+                  <h1 className="text-4xl font-bold text-gray-700 mt-2">
+                    {paket.length}
+                  </h1>
+
+                </div>
+
+                <div className="w-16 h-16 rounded-2xl bg-orange-100 flex items-center justify-center group-hover:scale-110 transition">
+                  <FaSuitcaseRolling className="text-2xl text-[#C49C74]" />
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* CARD 2 */}
+            <div className="bg-white rounded-3xl p-6 border border-stone-200 shadow-sm hover:shadow-xl transition duration-300 group">
+
+              <div className="flex items-center justify-between">
+
+                <div>
+
+                  <p className="text-gray-400 text-sm">
+                    Active Paket
+                  </p>
+
+                  <h1 className="text-4xl font-bold text-green-500 mt-2">
+                    {
+                      paket.filter(
+                        (item) => item.status === "Active"
+                      ).length
+                    }
+                  </h1>
+
+                </div>
+
+                <div className="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center group-hover:scale-110 transition">
+                  <FaMapMarkerAlt className="text-2xl text-green-500" />
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* CARD 3 */}
+            <div className="bg-white rounded-3xl p-6 border border-stone-200 shadow-sm hover:shadow-xl transition duration-300 group">
+
+              <div className="flex items-center justify-between">
+
+                <div>
+
+                  <p className="text-gray-400 text-sm">
+                    Total Revenue
+                  </p>
+
+                  <h1 className="text-3xl font-bold text-[#C49C74] mt-2">
+                    Rp 85JT
+                  </h1>
+
+                </div>
+
+                <div className="w-16 h-16 rounded-2xl bg-yellow-100 flex items-center justify-center group-hover:scale-110 transition">
+                  <FaMoneyBillWave className="text-2xl text-yellow-500" />
+                </div>
+
+              </div>
+
+            </div>
+
           </div>
+
+          {/* TABLE */}
+          <div className="bg-white border border-stone-200 rounded-3xl shadow-sm overflow-hidden">
+
+            {/* TABLE HEADER */}
+            <div className="flex items-center justify-between px-6 py-5 border-b border-stone-100">
+
+              <div>
+
+                <h1 className="text-2xl font-bold text-gray-700">
+                  Data Paket Wisata
+                </h1>
+
+                <p className="text-sm text-gray-400 mt-1">
+                  Kelola seluruh data paket travel
+                </p>
+
+              </div>
+
+              <button className="px-4 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-sm font-medium transition">
+                Filter
+              </button>
+
+            </div>
+
+            {/* TABLE */}
+            <div className="overflow-x-auto">
+
+              <table className="w-full">
+
+                <thead className="bg-[#fafafa]">
+
+                  <tr>
+
+                    <th className="p-5 text-left text-sm font-bold text-gray-500">
+                      ID
+                    </th>
+
+                    <th className="p-5 text-left text-sm font-bold text-gray-500">
+                      Nama Paket
+                    </th>
+
+                    <th className="p-5 text-left text-sm font-bold text-gray-500">
+                      Lokasi
+                    </th>
+
+                    <th className="p-5 text-left text-sm font-bold text-gray-500">
+                      Durasi
+                    </th>
+
+                    <th className="p-5 text-left text-sm font-bold text-gray-500">
+                      Harga
+                    </th>
+
+                    <th className="p-5 text-left text-sm font-bold text-gray-500">
+                      Status
+                    </th>
+
+                    <th className="p-5 text-left text-sm font-bold text-gray-500">
+                      Aksi
+                    </th>
+
+                  </tr>
+
+                </thead>
+
+                <tbody>
+
+                  {paket.map((item) => (
+
+                    <tr
+                      key={item.id}
+                      className="border-t border-stone-100 hover:bg-stone-50 transition duration-200"
+                    >
+
+                      <td className="p-5 font-semibold text-gray-500">
+                        #{item.id}
+                      </td>
+
+                      <td className="p-5">
+
+                        <div className="flex items-center gap-3">
+
+                          <div className="w-11 h-11 rounded-full bg-[#C49C74] text-white flex items-center justify-center font-bold">
+                            {item.name.charAt(0)}
+                          </div>
+
+                          <div>
+
+                            <Link
+                              to={`/paket/${item.id}`}
+                              className="font-semibold text-gray-700 hover:text-[#C49C74] transition"
+                            >
+                              {item.name}
+                            </Link>
+
+                            <p className="text-xs text-gray-400">
+                              Travel Package
+                            </p>
+
+                          </div>
+
+                        </div>
+
+                      </td>
+
+                      <td className="p-5 font-medium text-gray-600">
+                        {item.location}
+                      </td>
+
+                      <td className="p-5 text-gray-500">
+                        {item.duration}
+                      </td>
+
+                      <td className="p-5 font-semibold text-[#C49C74]">
+                        {item.price}
+                      </td>
+
+                      <td className="p-5">
+
+                        <span
+                          className={`px-4 py-2 rounded-full text-xs font-bold ${
+                            item.status === "Active"
+                              ? "bg-green-100 text-green-600"
+                              : "bg-red-100 text-red-600"
+                          }`}
+                        >
+                          {item.status}
+                        </span>
+
+                      </td>
+
+                      <td className="p-5">
+
+                        <div className="flex items-center gap-3">
+
+                          {/* EDIT */}
+                          <button
+                            onClick={() => handleEdit(item)}
+                            className="w-10 h-10 rounded-xl bg-blue-100 hover:bg-blue-500 text-blue-500 hover:text-white flex items-center justify-center transition duration-300 hover:scale-110"
+                          >
+                            <FaEdit />
+                          </button>
+
+                          {/* DELETE */}
+                          <button
+                            onClick={() => handleDelete(item.id)}
+                            className="w-10 h-10 rounded-xl bg-red-100 hover:bg-red-500 text-red-500 hover:text-white flex items-center justify-center transition duration-300 hover:scale-110"
+                          >
+                            <FaTrash />
+                          </button>
+
+                        </div>
+
+                      </td>
+
+                    </tr>
+
+                  ))}
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
         </div>
+
       </div>
+
     </div>
   );
 }

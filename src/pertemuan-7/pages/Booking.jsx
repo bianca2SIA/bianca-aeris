@@ -1,169 +1,19 @@
 import { useState } from "react";
 import PageHeader from "../components/PageHeader";
+import { Link } from "react-router-dom";
+import bookingsData from "../data/booking.json";
+
+import {
+  FaEdit,
+  FaTrash,
+  FaCalendarAlt,
+  FaMoneyBillWave,
+  FaUser,
+} from "react-icons/fa";
 
 export default function Booking() {
-  const [bookings, setBookings] = useState([
-    {
-      id: 1,
-      customer: "Andi Saputra",
-      package: "Bali Tour",
-      date: "12 Mei 2026",
-      total: "Rp 2.500.000",
-      status: "Confirmed",
-    },
-    {
-      id: 2,
-      customer: "Siti Rahma",
-      package: "Lombok Trip",
-      date: "15 Mei 2026",
-      total: "Rp 3.200.000",
-      status: "Pending",
-    },
-    {
-      id: 3,
-      customer: "Budi Santoso",
-      package: "Raja Ampat",
-      date: "20 Mei 2026",
-      total: "Rp 7.800.000",
-      status: "Cancelled",
-    },
-    {
-      id: 4,
-      customer: "Rina Oktavia",
-      package: "Bandung Holiday",
-      date: "25 Mei 2026",
-      total: "Rp 1.800.000",
-      status: "Confirmed",
-    },
-    {
-      id: 5,
-      customer: "Dewi Lestari",
-      package: "Yogyakarta Trip",
-      date: "28 Mei 2026",
-      total: "Rp 2.200.000",
-      status: "Pending",
-    },
-    {
-      id: 6,
-      customer: "Fajar Nugroho",
-      package: "Bromo Sunrise",
-      date: "30 Mei 2026",
-      total: "Rp 1.500.000",
-      status: "Confirmed",
-    },
-    {
-      id: 7,
-      customer: "Agus Pratama",
-      package: "Labuan Bajo",
-      date: "02 Juni 2026",
-      total: "Rp 5.200.000",
-      status: "Confirmed",
-    },
-    {
-      id: 8,
-      customer: "Putri Amelia",
-      package: "Malang Trip",
-      date: "05 Juni 2026",
-      total: "Rp 1.900.000",
-      status: "Cancelled",
-    },
-    {
-      id: 9,
-      customer: "Yoga Prakoso",
-      package: "Jakarta City Tour",
-      date: "08 Juni 2026",
-      total: "Rp 1.200.000",
-      status: "Pending",
-    },
-    {
-      id: 10,
-      customer: "Lina Marlina",
-      package: "Singapore Tour",
-      date: "10 Juni 2026",
-      total: "Rp 6.500.000",
-      status: "Confirmed",
-    },
-    {
-      id: 11,
-      customer: "Rizky Hidayat",
-      package: "Thailand Trip",
-      date: "12 Juni 2026",
-      total: "Rp 5.800.000",
-      status: "Confirmed",
-    },
-    {
-      id: 12,
-      customer: "Nina Kartika",
-      package: "Malaysia Tour",
-      date: "15 Juni 2026",
-      total: "Rp 4.300.000",
-      status: "Pending",
-    },
-    {
-      id: 13,
-      customer: "Dian Pratama",
-      package: "Bali Luxury",
-      date: "18 Juni 2026",
-      total: "Rp 8.200.000",
-      status: "Confirmed",
-    },
-    {
-      id: 14,
-      customer: "Wahyu Saputra",
-      package: "Medan Trip",
-      date: "20 Juni 2026",
-      total: "Rp 2.700.000",
-      status: "Cancelled",
-    },
-    {
-      id: 15,
-      customer: "Intan Sari",
-      package: "Padang Tour",
-      date: "22 Juni 2026",
-      total: "Rp 3.100.000",
-      status: "Pending",
-    },
-    {
-      id: 16,
-      customer: "Reza Maulana",
-      package: "Makassar Trip",
-      date: "25 Juni 2026",
-      total: "Rp 3.600.000",
-      status: "Confirmed",
-    },
-    {
-      id: 17,
-      customer: "Farah Nabila",
-      package: "Bandung Staycation",
-      date: "27 Juni 2026",
-      total: "Rp 1.400.000",
-      status: "Confirmed",
-    },
-    {
-      id: 18,
-      customer: "Hendra Wijaya",
-      package: "Jogja Adventure",
-      date: "30 Juni 2026",
-      total: "Rp 2.900.000",
-      status: "Cancelled",
-    },
-    {
-      id: 19,
-      customer: "Tika Ramadhani",
-      package: "Bali Honeymoon",
-      date: "02 Juli 2026",
-      total: "Rp 9.500.000",
-      status: "Confirmed",
-    },
-    {
-      id: 20,
-      customer: "Arif Kurniawan",
-      package: "Lombok Explore",
-      date: "05 Juli 2026",
-      total: "Rp 3.800.000",
-      status: "Pending",
-    },
-  ]);
+
+  const [bookings, setBookings] = useState(bookingsData);
 
   const handleDelete = (id) => {
     const confirmDelete = confirm("Yakin mau hapus booking?");
@@ -177,94 +27,288 @@ export default function Booking() {
   };
 
   return (
-    <div className="flex-1 bg-[#f9f9f9] min-h-screen overflow-y-auto">
+    <div className="flex-1 bg-[#f6f6f6] min-h-screen overflow-y-auto">
+
       <div className="p-8">
-        <div className="max-w-7xl mx-auto flex flex-col gap-10">
+
+      <div className="w-full flex flex-col gap-8">
+
           {/* HEADER */}
           <PageHeader
             title="Kelola Booking"
             breadcrumb="TravelGo."
             actions={
-              <>
-                <button className="flex items-center gap-2 px-4 py-2 bg-[#C49C74] text-white rounded-lg text-sm shadow hover:shadow-md">
-                  <span className="material-symbols-outlined text-[18px]">
-                    add
-                  </span>
-                  Tambah Booking
-                </button>
-              </>
+              <button className="flex items-center gap-2 px-5 py-3 bg-[#C49C74] hover:bg-[#b58b63] text-white rounded-2xl text-sm font-semibold shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105">
+
+                <span className="material-symbols-outlined text-[18px]">
+                  add
+                </span>
+
+                Tambah Booking
+
+              </button>
             }
           />
 
+          {/* TOP CARDS */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+            {/* CARD 1 */}
+            <div className="bg-white rounded-3xl p-6 border border-stone-200 shadow-sm hover:shadow-xl transition duration-300 group">
+
+              <div className="flex items-center justify-between">
+
+                <div>
+
+                  <p className="text-gray-400 text-sm">
+                    Total Booking
+                  </p>
+
+                  <h1 className="text-4xl font-bold text-gray-700 mt-2">
+                    {bookings.length}
+                  </h1>
+
+                </div>
+
+                <div className="w-16 h-16 rounded-2xl bg-orange-100 flex items-center justify-center group-hover:scale-110 transition">
+                  <FaCalendarAlt className="text-2xl text-[#C49C74]" />
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* CARD 2 */}
+            <div className="bg-white rounded-3xl p-6 border border-stone-200 shadow-sm hover:shadow-xl transition duration-300 group">
+
+              <div className="flex items-center justify-between">
+
+                <div>
+
+                  <p className="text-gray-400 text-sm">
+                    Confirmed
+                  </p>
+
+                  <h1 className="text-4xl font-bold text-green-500 mt-2">
+                    {
+                      bookings.filter(
+                        (item) => item.status === "Confirmed"
+                      ).length
+                    }
+                  </h1>
+
+                </div>
+
+                <div className="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center group-hover:scale-110 transition">
+                  <FaUser className="text-2xl text-green-500" />
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* CARD 3 */}
+            <div className="bg-white rounded-3xl p-6 border border-stone-200 shadow-sm hover:shadow-xl transition duration-300 group">
+
+              <div className="flex items-center justify-between">
+
+                <div>
+
+                  <p className="text-gray-400 text-sm">
+                    Total Revenue
+                  </p>
+
+                  <h1 className="text-3xl font-bold text-[#C49C74] mt-2">
+                    Rp 58JT
+                  </h1>
+
+                </div>
+
+                <div className="w-16 h-16 rounded-2xl bg-yellow-100 flex items-center justify-center group-hover:scale-110 transition">
+                  <FaMoneyBillWave className="text-2xl text-yellow-500" />
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
           {/* TABLE */}
-          <div className="bg-white border border-stone-200 rounded-2xl shadow-sm overflow-hidden">
-            <table className="w-full">
-              <thead className="bg-[#f9f9f9]">
-                <tr>
-                  <th className="p-4 text-left text-sm font-semibold">ID</th>
-                  <th className="p-4 text-left text-sm font-semibold">
-                    Customer
-                  </th>
-                  <th className="p-4 text-left text-sm font-semibold">Paket</th>
-                  <th className="p-4 text-left text-sm font-semibold">
-                    Tanggal
-                  </th>
-                  <th className="p-4 text-left text-sm font-semibold">Total</th>
-                  <th className="p-4 text-left text-sm font-semibold">
-                    Status
-                  </th>
-                  <th className="p-4 text-left text-sm font-semibold">Aksi</th>
-                </tr>
-              </thead>
+          <div className="bg-white border border-stone-200 rounded-3xl shadow-sm overflow-hidden">
 
-              <tbody>
-                {bookings.map((item) => (
-                  <tr
-                    key={item.id}
-                    className="border-t hover:bg-gray-50 transition"
-                  >
-                    <td className="p-4">{item.id}</td>
-                    <td className="p-4 font-medium">{item.customer}</td>
-                    <td className="p-4">{item.package}</td>
-                    <td className="p-4">{item.date}</td>
-                    <td className="p-4">{item.total}</td>
+            {/* TABLE HEADER */}
+            <div className="flex items-center justify-between px-6 py-5 border-b border-stone-100">
 
-                    <td className="p-4">
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${
-                          item.status === "Confirmed"
-                            ? "bg-green-100 text-green-600"
-                            : item.status === "Pending"
+              <div>
+
+                <h1 className="text-2xl font-bold text-gray-700">
+                  Data Booking
+                </h1>
+
+                <p className="text-sm text-gray-400 mt-1">
+                  Kelola seluruh data booking customer
+                </p>
+
+              </div>
+
+              <button className="px-4 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-sm font-medium transition">
+                Filter
+              </button>
+
+            </div>
+
+            {/* TABLE */}
+            <div className="overflow-x-auto">
+
+              <table className="w-full">
+
+                <thead className="bg-[#fafafa]">
+
+                  <tr>
+
+                    <th className="p-5 text-left text-sm font-bold text-gray-500">
+                      ID
+                    </th>
+
+                    <th className="p-5 text-left text-sm font-bold text-gray-500">
+                      Customer
+                    </th>
+
+                    <th className="p-5 text-left text-sm font-bold text-gray-500">
+                      Paket
+                    </th>
+
+                    <th className="p-5 text-left text-sm font-bold text-gray-500">
+                      Tanggal
+                    </th>
+
+                    <th className="p-5 text-left text-sm font-bold text-gray-500">
+                      Total
+                    </th>
+
+                    <th className="p-5 text-left text-sm font-bold text-gray-500">
+                      Status
+                    </th>
+
+                    <th className="p-5 text-left text-sm font-bold text-gray-500">
+                      Aksi
+                    </th>
+
+                  </tr>
+
+                </thead>
+
+                <tbody>
+
+                  {bookings.map((item) => (
+
+                    <tr
+                      key={item.id}
+                      className="border-t border-stone-100 hover:bg-stone-50 transition duration-200"
+                    >
+
+                      <td className="p-5 font-semibold text-gray-500">
+                        #{item.id}
+                      </td>
+
+                      <td className="p-5">
+
+                        <div className="flex items-center gap-3">
+
+                          <div className="w-11 h-11 rounded-full bg-[#C49C74] text-white flex items-center justify-center font-bold">
+                            {item.customer.charAt(0)}
+                          </div>
+
+                          <div>
+
+                            <h1 className="font-semibold text-gray-700">
+                              <Link
+  to={`/booking/${item.id}`}
+  className="font-semibold text-gray-700 hover:text-[#C49C74] transition"
+>
+  {item.customer}
+</Link>
+                            </h1>
+
+                            <p className="text-xs text-gray-400">
+                              Customer Booking
+                            </p>
+
+                          </div>
+
+                        </div>
+
+                      </td>
+
+                      <td className="p-5 font-medium text-gray-600">
+                        {item.package}
+                      </td>
+
+                      <td className="p-5 text-gray-500">
+                        {item.date}
+                      </td>
+
+                      <td className="p-5 font-semibold text-[#C49C74]">
+                        {item.total}
+                      </td>
+
+                      <td className="p-5">
+
+                        <span
+                          className={`px-4 py-2 rounded-full text-xs font-bold ${
+                            item.status === "Confirmed"
+                              ? "bg-green-100 text-green-600"
+                              : item.status === "Pending"
                               ? "bg-yellow-100 text-yellow-600"
                               : "bg-red-100 text-red-600"
-                        }`}
-                      >
-                        {item.status}
-                      </span>
-                    </td>
+                          }`}
+                        >
+                          {item.status}
+                        </span>
 
-                    <td className="p-4 flex gap-2">
-                      <button
-                        onClick={() => handleEdit(item)}
-                        className="bg-blue-100 text-blue-600 px-3 py-1 rounded-md text-xs hover:bg-blue-200"
-                      >
-                        Edit
-                      </button>
+                      </td>
 
-                      <button
-                        onClick={() => handleDelete(item.id)}
-                        className="bg-red-100 text-red-600 px-3 py-1 rounded-md text-xs hover:bg-red-200"
-                      >
-                        Hapus
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                      <td className="p-5">
+
+                        <div className="flex items-center gap-3">
+
+                          {/* EDIT */}
+                          <button
+                            onClick={() => handleEdit(item)}
+                            className="w-10 h-10 rounded-xl bg-blue-100 hover:bg-blue-500 text-blue-500 hover:text-white flex items-center justify-center transition duration-300 hover:scale-110"
+                          >
+                            <FaEdit />
+                          </button>
+
+                          {/* DELETE */}
+                          <button
+                            onClick={() => handleDelete(item.id)}
+                            className="w-10 h-10 rounded-xl bg-red-100 hover:bg-red-500 text-red-500 hover:text-white flex items-center justify-center transition duration-300 hover:scale-110"
+                          >
+                            <FaTrash />
+                          </button>
+
+                        </div>
+
+                      </td>
+
+                    </tr>
+
+                  ))}
+
+                </tbody>
+
+              </table>
+
+            </div>
+
           </div>
+
         </div>
+
       </div>
+
     </div>
   );
 }

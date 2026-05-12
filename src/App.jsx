@@ -11,6 +11,8 @@ const Paket = React.lazy(() => import("./pertemuan-7/pages/Paket"));
 const Booking = React.lazy(() => import("./pertemuan-7/pages/Booking"));
 const User = React.lazy(() => import("./pertemuan-7/pages/User"));
 const Login = React.lazy(() => import("./pertemuan-7/pages/auth/Login"));
+const PaketDetail = React.lazy(() => import("./pertemuan-7/pages/PaketDetail"));
+const BookingDetail = React.lazy(() => import("./pertemuan-7/pages/BookingDetail"));
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
           <Route path="paket" element={<Paket />} />
           <Route path="booking" element={<Booking />} />
           <Route path="user" element={<User />} />
+          <Route path="paket/:id" element={<PaketDetail />} />
+          <Route path="booking/:id" element={<BookingDetail />} />
         </Route>
       </Routes>
     </Suspense>

@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "customer": "Andi Saputra",
+    "package": "Bali Tour",
+    "date": "12 Mei 2026",
+    "total": "Rp 2.500.000",
+    "status": "Confirmed"
+  },
+  {
+    "id": 2,
+    "customer": "Siti Rahma",
+    "package": "Lombok Trip",
+    "date": "15 Mei 2026",
+    "total": "Rp 3.200.000",
+    "status": "Pending"
+  },
+  {
+    "id": 3,
+    "customer": "Budi Santoso",
+    "package": "Raja Ampat",
+    "date": "20 Mei 2026",
+    "total": "Rp 7.800.000",
+    "status": "Cancelled"
+  },
+  {
+    "id": 4,
+    "customer": "Rina Oktavia",
+    "package": "Bandung Holiday",
+    "date": "25 Mei 2026",
+    "total": "Rp 1.800.000",
+    "status": "Confirmed"
+  },
+  {
+    "id": 5,
+    "customer": "Dewi Lestari",
+    "package": "Yogyakarta Trip",
+    "date": "28 Mei 2026",
+    "total": "Rp 2.200.000",
+    "status": "Pending"
+  },
+  {
+    "id": 6,
+    "customer": "Fajar Nugroho",
+    "package": "Bromo Sunrise",
+    "date": "30 Mei 2026",
+    "total": "Rp 1.500.000",
+    "status": "Confirmed"
+  },
+  {
+    "id": 7,
+    "customer": "Agus Pratama",
+    "package": "Labuan Bajo",
+    "date": "02 Juni 2026",
+    "total": "Rp 5.200.000",
+    "status": "Confirmed"
+  },
+  {
+    "id": 8,
+    "customer": "Putri Amelia",
+    "package": "Malang Trip",
+    "date": "05 Juni 2026",
+    "total": "Rp 1.900.000",
+    "status": "Cancelled"
+  },
+  {
+    "id": 9,
+    "customer": "Yoga Prakoso",
+    "package": "Jakarta City Tour",
+    "date": "08 Juni 2026",
+    "total": "Rp 1.200.000",
+    "status": "Pending"
+  },
+  {
+    "id": 10,
+    "customer": "Lina Marlina",
+    "package": "Singapore Tour",
+    "date": "10 Juni 2026",
+    "total": "Rp 6.500.000",
+    "status": "Confirmed"
+  },
+  {
+    "id": 11,
+    "customer": "Rizky Hidayat",
+    "package": "Thailand Trip",
+    "date": "12 Juni 2026",
+    "total": "Rp 5.800.000",
+    "status": "Confirmed"
+  },
+  {
+    "id": 12,
+    "customer": "Nina Kartika",
+    "package": "Malaysia Tour",
+    "date": "15 Juni 2026",
+    "total": "Rp 4.300.000",
+    "status": "Pending"
+  },
+  {
+    "id": 13,
+    "customer": "Dian Pratama",
+    "package": "Bali Luxury",
+    "date": "18 Juni 2026",
+    "total": "Rp 8.200.000",
+    "status": "Confirmed"
+  },
+  {
+    "id": 14,
+    "customer": "Wahyu Saputra",
+    "package": "Medan Trip",
+    "date": "20 Juni 2026",
+    "total": "Rp 2.700.000",
+    "status": "Cancelled"
+  },
+  {
+    "id": 15,
+    "customer": "Intan Sari",
+    "package": "Padang Tour",
+    "date": "22 Juni 2026",
+    "total": "Rp 3.100.000",
+    "status": "Pending"
+  },
+  {
+    "id": 16,
+    "customer": "Reza Maulana",
+    "package": "Makassar Trip",
+    "date": "25 Juni 2026",
+    "total": "Rp 3.600.000",
+    "status": "Confirmed"
+  },
+  {
+    "id": 17,
+    "customer": "Farah Nabila",
+    "package": "Bandung Staycation",
+    "date": "27 Juni 2026",
+    "total": "Rp 1.400.000",
+    "status": "Confirmed"
+  },
+  {
+    "id": 18,
+    "customer": "Hendra Wijaya",
+    "package": "Jogja Adventure",
+    "date": "30 Juni 2026",
+    "total": "Rp 2.900.000",
+    "status": "Cancelled"
+  },
+  {
+    "id": 19,
+    "customer": "Tika Ramadhani",
+    "package": "Bali Honeymoon",
+    "date": "02 Juli 2026",
+    "total": "Rp 9.500.000",
+    "status": "Confirmed"
+  },
+  {
+    "id": 20,
+    "customer": "Arif Kurniawan",
+    "package": "Lombok Explore",
+    "date": "05 Juli 2026",
+    "total": "Rp 3.800.000",
+    "status": "Pending"
+  }
+]
