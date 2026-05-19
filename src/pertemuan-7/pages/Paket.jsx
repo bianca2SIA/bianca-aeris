@@ -27,7 +27,21 @@ export default function Paket() {
   };
 
   return (
-    <div className="flex-1 bg-[#f6f6f6] min-h-screen overflow-y-auto">
+    <div className="
+bg-gradient-to-br
+from-white
+to-[#EEF5FF]
+rounded-3xl
+p-6
+border
+border-[#DCEAFF]
+shadow-sm
+hover:shadow-2xl
+hover:-translate-y-2
+transition-all
+duration-500
+group
+">
 
       <div className="p-8">
 
@@ -35,10 +49,10 @@ export default function Paket() {
 
           {/* HEADER */}
           <PageHeader
-            title="Kelola Paket Wisata"
+            title="Packages"
             breadcrumb="TravelGo."
             actions={
-              <button className="flex items-center gap-2 px-5 py-3 bg-[#C49C74] hover:bg-[#b58b63] text-white rounded-2xl text-sm font-semibold shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105">
+              <button className="flex items-center gap-2 px-5 py-3 bg-[#6EA8FE] hover:bg-[#4B91FF] text-white rounded-2xl text-sm font-semibold shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105">
 
                 <span className="material-symbols-outlined text-[18px]">
                   add
@@ -70,8 +84,8 @@ export default function Paket() {
 
                 </div>
 
-                <div className="w-16 h-16 rounded-2xl bg-orange-100 flex items-center justify-center group-hover:scale-110 transition">
-                  <FaSuitcaseRolling className="text-2xl text-[#C49C74]" />
+                <div className="w-16 h-16 rounded-2xl bg-[#DCEAFF] flex items-center justify-center group-hover:scale-110 transition">
+                  <FaSuitcaseRolling className="text-2xl text-[#6EA8FE]" />
                 </div>
 
               </div>
@@ -99,8 +113,8 @@ export default function Paket() {
 
                 </div>
 
-                <div className="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center group-hover:scale-110 transition">
-                  <FaMapMarkerAlt className="text-2xl text-green-500" />
+                <div className="w-16 h-16 rounded-2xl bg-[#E7F1FF] flex items-center justify-center group-hover:scale-110 transition">
+                  <FaMapMarkerAlt className="text-2xl text-[#3689CC]" />
                 </div>
 
               </div>
@@ -124,8 +138,8 @@ export default function Paket() {
 
                 </div>
 
-                <div className="w-16 h-16 rounded-2xl bg-yellow-100 flex items-center justify-center group-hover:scale-110 transition">
-                  <FaMoneyBillWave className="text-2xl text-yellow-500" />
+                <div className="w-16 h-16 rounded-2xl bg-[#DCEAFF] flex items-center justify-center group-hover:scale-110 transition">
+                  <FaMoneyBillWave className="text-2xl text-[#6EA8FE]" />
                 </div>
 
               </div>
@@ -135,7 +149,17 @@ export default function Paket() {
           </div>
 
           {/* TABLE */}
-          <div className="bg-white border border-stone-200 rounded-3xl shadow-sm overflow-hidden">
+          <div className="
+bg-white
+border
+border-[#DCEAFF]
+rounded-3xl
+shadow-md
+hover:shadow-xl
+transition-all
+duration-300
+overflow-hidden
+">
 
             {/* TABLE HEADER */}
             <div className="flex items-center justify-between px-6 py-5 border-b border-stone-100">
@@ -163,7 +187,7 @@ export default function Paket() {
 
               <table className="w-full">
 
-                <thead className="bg-[#fafafa]">
+                <thead className="bg-[#F4F8FD]">
 
                   <tr>
 
@@ -205,7 +229,7 @@ export default function Paket() {
 
                     <tr
                       key={item.id}
-                      className="border-t border-stone-100 hover:bg-stone-50 transition duration-200"
+                      className="border-t border-stone-100 hover:bg-[#F5FAFF] transition duration-200"
                     >
 
                       <td className="p-5 font-semibold text-gray-500">
@@ -216,7 +240,7 @@ export default function Paket() {
 
                         <div className="flex items-center gap-3">
 
-                          <div className="w-11 h-11 rounded-full bg-[#C49C74] text-white flex items-center justify-center font-bold">
+                          <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#6EA8FE] to-[#3689CC] text-white flex items-center justify-center font-bold">
                             {item.name.charAt(0)}
                           </div>
 
@@ -224,7 +248,7 @@ export default function Paket() {
 
                             <Link
                               to={`/paket/${item.id}`}
-                              className="font-semibold text-gray-700 hover:text-[#C49C74] transition"
+                              className="font-semibold text-gray-700 hover:text-[#3689CC] transition"
                             >
                               {item.name}
                             </Link>
@@ -299,7 +323,7 @@ export default function Paket() {
 
             </div>
 
-          </div>
+         </div>
 
         </div>
 

@@ -109,7 +109,198 @@ export default function Dashboard() {
               </div>
             ))}
           </div>
+          {/* TOP CONTENT */}
+          <div className="grid grid-cols-12 gap-6">
+            {/* REVENUE */}
+            <div className="col-span-5 bg-white border border-[#BAC4CB]/30 rounded-3xl p-5 h-[290px] shadow-sm transition-all duration-500 hover:shadow-[0_15px_35px_rgba(54,137,204,0.18)] hover:-translate-y-2 hover:border-[#6EA8FE] cursor-pointer">
+              <div className="flex justify-between mb-4">
+                <h3 className="font-semibold">Revenue Overview</h3>
 
+                <button className="bg-[#6EA8FE] text-white px-4 py-1 rounded-lg text-sm">
+                  Weekly
+                </button>
+              </div>
+
+              <div className="relative h-[200px]">
+                <div className="absolute inset-0 flex flex-col justify-between">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="border-t border-[#EEF1F5]"></div>
+                  ))}
+                </div>
+
+                <div className="absolute top-5 left-[52%] bg-[#F5F8FC] px-3 py-2 rounded-xl shadow z-20">
+                  <h4 className="font-semibold text-sm">$635</h4>
+
+                  <p className="text-xs text-[#BAC4CB]">12 Jul 28</p>
+                </div>
+
+                <div className="absolute h-[110px] border-l border-dashed border-[#6EA8FE] left-[54%] top-[45px]"></div>
+
+                <svg
+                  viewBox="0 0 400 160"
+                  className="w-full h-full relative z-10"
+                >
+                  <path
+                    d="M0,120 C50,140 80,60 120,110
+C170,180 220,10 260,70
+C320,150 340,70 400,90"
+                    fill="none"
+                    stroke="#6EA8FE"
+                    strokeWidth="4"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            {/* DONUT */}
+            <div className="col-span-4 bg-white border border-[#BAC4CB]/30 rounded-3xl p-5 h-[290px] shadow-sm transition-all duration-500 hover:shadow-[0_15px_35px_rgba(54,137,204,0.18)] hover:-translate-y-2 hover:border-[#6EA8FE] cursor-pointer">
+              <div className="flex justify-between mb-4">
+                <h3 className="font-semibold">Top Destinations</h3>
+
+                <button className="bg-[#6EA8FE] text-white px-4 py-1 rounded-lg text-sm">
+                  This Month
+                </button>
+              </div>
+
+              <div className="flex items-center gap-5 h-[190px]">
+                <div
+                  className="
+w-36
+h-36
+rounded-full
+border-[18px]
+border-[#6EA8FE]
+border-r-[#DCEAFF]
+border-b-[#BCD8FF]
+shrink-0
+"
+                ></div>
+
+                <div className="space-y-3 text-sm">
+                  <div className="flex gap-2 items-center">
+                    <div className="w-3 h-3 bg-[#6EA8FE] rounded-full"></div>
+                    Tokyo, Japan (35%)
+                  </div>
+
+                  <div className="flex gap-2 items-center">
+                    <div className="w-3 h-3 bg-[#8CB9FF] rounded-full"></div>
+                    Sydney (28%)
+                  </div>
+
+                  <div className="flex gap-2 items-center">
+                    <div className="w-3 h-3 bg-[#BCD8FF] rounded-full"></div>
+                    Paris (22%)
+                  </div>
+
+                  <div className="flex gap-2 items-center">
+                    <div className="w-3 h-3 bg-[#DCEAFF] rounded-full"></div>
+                    Venice (15%)
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* KANAN */}
+            {/* KANAN */}
+            <div className="col-span-3">
+              <div className="bg-white border border-[#BAC4CB]/30 rounded-3xl p-6 h-full shadow-sm transition-all duration-500 hover:shadow-[0_15px_35px_rgba(54,137,204,0.18)] hover:-translate-y-2 hover:border-[#6EA8FE] cursor-pointer">
+                {/* HEADER KALENDER */}
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="font-semibold text-xl text-[#0D0B14]">
+                    July 2028
+                  </h3>
+
+                  <div className="flex gap-2">
+                    <button className="w-8 h-8 rounded-lg bg-[#F4F7FB]">
+                      ←
+                    </button>
+
+                    <button className="w-8 h-8 rounded-lg bg-[#F4F7FB]">
+                      →
+                    </button>
+                  </div>
+                </div>
+
+                {/* HARI */}
+                <div className="grid grid-cols-7 text-center text-xs text-[#BAC4CB] mb-4">
+                  <span>Sun</span>
+                  <span>Mon</span>
+                  <span>Tue</span>
+                  <span>Wed</span>
+                  <span>Thu</span>
+                  <span>Fri</span>
+                  <span>Sat</span>
+                </div>
+
+                {/* TANGGAL */}
+                <div className="grid grid-cols-7 gap-y-4 text-center text-[#0D0B14]">
+                  {[
+                    25, 26, 27, 28, 29, 30, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+                    12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+                    27, 28, 29,
+                  ].map((day, i) => (
+                    <div
+                      key={i}
+                      className={`w-8 h-8 mx-auto flex items-center justify-center rounded-lg
+          ${day === 12 || day === 19 ? "bg-[#6EA8FE] text-white" : ""}`}
+                    >
+                      {day}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="border-t my-8"></div>
+
+                {/* UPCOMING */}
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="font-semibold text-xl">Upcoming Trips</h3>
+
+                  <button className="w-10 h-10 bg-[#6EA8FE] rounded-xl text-white">
+                    +
+                  </button>
+                </div>
+
+                {/* ITEM */}
+                <div className="space-y-4">
+                  <div className="flex gap-3 bg-[#F6F8FC] rounded-2xl p-3">
+                  <img
+  src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=300&q=80"
+  className="w-16 h-16 rounded-xl object-cover"
+  alt="Paris"
+/>
+
+                    <div>
+                      <span className="text-xs bg-blue-100 px-2 py-1 rounded">
+                        Romantic Gateway
+                      </span>
+
+                      <h4 className="font-semibold mt-2">Paris, France</h4>
+
+                      <p className="text-xs text-[#BAC4CB]">5–10 July</p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-3 bg-[#EEF5FF] rounded-2xl p-3">
+                   <img
+  src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=300&q=80"
+  className="w-16 h-16 rounded-xl object-cover"
+  alt="Tokyo"
+/>
+
+                    <div>
+                      <span className="text-xs bg-blue-100 px-2 py-1 rounded">
+                        Cultural Exploration
+                      </span>
+
+                      <h4 className="font-semibold mt-2">Tokyo, Japan</h4>
+
+                      <p className="text-xs text-[#BAC4CB]">12–19 July</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           {/* BOTTOM GRID */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* LEFT (TABLE) */}

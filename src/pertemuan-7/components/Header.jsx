@@ -1,59 +1,101 @@
-﻿export default function Header({ NavOpen, IsNavOpen }) {
+﻿import { useLocation } from "react-router-dom";
+
+export default function Header({ NavOpen, IsNavOpen }) {
+
+const location = useLocation();
+
+const titles = {
+"/":"Dashboard",
+"/paket":" Packages",
+"/booking":"Bookings",
+"/user":"Users"
+};
+
+const pageTitle = titles[location.pathname] || "Dashboard";
+
   return (
-    <header className="sticky top-0 z-40 border-b  border-[#BAC4CB]/40 bg-white/80 backdrop-blur-md shadow-sm">
-      <div className="flex items-center justify-between gap-4 px-8 py-3">
-        {/* LEFT */}
-        <div className="flex items-center gap-4 flex-1">
-          <button
-            type="button"
-            onClick={() => IsNavOpen(!NavOpen)}
-            className="inline-flex items-center justify-center rounded-lg border border-[#BAC4CB] bg-white p-2 text-[#BAC4CB] shadow-sm transition hover:bg-[#94B3CC]/20"
-          >
-            <span className="material-symbols-outlined">menu</span>
-          </button>
+    <header className="bg-white border-b border-[#EEF1F5] h-[76px] px-8">
+      <div className="h-full flex items-center justify-between">
+
+        {/* KIRI */}
+        <h1 className="text-[20px] font-bold text-[#1E293B]">
+          {pageTitle}
+        </h1>
+
+        {/* KANAN */}
+        <div className="flex items-center gap-7">
 
           {/* SEARCH */}
-          <div className="hidden md:flex items-center relative w-full max-w-md">
-            <span className="material-symbols-outlined absolute left-3 text-[#BAC4CB]">
+          <div className="relative">
+
+            <span
+              className="
+              material-symbols-outlined
+              absolute
+              left-4
+              top-[80%]
+              -translate-y-1/2
+              text-[#B8C0CC]
+              text-[22px]
+            "
+            >
               search
             </span>
+
             <input
               type="text"
-              className="w-full rounded-xl border border-[#BAC4CB] bg-white py-2 pl-10 pr-4 text-sm text-[#0D0B14] focus:border-[#3689CC] focus:outline-none focus:ring-1 focus:ring-[#3689CC]"
-              placeholder="Search itineraries, bookings..."
+              placeholder="Search anything"
+              className="
+              w-[260px]
+              h-[46px]
+              bg-[#FAFBFC]
+              border
+              border-[#E9EDF2]
+              rounded-xl
+              pl-12
+              pr-4
+              text-[14px]
+              text-[#9AA6B2]
+              outline-none
+              focus:border-[#6EA8FE]
+              transition
+            "
             />
           </div>
-        </div>
 
-        {/* RIGHT */}
-        <div className="flex items-center gap-6">
           {/* NOTIF */}
-          <button className="relative rounded-full p-2 text-[#BAC4CB] hover:text-[#0D0B14] hover:bg-[#94B3CC]/20 transition-colors">
-            <span className="material-symbols-outlined">notifications</span>
-            <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-[#CB8A8E]" />
+          <button className="relative">
+            <span className="material-symbols-outlined text-[24px] text-[#B8C0CC] hover:text-[#6EA8FE]">
+              notifications
+            </span>
+
+            <span className="absolute top-[2px] right-[2px] h-[8px] w-[8px] rounded-full bg-[#F19999]"></span>
           </button>
 
-          {/* SETTINGS */}
-          <button className="rounded-full p-2 text-[#BAC4CB] hover:text-[#0D0B14] hover:bg-[#94B3CC]/20 transition-colors">
-            <span className="material-symbols-outlined">settings</span>
-          </button>
-
-          {/* SUPPORT */}
-          <button className="hidden md:flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-[#BAC4CB] hover:text-[#0D0B14] transition-colors">
-            Support
-          </button>
+          <div className="h-10 border-r border-[#EEF2F6]"></div>
 
           {/* PROFILE */}
-          <div className="flex items-center gap-3 border-l border-[#BAC4CB] pl-6">
+          <div className="flex items-center gap-3 cursor-pointer">
             <img
-              src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80"
-              alt="Travel Admin Profile"
-              className="h-10 w-10 rounded-full object-cover border border-[#BAC4CB]"
+              src="https://randomuser.me/api/portraits/men/32.jpg"
+              className="w-11 h-11 rounded-xl object-cover border border-[#EEF2F6]"
             />
-            <div className="hidden md:block">
-              <p className="text-sm font-medium text-[#0D0B14]">Admin User</p>
+
+            <div>
+              <h3 className="text-[15px] font-semibold text-[#222]">
+                Ruben Herwitz
+              </h3>
+
+              <p className="text-[13px] text-[#AAB2BF]">
+                Admin
+              </p>
             </div>
+
+            <span className="material-symbols-outlined text-[#BAC4CB]">
+              keyboard_arrow_down
+            </span>
           </div>
+
         </div>
       </div>
     </header>
