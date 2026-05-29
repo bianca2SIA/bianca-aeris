@@ -1,261 +1,247 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 import {
+  FaArrowLeft,
   FaMapMarkerAlt,
-  FaMoneyBillWave,
-  FaClock,
+  FaCalendarAlt,
+  FaUsers,
   FaCheckCircle,
-  FaPlaneDeparture,
+  FaTimesCircle,
+  FaCircle,
 } from "react-icons/fa";
 
 import paketData from "../data/paket.json";
+import paketDetailData from "../data/paketDetail.json";
 
 export default function PaketDetail() {
-  const { id } = useParams();
+  const { namaPaket } = useParams();
+  const decodedNama = decodeURIComponent(namaPaket || "");
 
-  const [paket, setPaket] = useState(null);
+  const semuaPaket = [
+    paketData.paketBaru,
+    ...paketData.paketUnggulan,
+    ...paketData.paketPopuler,
+    ...paketData.paketRekomendasi,
+  ];
 
-  useEffect(() => {
-    const selectedPaket = paketData.find(
-      (item) => item.id === Number(id)
-    );
+  const paketDasar =
+    semuaPaket.find((item) => item.nama === decodedNama) || paketData.paketBaru;
 
-    setPaket(selectedPaket);
-  }, [id]);
-
-  if (!paket) {
-    return (
-      <div className="p-6 text-gray-500">
-        Loading...
-      </div>
-    );
-  }
+  const detail =
+    paketDetailData[paketDasar.nama] || paketDetailData.default;
 
   return (
-    <div className="bg-[#f5f5f5] min-h-screen p-5">
+    <div className="min-h-[calc(100vh-76px)] bg-[#F4F5F7] px-8 py-7 text-[#202436]">
+      <div className="flex items-center justify-between mb-5">
+        <Link
+          to="/paket"
+          className="flex items-center gap-3 text-[14px] font-semibold text-[#596070] hover:text-[#70A9F8] transition"
+        >
+          <span className="w-[38px] h-[38px] rounded-[8px] bg-white flex items-center justify-center shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+            <FaArrowLeft />
+          </span>
+          Kembali ke Daftar Paket
+        </Link>
 
-      {/* TITLE */}
-      <div className="mb-6">
-
-        <h1 className="text-3xl font-bold text-gray-700">
-          Paket Detail
-        </h1>
-
-        <p className="text-gray-400">
-          Detail information about this travel package
-        </p>
-
+        <button className="h-[40px] px-6 rounded-[8px] bg-[#70A9F8] hover:bg-[#5D9AF2] text-white text-sm font-bold shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+          Edit Data
+        </button>
       </div>
 
-      {/* MAIN */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-        {/* LEFT CARD */}
-        <div className="bg-white rounded-3xl border border-gray-100 p-6 shadow-sm">
-
-          <div className="flex flex-col items-center">
-
-            {/* IMAGE */}
-            <div className="bg-orange-100 p-3 rounded-full">
-
-              <div className="w-36 h-36 rounded-full bg-gradient-to-br from-orange-400 to-yellow-300 flex items-center justify-center">
-
-                <FaPlaneDeparture className="text-white text-6xl" />
-
-              </div>
-
+      <div className="bg-white rounded-[16px] p-6 grid grid-cols-[1fr_360px] gap-6 shadow-sm hover:shadow-xl transition-all duration-300">
+        <section>
+          <div className="grid grid-cols-[1.1fr_1fr] gap-4 mb-6">
+            <div className="h-[405px] rounded-[14px] overflow-hidden shadow-sm group">
+              <img
+                src={detail.gambarUtama}
+                alt={paketDasar.nama}
+                className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+              />
             </div>
 
-            {/* TITLE */}
-            <h1 className="text-2xl font-bold text-gray-700 mt-5 text-center">
-              {paket.name}
-            </h1>
+            <div className="grid grid-rows-2 gap-4">
+              <div className="h-[195px] rounded-[14px] overflow-hidden shadow-sm group">
+                <img
+                  src={detail.galeri[0]}
+                  alt="Galeri Paket"
+                  className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                />
+              </div>
 
-            <p className="text-gray-400 text-sm mt-1">
-              {paket.location}
-            </p>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="h-[195px] rounded-[14px] overflow-hidden shadow-sm group">
+                  <img
+                    src={detail.galeri[1]}
+                    alt="Galeri Paket"
+                    className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                  />
+                </div>
 
-            {/* STATUS */}
-            <span
-              className={`px-4 py-2 rounded-full text-xs font-bold mt-4 ${
-                paket.status === "Active"
-                  ? "bg-green-100 text-green-500"
-                  : "bg-red-100 text-red-500"
-              }`}
-            >
-              {paket.status}
-            </span>
-
+                <div className="h-[195px] rounded-[14px] overflow-hidden shadow-sm group">
+                  <img
+                    src={detail.galeri[2]}
+                    alt="Galeri Paket"
+                    className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* BUTTON */}
-          <div className="grid grid-cols-2 gap-4 mt-8">
-
-            <button className="bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-2xl font-semibold transition hover:scale-105">
-              Edit
-            </button>
-
-            <button className="bg-red-500 hover:bg-red-600 text-white py-3 rounded-2xl font-semibold transition hover:scale-105">
-              Delete
-            </button>
-
-          </div>
-
-        </div>
-
-        {/* RIGHT DETAIL */}
-        <div className="lg:col-span-2 bg-white rounded-3xl border border-gray-100 p-6 shadow-sm relative overflow-hidden">
-
-          {/* BG EFFECT */}
-          <div className="absolute top-0 right-0 w-72 h-72 bg-orange-100 rounded-full blur-3xl opacity-20"></div>
-
-          <div className="relative z-10">
-
-            {/* HEADER */}
+          <div className="flex items-start justify-between mb-3">
             <div>
-
-              <span className="bg-orange-100 text-orange-500 px-4 py-2 rounded-full text-xs font-bold">
-                TRAVEL PACKAGE
-              </span>
-
-              <h1 className="text-3xl font-bold text-gray-700 mt-4">
-                {paket.name}
+              <h1 className="text-[30px] font-bold tracking-[-0.5px] mb-3">
+                {paketDasar.nama}
               </h1>
 
-              <p className="text-gray-400 mt-2">
-                Complete package information and destination details
-              </p>
+              <div className="flex items-center gap-5 text-[#8F96A3] text-[14px] font-semibold">
+                <span className="flex items-center gap-2">
+                  <FaMapMarkerAlt className="text-[#B9C0CA]" />
+                  {paketDasar.lokasi}
+                </span>
 
+                <span className="flex items-center gap-2">
+                  <FaCalendarAlt className="text-[#B9C0CA]" />
+                  {paketDasar.durasi || "5 Hari / 4 Malam"}
+                </span>
+
+                <span className="flex items-center gap-2">
+                  <FaUsers className="text-[#B9C0CA]" />
+                  {detail.peserta}
+                </span>
+              </div>
             </div>
 
-            {/* INFO */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-8">
-
-              {/* LOCATION */}
-              <div className="bg-gray-50 border border-gray-100 rounded-2xl p-5 hover:shadow-md transition">
-
-                <div className="flex items-center gap-4">
-
-                  <div className="bg-red-100 w-12 h-12 rounded-xl flex items-center justify-center">
-                    <FaMapMarkerAlt className="text-red-500" />
-                  </div>
-
-                  <div>
-
-                    <p className="text-sm text-gray-400">
-                      Location
-                    </p>
-
-                    <h1 className="font-bold text-gray-700 mt-1">
-                      {paket.location}
-                    </h1>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-              {/* PRICE */}
-              <div className="bg-gray-50 border border-gray-100 rounded-2xl p-5 hover:shadow-md transition">
-
-                <div className="flex items-center gap-4">
-
-                  <div className="bg-green-100 w-12 h-12 rounded-xl flex items-center justify-center">
-                    <FaMoneyBillWave className="text-green-500" />
-                  </div>
-
-                  <div>
-
-                    <p className="text-sm text-gray-400">
-                      Price
-                    </p>
-
-                    <h1 className="font-bold text-gray-700 mt-1">
-                      {paket.price}
-                    </h1>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-              {/* DURATION */}
-              <div className="bg-gray-50 border border-gray-100 rounded-2xl p-5 hover:shadow-md transition">
-
-                <div className="flex items-center gap-4">
-
-                  <div className="bg-blue-100 w-12 h-12 rounded-xl flex items-center justify-center">
-                    <FaClock className="text-blue-500" />
-                  </div>
-
-                  <div>
-
-                    <p className="text-sm text-gray-400">
-                      Duration
-                    </p>
-
-                    <h1 className="font-bold text-gray-700 mt-1">
-                      {paket.duration}
-                    </h1>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-              {/* STATUS */}
-              <div className="bg-gray-50 border border-gray-100 rounded-2xl p-5 hover:shadow-md transition">
-
-                <div className="flex items-center gap-4">
-
-                  <div className="bg-yellow-100 w-12 h-12 rounded-xl flex items-center justify-center">
-                    <FaCheckCircle className="text-yellow-500" />
-                  </div>
-
-                  <div>
-
-                    <p className="text-sm text-gray-400">
-                      Status
-                    </p>
-
-                    <h1 className="font-bold text-gray-700 mt-1">
-                      {paket.status}
-                    </h1>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-              {/* DESCRIPTION */}
-              <div className="bg-gray-50 border border-gray-100 rounded-2xl p-5 hover:shadow-md transition md:col-span-2">
-
-                <p className="text-sm text-gray-400 mb-2">
-                  Description
-                </p>
-
-                <p className="text-gray-600 leading-relaxed">
-                  Paket wisata {paket.name} menawarkan pengalaman
-                  perjalanan terbaik ke {paket.location} selama{" "}
-                  {paket.duration}. Nikmati perjalanan nyaman,
-                  destinasi menarik, hotel terbaik, dan pengalaman
-                  liburan yang menyenangkan bersama TravelGo.
-                </p>
-
-              </div>
-
+            <div className="text-right">
+              <h2 className="text-[28px] font-bold text-[#5A91D6]">
+                {paketDasar.harga}
+              </h2>
+              <p className="text-[13px] text-[#9AA0AA]">per orang</p>
             </div>
-
           </div>
 
-        </div>
+          <div className="mt-6 mb-6">
+            <p className="text-[13px] text-[#B0B3BB] font-bold mb-2">
+              Tentang
+            </p>
+            <p className="text-[14px] leading-6 text-[#596070] max-w-[900px]">
+              {detail.deskripsi}
+            </p>
+          </div>
 
+          <div className="mb-6">
+            <p className="text-[13px] text-[#B0B3BB] font-bold mb-2">
+              Jadwal Perjalanan
+            </p>
+
+            <div className="flex items-center gap-2 text-[14px] font-semibold text-[#596070]">
+              <FaCalendarAlt className="text-[#B9C0CA]" />
+              {detail.tanggal}
+            </div>
+          </div>
+
+          <div className="border-t border-[#E8EBF0] pt-6 grid grid-cols-[1fr_1fr_0.9fr] gap-6">
+            <div>
+              <h3 className="text-[13px] font-bold text-[#9AA0AA] mb-4">
+                TERMASUK
+              </h3>
+
+              <div className="space-y-4">
+                {detail.termasuk.slice(0, 4).map((item) => (
+                  <div key={item} className="flex items-start gap-3 group">
+                    <FaCheckCircle className="text-[#70A9F8] mt-1 shrink-0 group-hover:scale-125 transition" />
+                    <p className="text-[14px] leading-5 font-semibold text-[#596070]">
+                      {item}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-[13px] font-bold text-transparent mb-4">
+                TERMASUK
+              </h3>
+
+              <div className="space-y-4">
+                {detail.termasuk.slice(4).map((item) => (
+                  <div key={item} className="flex items-start gap-3 group">
+                    <FaCheckCircle className="text-[#70A9F8] mt-1 shrink-0 group-hover:scale-125 transition" />
+                    <p className="text-[14px] leading-5 font-semibold text-[#596070]">
+                      {item}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="border-l border-[#E8EBF0] pl-6">
+              <h3 className="text-[13px] font-bold text-[#9AA0AA] mb-4">
+                TIDAK TERMASUK
+              </h3>
+
+              <div className="space-y-4">
+                {detail.tidakTermasuk.map((item) => (
+                  <div key={item} className="flex items-start gap-3 group">
+                    <FaTimesCircle className="text-[#B9C0CA] mt-1 shrink-0 group-hover:text-[#F06C7A] group-hover:scale-125 transition" />
+                    <p className="text-[14px] leading-5 font-semibold text-[#596070]">
+                      {item}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <aside className="bg-[#F7F7F8] rounded-[14px] p-6 hover:shadow-lg transition-all duration-300">
+          <h2 className="text-[24px] font-bold text-[#8A8F9A] mb-7">
+            Rencana Perjalanan
+          </h2>
+
+          <div className="relative">
+            <div className="absolute left-[92px] top-3 bottom-4 w-[2px] bg-[#E1E4EA]"></div>
+
+            <div className="space-y-8">
+              {detail.rencanaPerjalanan.map((item) => (
+                <div
+                  key={item.hari}
+                  className="grid grid-cols-[70px_24px_1fr] gap-3 relative group"
+                >
+                  <div>
+                    <p className="text-[15px] font-bold text-[#202436]">
+                      {item.hari}
+                    </p>
+                    <p className="text-[13px] text-[#9AA0AA] mt-2">
+                      {item.tanggal}
+                    </p>
+                  </div>
+
+                  <div className="relative z-10 flex justify-center">
+                    <FaCircle className="text-[#D9DCE2] text-[17px] mt-1 group-hover:text-[#70A9F8] group-hover:scale-125 transition-all duration-300" />
+                  </div>
+
+                  <div className="hover:bg-white rounded-[10px] p-2 -mt-2 transition-all duration-300">
+                    <h3 className="text-[15px] font-bold text-[#596070] mb-2">
+                      {item.tempat}
+                    </h3>
+                    <p className="text-[14px] leading-6 text-[#8F96A3]">
+                      {item.aktivitas}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </aside>
       </div>
+
+      <footer className="flex items-center gap-8 mt-8 text-[#B0B3BB] text-sm">
+        <span>Copyright © 2024 TravelGo</span>
+        <span>Privacy Policy</span>
+        <span>Term and conditions</span>
+        <span>Contact</span>
+      </footer>
     </div>
   );
 }

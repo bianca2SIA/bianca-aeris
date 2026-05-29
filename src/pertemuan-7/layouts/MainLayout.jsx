@@ -1,23 +1,16 @@
-import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 
 export default function MainLayout() {
-  const [NavOpen, IsNavOpen] = useState(true);
-
   return (
-    <div className="bg-gray-100 min-h-screen">
-      {/* SIDEBAR */}
+    <div className="min-h-screen bg-[#F4F5F7] overflow-x-hidden">
       <Sidebar />
 
-      {/* CONTENT AREA */}
-      <div className="transition-all duration-300 ml-64">
-        {/* HEADER */}
-        <Header NavOpen={NavOpen} IsNavOpen={IsNavOpen} />
+      <div className="ml-[230px] min-h-screen">
+        <Header />
 
-        {/* PAGE CONTENT */}
-        <main className="p-6">
+        <main className="pt-[76px] min-h-screen bg-[#F4F5F7] p-0 m-0">
           <Outlet />
         </main>
       </div>

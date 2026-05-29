@@ -1,0 +1,26 @@
+[
+  {
+    "persen": "35%",
+    "paket": "Paket Bali Beach Escape",
+    "jumlah": "650 Customer",
+    "warna": "bg-[#5A91D6]"
+  },
+  {
+    "persen": "28%",
+    "paket": "Paket Bromo Sunrise Trip",
+    "jumlah": "520 Customer",
+    "warna": "bg-[#70A9F8]"
+  },
+  {
+    "persen": "22%",
+    "paket": "Paket Lombok Eksotis",
+    "jumlah": "408 Customer",
+    "warna": "bg-[#B9D8FF]"
+  },
+  {
+    "persen": "15%",
+    "paket": "Paket Jogja Heritage",
+    "jumlah": "278 Customer",
+    "warna": "bg-[#E5F1FF]"
+  }
+]

@@ -1,0 +1,226 @@
+{
+  "Paket Bali Beach Escape": {
+    "peserta": "20 peserta",
+    "tanggal": "5 Agustus 2028 — 9 Agustus 2028",
+    "deskripsi": "Nikmati pengalaman liburan santai di Bali dengan pantai indah, budaya lokal, hotel nyaman, dan aktivitas wisata menarik. Paket ini cocok untuk keluarga, pasangan, maupun liburan bersama teman.",
+    "gambarUtama": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=80",
+    "galeri": [
+      "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80",
+      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=500&q=80"
+    ],
+    "termasuk": [
+      "Hotel dekat area wisata pantai",
+      "Sarapan setiap hari",
+      "Transportasi lokal selama trip",
+      "Tiket masuk destinasi wisata",
+      "Guide lokal",
+      "Dokumentasi perjalanan",
+      "Antar jemput bandara",
+      "Asuransi perjalanan"
+    ],
+    "tidakTermasuk": [
+      "Tiket pesawat dari kota asal",
+      "Pengeluaran pribadi customer",
+      "Upgrade kamar pribadi",
+      "Aktivitas tambahan di luar jadwal"
+    ],
+    "rencanaPerjalanan": [
+      {
+        "hari": "Hari 1",
+        "tanggal": "5 Agu 28",
+        "tempat": "Kedatangan di Bali",
+        "aktivitas": "Penjemputan di bandara, check-in hotel, dan briefing singkat perjalanan."
+      },
+      {
+        "hari": "Hari 2",
+        "tanggal": "6 Agu 28",
+        "tempat": "Pantai Pandawa dan GWK",
+        "aktivitas": "Mengunjungi Pantai Pandawa, Garuda Wisnu Kencana, dan menikmati makan malam."
+      },
+      {
+        "hari": "Hari 3",
+        "tanggal": "7 Agu 28",
+        "tempat": "Tanah Lot",
+        "aktivitas": "Wisata budaya ke Tanah Lot dan menikmati sunset."
+      },
+      {
+        "hari": "Hari 4",
+        "tanggal": "8 Agu 28",
+        "tempat": "Jimbaran",
+        "aktivitas": "Waktu bebas, belanja oleh-oleh, dan dinner di Jimbaran."
+      },
+      {
+        "hari": "Hari 5",
+        "tanggal": "9 Agu 28",
+        "tempat": "Kepulangan",
+        "aktivitas": "Check-out hotel dan transfer ke bandara."
+      }
+    ]
+  },
+  "Paket Bromo Sunrise Trip": {
+    "peserta": "15 peserta",
+    "tanggal": "10 Agustus 2028 — 12 Agustus 2028",
+    "deskripsi": "Paket wisata Bromo untuk menikmati sunrise, Kawah Bromo, Pasir Berbisik, dan Bukit Teletubbies. Cocok untuk customer yang menyukai wisata alam dan fotografi.",
+    "gambarUtama": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=80",
+    "galeri": [
+      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=500&q=80",
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=500&q=80"
+    ],
+    "termasuk": [
+      "Penginapan dekat kawasan Bromo",
+      "Jeep Bromo",
+      "Tiket masuk wisata",
+      "Guide lokal",
+      "Sarapan dan makan malam",
+      "Transportasi lokal",
+      "Dokumentasi perjalanan",
+      "Asuransi perjalanan"
+    ],
+    "tidakTermasuk": [
+      "Tiket pesawat atau kereta",
+      "Pengeluaran pribadi",
+      "Sewa jaket tambahan",
+      "Aktivitas di luar itinerary"
+    ],
+    "rencanaPerjalanan": [
+      {
+        "hari": "Hari 1",
+        "tanggal": "10 Agu 28",
+        "tempat": "Kedatangan di Malang",
+        "aktivitas": "Penjemputan, check-in penginapan, dan persiapan trip Bromo."
+      },
+      {
+        "hari": "Hari 2",
+        "tanggal": "11 Agu 28",
+        "tempat": "Sunrise Bromo",
+        "aktivitas": "Melihat sunrise dari Penanjakan, mengunjungi Kawah Bromo dan Pasir Berbisik."
+      },
+      {
+        "hari": "Hari 3",
+        "tanggal": "12 Agu 28",
+        "tempat": "City Tour Malang",
+        "aktivitas": "City tour singkat, belanja oleh-oleh, lalu transfer pulang."
+      }
+    ]
+  },
+  "Paket Labuan Bajo Sailing Trip": {
+    "peserta": "18 peserta",
+    "tanggal": "5 Agustus 2028 — 9 Agustus 2028",
+    "deskripsi": "Paket sailing trip Labuan Bajo untuk menjelajahi Pulau Padar, Pink Beach, Pulau Komodo, dan spot snorkeling terbaik. Cocok untuk customer yang ingin menikmati wisata alam dan laut.",
+    "gambarUtama": "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=900&q=80",
+    "galeri": [
+      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80",
+      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=500&q=80"
+    ],
+    "termasuk": [
+      "Hotel dan kapal wisata",
+      "Transportasi lokal",
+      "Tiket masuk destinasi",
+      "Makan sesuai jadwal",
+      "Guide lokal",
+      "Dokumentasi perjalanan",
+      "Snorkeling basic equipment",
+      "Asuransi perjalanan"
+    ],
+    "tidakTermasuk": [
+      "Tiket pesawat dari kota asal",
+      "Pengeluaran pribadi",
+      "Biaya tambahan di luar itinerary",
+      "Upgrade hotel atau kamar pribadi"
+    ],
+    "rencanaPerjalanan": [
+      {
+        "hari": "Hari 1",
+        "tanggal": "5 Agu 28",
+        "tempat": "Kedatangan di Labuan Bajo",
+        "aktivitas": "Penjemputan bandara, check-in, briefing perjalanan, dan waktu bebas."
+      },
+      {
+        "hari": "Hari 2",
+        "tanggal": "6 Agu 28",
+        "tempat": "Pulau Padar",
+        "aktivitas": "Trekking ringan, foto panorama, dan menikmati sunrise."
+      },
+      {
+        "hari": "Hari 3",
+        "tanggal": "7 Agu 28",
+        "tempat": "Pink Beach dan Pulau Komodo",
+        "aktivitas": "Snorkeling, melihat Komodo bersama ranger, dan makan siang di kapal."
+      },
+      {
+        "hari": "Hari 4",
+        "tanggal": "8 Agu 28",
+        "tempat": "Taka Makassar dan Manta Point",
+        "aktivitas": "Island hopping, snorkeling, dan menikmati sunset."
+      },
+      {
+        "hari": "Hari 5",
+        "tanggal": "9 Agu 28",
+        "tempat": "Kepulangan",
+        "aktivitas": "Check-out, belanja oleh-oleh, dan transfer ke bandara."
+      }
+    ]
+  },
+  "default": {
+    "peserta": "15 peserta",
+    "tanggal": "5 Agustus 2028 — 9 Agustus 2028",
+    "deskripsi": "Paket wisata ini dirancang untuk membantu customer menikmati perjalanan yang nyaman, terjadwal, dan sesuai kebutuhan bersama TravelGo.",
+    "gambarUtama": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=80",
+    "galeri": [
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=500&q=80",
+      "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=500&q=80"
+    ],
+    "termasuk": [
+      "Akomodasi sesuai paket",
+      "Transportasi lokal",
+      "Tiket destinasi wisata",
+      "Guide lokal",
+      "Makan sesuai jadwal",
+      "Dokumentasi perjalanan",
+      "Layanan customer service",
+      "Asuransi perjalanan"
+    ],
+    "tidakTermasuk": [
+      "Tiket dari kota asal",
+      "Pengeluaran pribadi",
+      "Upgrade fasilitas pribadi",
+      "Aktivitas tambahan di luar jadwal"
+    ],
+    "rencanaPerjalanan": [
+      {
+        "hari": "Hari 1",
+        "tanggal": "5 Agu 28",
+        "tempat": "Kedatangan",
+        "aktivitas": "Penjemputan, check-in, dan briefing perjalanan."
+      },
+      {
+        "hari": "Hari 2",
+        "tanggal": "6 Agu 28",
+        "tempat": "Wisata Utama",
+        "aktivitas": "Mengunjungi destinasi utama sesuai paket."
+      },
+      {
+        "hari": "Hari 3",
+        "tanggal": "7 Agu 28",
+        "tempat": "Wisata Tambahan",
+        "aktivitas": "Aktivitas wisata tambahan dan waktu bebas."
+      },
+      {
+        "hari": "Hari 4",
+        "tanggal": "8 Agu 28",
+        "tempat": "Belanja Oleh-oleh",
+        "aktivitas": "Belanja oleh-oleh dan persiapan kepulangan."
+      },
+      {
+        "hari": "Hari 5",
+        "tanggal": "9 Agu 28",
+        "tempat": "Kepulangan",
+        "aktivitas": "Check-out dan transfer pulang."
+      }
+    ]
+  }
+}

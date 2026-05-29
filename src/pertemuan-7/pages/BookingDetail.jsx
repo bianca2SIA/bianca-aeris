@@ -1,270 +1,366 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 import {
+  FaArrowLeft,
   FaUser,
   FaSuitcaseRolling,
   FaCalendarAlt,
-  FaMoneyBillWave,
   FaCheckCircle,
+  FaTimesCircle,
+  FaCircle,
+  FaPhoneAlt,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaCreditCard,
 } from "react-icons/fa";
 
 import bookingsData from "../data/booking.json";
 
 export default function BookingDetail() {
+  const { kodeBooking } = useParams();
 
-  const { id } = useParams();
+  const booking =
+    bookingsData.find((item) => item.kode === kodeBooking) || bookingsData[0];
 
-  const [booking, setBooking] = useState(null);
+  const getStatusStyle = (status) => {
+    if (status === "Dikonfirmasi") return "bg-[#EAF4FF] text-[#5A91D6]";
+    if (status === "Menunggu") return "bg-[#FFF4D8] text-[#C49A35]";
+    return "bg-[#FFE5E8] text-[#F06C7A]";
+  };
 
-  useEffect(() => {
+  const customerEmail = `${booking.nama
+    .toLowerCase()
+    .replaceAll(" ", "")}@gmail.com`;
 
-    const selectedBooking = bookingsData.find(
-      (item) => item.id === Number(id)
-    );
+  const customerDetail = {
+    hp: "081234567890",
+    email: customerEmail,
+    alamat: "Pekanbaru, Riau",
+    metode: "Transfer Bank",
+    jumlahPeserta: "2 orang",
+    tipeBooking: "Paket Travel",
+  };
 
-    setBooking(selectedBooking);
+  const timelineBooking = [
+    {
+      tahap: "Tahap 1",
+      tanggal: "12 Jun",
+      judul: "Booking Dibuat",
+      deskripsi:
+        "Customer memilih paket travel dan mengisi data pemesanan melalui website TravelGo.",
+    },
+    {
+      tahap: "Tahap 2",
+      tanggal: "12 Jun",
+      judul: "Konfirmasi Admin",
+      deskripsi:
+        "Admin mengecek ketersediaan paket, jadwal perjalanan, dan data customer.",
+    },
+    {
+      tahap: "Tahap 3",
+      tanggal: "13 Jun",
+      judul: "Pembayaran",
+      deskripsi:
+        "Customer melakukan pembayaran sesuai metode pembayaran yang dipilih.",
+    },
+    {
+      tahap: "Tahap 4",
+      tanggal: "14 Jun",
+      judul: "Tiket dan Jadwal Dikirim",
+      deskripsi:
+        "Admin mengirim detail jadwal perjalanan, fasilitas, dan informasi keberangkatan.",
+    },
+    {
+      tahap: "Tahap 5",
+      tanggal: booking.tanggal,
+      judul: "Perjalanan Berlangsung",
+      deskripsi:
+        "Customer mengikuti perjalanan sesuai paket yang sudah dibooking.",
+    },
+  ];
 
-  }, [id]);
+  const informasiBooking = [
+    "Data customer sudah tercatat di sistem CRM",
+    "Paket travel sudah dipilih customer",
+    "Jadwal perjalanan sudah ditentukan",
+    "Metode pembayaran sudah tersedia",
+    "Customer bisa dihubungi melalui WhatsApp/email",
+    "Status booking dapat dipantau admin",
+  ];
 
-  if (!booking) {
-    return (
-      <div className="p-6 text-gray-500">
-        Loading...
-      </div>
-    );
-  }
+  const catatanAdmin = [
+    "Pastikan customer menerima jadwal perjalanan",
+    "Cek ulang status pembayaran customer",
+    "Konfirmasi jumlah peserta sebelum keberangkatan",
+    "Hubungi customer jika ada perubahan jadwal",
+  ];
 
   return (
-    <div className="bg-[#f5f5f5] min-h-screen p-6">
+    <div className="min-h-[calc(100vh-76px)] bg-[#F4F5F7] px-8 py-7 text-[#202436]">
+      <div className="flex items-center justify-between mb-5">
+        <Link
+          to="/booking"
+          className="flex items-center gap-3 text-[14px] font-semibold text-[#596070] hover:text-[#70A9F8] transition"
+        >
+          <span className="w-[38px] h-[38px] rounded-[8px] bg-white flex items-center justify-center shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+            <FaArrowLeft />
+          </span>
+          Kembali ke Daftar Booking
+        </Link>
 
-      {/* TITLE */}
-      <div className="mb-6">
-
-        <h1 className="text-3xl font-bold text-gray-700">
-          Booking Detail
-        </h1>
-
-        <p className="text-gray-400">
-          Detail informasi booking customer
-        </p>
-
+        <button className="h-[40px] px-6 rounded-[8px] bg-[#70A9F8] hover:bg-[#5D9AF2] text-white text-sm font-bold shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+          Edit Data
+        </button>
       </div>
 
-      {/* MAIN */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="bg-white rounded-[16px] p-6 grid grid-cols-[1fr_360px] gap-6 shadow-sm hover:shadow-xl transition-all duration-300">
+        <section>
+          <div className="grid grid-cols-[1.1fr_1fr] gap-4 mb-6">
+            <div className="h-[405px] rounded-[14px] overflow-hidden shadow-sm group bg-[#EAF4FF] relative">
+              <img
+                src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=80"
+                alt={booking.paket}
+                className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+              />
 
-        {/* LEFT CARD */}
-        <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm">
-
-          <div className="flex flex-col items-center">
-
-            {/* ICON */}
-            <div className="w-36 h-36 rounded-full bg-gradient-to-br from-[#C49C74] to-orange-300 flex items-center justify-center shadow-lg">
-
-              <FaSuitcaseRolling className="text-white text-6xl" />
-
+              <div className="absolute left-6 bottom-6 bg-white/90 backdrop-blur rounded-[14px] p-4 shadow-sm">
+                <p className="text-[13px] text-[#9AA0AA] font-semibold">
+                  Kode Booking
+                </p>
+                <h2 className="text-[25px] font-bold text-[#202436]">
+                  {booking.kode}
+                </h2>
+              </div>
             </div>
 
-            {/* CUSTOMER */}
-            <h1 className="text-2xl font-bold text-gray-700 mt-5 text-center">
-              {booking.customer}
-            </h1>
+            <div className="grid grid-rows-2 gap-4">
+              <div className="bg-[#F7F7F8] rounded-[14px] p-5 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-[50px] h-[50px] rounded-[12px] bg-[#EAF4FF] flex items-center justify-center text-[#70A9F8]">
+                    <FaUser />
+                  </div>
 
-            <p className="text-gray-400 mt-1">
-              Customer Booking
-            </p>
+                  <div>
+                    <p className="text-[13px] text-[#9AA0AA] font-semibold">
+                      Nama Customer
+                    </p>
+                    <h3 className="text-[20px] font-bold">{booking.nama}</h3>
+                  </div>
+                </div>
 
-            {/* STATUS */}
-            <span
-              className={`px-4 py-2 rounded-full text-xs font-bold mt-5 ${
-                booking.status === "Confirmed"
-                  ? "bg-green-100 text-green-500"
-                  : booking.status === "Pending"
-                  ? "bg-yellow-100 text-yellow-500"
-                  : "bg-red-100 text-red-500"
-              }`}
-            >
-              {booking.status}
-            </span>
+                <div className="grid grid-cols-2 gap-3 text-[13px] text-[#596070] font-semibold">
+                  <p className="flex items-center gap-2">
+                    <FaPhoneAlt className="text-[#B9C0CA]" />
+                    {customerDetail.hp}
+                  </p>
 
+                  <p className="flex items-center gap-2">
+                    <FaEnvelope className="text-[#B9C0CA]" />
+                    {customerDetail.email}
+                  </p>
+
+                  <p className="flex items-center gap-2 col-span-2">
+                    <FaMapMarkerAlt className="text-[#B9C0CA]" />
+                    {customerDetail.alamat}
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-[#F7F7F8] rounded-[14px] p-5 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                  <div className="w-[44px] h-[44px] rounded-[10px] bg-[#EAF4FF] flex items-center justify-center text-[#70A9F8] mb-4">
+                    <FaCalendarAlt />
+                  </div>
+                  <p className="text-[13px] text-[#9AA0AA] font-semibold">
+                    Tanggal Trip
+                  </p>
+                  <h3 className="text-[16px] font-bold mt-1">
+                    {booking.tanggal}
+                  </h3>
+                </div>
+
+                <div className="bg-[#F7F7F8] rounded-[14px] p-5 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                  <div className="w-[44px] h-[44px] rounded-[10px] bg-[#EAF4FF] flex items-center justify-center text-[#70A9F8] mb-4">
+                    <FaCreditCard />
+                  </div>
+                  <p className="text-[13px] text-[#9AA0AA] font-semibold">
+                    Pembayaran
+                  </p>
+                  <h3 className="text-[16px] font-bold mt-1">
+                    {customerDetail.metode}
+                  </h3>
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* BUTTON */}
-          <div className="grid grid-cols-2 gap-4 mt-8">
-
-            <button className="bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-2xl font-semibold transition hover:scale-105">
-              Edit
-            </button>
-
-            <button className="bg-red-500 hover:bg-red-600 text-white py-3 rounded-2xl font-semibold transition hover:scale-105">
-              Delete
-            </button>
-
-          </div>
-
-        </div>
-
-        {/* RIGHT DETAIL */}
-        <div className="lg:col-span-2 bg-white rounded-3xl p-6 border border-gray-100 shadow-sm relative overflow-hidden">
-
-          {/* EFFECT */}
-          <div className="absolute top-0 right-0 w-72 h-72 bg-orange-100 rounded-full blur-3xl opacity-20"></div>
-
-          <div className="relative z-10">
-
-            {/* HEADER */}
+          <div className="flex items-start justify-between mb-3">
             <div>
-
-              <span className="bg-orange-100 text-orange-500 px-4 py-2 rounded-full text-xs font-bold">
-                BOOKING INFORMATION
-              </span>
-
-              <h1 className="text-3xl font-bold text-gray-700 mt-4">
-                {booking.package}
+              <h1 className="text-[30px] font-bold tracking-[-0.5px] mb-3">
+                {booking.paket}
               </h1>
 
-              <p className="text-gray-400 mt-2">
-                Complete booking information from customer
-              </p>
+              <div className="flex items-center gap-5 text-[#8F96A3] text-[14px] font-semibold">
+                <span className="flex items-center gap-2">
+                  <FaSuitcaseRolling className="text-[#B9C0CA]" />
+                  {customerDetail.tipeBooking}
+                </span>
 
+                <span className="flex items-center gap-2">
+                  <FaCalendarAlt className="text-[#B9C0CA]" />
+                  {booking.durasi}
+                </span>
+
+                <span className="flex items-center gap-2">
+                  <FaUser className="text-[#B9C0CA]" />
+                  {customerDetail.jumlahPeserta}
+                </span>
+              </div>
             </div>
 
-            {/* DETAIL */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-8">
+            <div className="text-right">
+              <h2 className="text-[28px] font-bold text-[#5A91D6]">
+                {booking.harga}
+              </h2>
 
-              {/* CUSTOMER */}
-              <div className="bg-gray-50 border border-gray-100 rounded-2xl p-5 hover:shadow-md transition">
+              <p className="text-[13px] text-[#9AA0AA]">total pembayaran</p>
 
-                <div className="flex items-center gap-4">
-
-                  <div className="bg-blue-100 w-12 h-12 rounded-xl flex items-center justify-center">
-                    <FaUser className="text-blue-500" />
-                  </div>
-
-                  <div>
-
-                    <p className="text-sm text-gray-400">
-                      Customer
-                    </p>
-
-                    <h1 className="font-bold text-gray-700 mt-1">
-                      {booking.customer}
-                    </h1>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-              {/* PACKAGE */}
-              <div className="bg-gray-50 border border-gray-100 rounded-2xl p-5 hover:shadow-md transition">
-
-                <div className="flex items-center gap-4">
-
-                  <div className="bg-orange-100 w-12 h-12 rounded-xl flex items-center justify-center">
-                    <FaSuitcaseRolling className="text-orange-500" />
-                  </div>
-
-                  <div>
-
-                    <p className="text-sm text-gray-400">
-                      Package
-                    </p>
-
-                    <h1 className="font-bold text-gray-700 mt-1">
-                      {booking.package}
-                    </h1>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-              {/* DATE */}
-              <div className="bg-gray-50 border border-gray-100 rounded-2xl p-5 hover:shadow-md transition">
-
-                <div className="flex items-center gap-4">
-
-                  <div className="bg-purple-100 w-12 h-12 rounded-xl flex items-center justify-center">
-                    <FaCalendarAlt className="text-purple-500" />
-                  </div>
-
-                  <div>
-
-                    <p className="text-sm text-gray-400">
-                      Booking Date
-                    </p>
-
-                    <h1 className="font-bold text-gray-700 mt-1">
-                      {booking.date}
-                    </h1>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-              {/* TOTAL */}
-              <div className="bg-gray-50 border border-gray-100 rounded-2xl p-5 hover:shadow-md transition">
-
-                <div className="flex items-center gap-4">
-
-                  <div className="bg-green-100 w-12 h-12 rounded-xl flex items-center justify-center">
-                    <FaMoneyBillWave className="text-green-500" />
-                  </div>
-
-                  <div>
-
-                    <p className="text-sm text-gray-400">
-                      Total Payment
-                    </p>
-
-                    <h1 className="font-bold text-gray-700 mt-1">
-                      {booking.total}
-                    </h1>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-              {/* STATUS */}
-              <div className="bg-gray-50 border border-gray-100 rounded-2xl p-5 hover:shadow-md transition md:col-span-2">
-
-                <div className="flex items-center gap-4">
-
-                  <div className="bg-yellow-100 w-12 h-12 rounded-xl flex items-center justify-center">
-                    <FaCheckCircle className="text-yellow-500" />
-                  </div>
-
-                  <div>
-
-                    <p className="text-sm text-gray-400">
-                      Booking Status
-                    </p>
-
-                    <h1 className="font-bold text-gray-700 mt-1">
-                      {booking.status}
-                    </h1>
-
-                  </div>
-
-                </div>
-
-              </div>
-
+              <span
+                className={`inline-block mt-3 px-4 py-2 rounded-[8px] text-[12px] font-bold ${getStatusStyle(
+                  booking.status
+                )}`}
+              >
+                {booking.status}
+              </span>
             </div>
-
           </div>
 
-        </div>
+          <div className="mt-6 mb-6">
+            <p className="text-[13px] text-[#B0B3BB] font-bold mb-2">
+              Detail Booking
+            </p>
+            <p className="text-[14px] leading-6 text-[#596070] max-w-[900px]">
+              Booking ini merupakan pemesanan paket travel atas nama{" "}
+              <span className="font-bold">{booking.nama}</span> untuk paket{" "}
+              <span className="font-bold">{booking.paket}</span>. Data ini
+              digunakan admin TravelGo untuk memantau status pemesanan,
+              pembayaran, jadwal perjalanan, dan kebutuhan follow-up customer.
+            </p>
+          </div>
 
+          <div className="mb-6">
+            <p className="text-[13px] text-[#B0B3BB] font-bold mb-2">
+              Jadwal Booking
+            </p>
+
+            <div className="flex items-center gap-2 text-[14px] font-semibold text-[#596070]">
+              <FaCalendarAlt className="text-[#B9C0CA]" />
+              {booking.tanggal}
+            </div>
+          </div>
+
+          <div className="border-t border-[#E8EBF0] pt-6 grid grid-cols-[1fr_1fr_0.9fr] gap-6">
+            <div>
+              <h3 className="text-[13px] font-bold text-[#9AA0AA] mb-4">
+                INFORMASI BOOKING
+              </h3>
+
+              <div className="space-y-4">
+                {informasiBooking.slice(0, 3).map((item) => (
+                  <div key={item} className="flex items-start gap-3 group">
+                    <FaCheckCircle className="text-[#70A9F8] mt-1 shrink-0 group-hover:scale-125 transition" />
+                    <p className="text-[14px] leading-5 font-semibold text-[#596070]">
+                      {item}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-[13px] font-bold text-transparent mb-4">
+                INFORMASI
+              </h3>
+
+              <div className="space-y-4">
+                {informasiBooking.slice(3).map((item) => (
+                  <div key={item} className="flex items-start gap-3 group">
+                    <FaCheckCircle className="text-[#70A9F8] mt-1 shrink-0 group-hover:scale-125 transition" />
+                    <p className="text-[14px] leading-5 font-semibold text-[#596070]">
+                      {item}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="border-l border-[#E8EBF0] pl-6">
+              <h3 className="text-[13px] font-bold text-[#9AA0AA] mb-4">
+                CATATAN ADMIN
+              </h3>
+
+              <div className="space-y-4">
+                {catatanAdmin.map((item) => (
+                  <div key={item} className="flex items-start gap-3 group">
+                    <FaTimesCircle className="text-[#B9C0CA] mt-1 shrink-0 group-hover:text-[#F06C7A] group-hover:scale-125 transition" />
+                    <p className="text-[14px] leading-5 font-semibold text-[#596070]">
+                      {item}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <aside className="bg-[#F7F7F8] rounded-[14px] p-6 hover:shadow-lg transition-all duration-300">
+          <h2 className="text-[24px] font-bold text-[#8A8F9A] mb-7">
+            Alur Booking
+          </h2>
+
+          <div className="relative">
+            <div className="absolute left-[92px] top-3 bottom-4 w-[2px] bg-[#E1E4EA]"></div>
+
+            <div className="space-y-8">
+              {timelineBooking.map((item) => (
+                <div
+                  key={item.tahap}
+                  className="grid grid-cols-[70px_24px_1fr] gap-3 relative group"
+                >
+                  <div>
+                    <p className="text-[15px] font-bold text-[#202436]">
+                      {item.tahap}
+                    </p>
+                    <p className="text-[13px] text-[#9AA0AA] mt-2">
+                      {item.tanggal}
+                    </p>
+                  </div>
+
+                  <div className="relative z-10 flex justify-center">
+                    <FaCircle className="text-[#D9DCE2] text-[17px] mt-1 group-hover:text-[#70A9F8] group-hover:scale-125 transition-all duration-300" />
+                  </div>
+
+                  <div className="hover:bg-white rounded-[10px] p-2 -mt-2 transition-all duration-300">
+                    <h3 className="text-[15px] font-bold text-[#596070] mb-2">
+                      {item.judul}
+                    </h3>
+                    <p className="text-[14px] leading-6 text-[#8F96A3]">
+                      {item.deskripsi}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </aside>
       </div>
+
+      <footer className="flex items-center gap-8 mt-8 text-[#B0B3BB] text-sm">
+        <span>Copyright © 2024 TravelGo</span>
+        <span>Privacy Policy</span>
+        <span>Term and conditions</span>
+        <span>Contact</span>
+      </footer>
     </div>
   );
 }

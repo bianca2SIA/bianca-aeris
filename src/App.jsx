@@ -5,14 +5,15 @@ import MainLayout from "./pertemuan-7/layouts/MainLayout";
 import AuthLayout from "./pertemuan-7/layouts/AuthLayout";
 import Loading from "./pertemuan-7/components/Loading";
 
-// Lazy Pages
 const Dashboard = React.lazy(() => import("./pertemuan-7/pages/Dashboard"));
 const Paket = React.lazy(() => import("./pertemuan-7/pages/Paket"));
+const PaketDetail = React.lazy(() => import("./pertemuan-7/pages/PaketDetail"));
 const Booking = React.lazy(() => import("./pertemuan-7/pages/Booking"));
+const BookingDetail = React.lazy(() =>
+  import("./pertemuan-7/pages/BookingDetail")
+);
 const User = React.lazy(() => import("./pertemuan-7/pages/User"));
 const Login = React.lazy(() => import("./pertemuan-7/pages/auth/Login"));
-const PaketDetail = React.lazy(() => import("./pertemuan-7/pages/PaketDetail"));
-const BookingDetail = React.lazy(() => import("./pertemuan-7/pages/BookingDetail"));
 
 function App() {
   return (
@@ -24,11 +25,14 @@ function App() {
 
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
+
           <Route path="paket" element={<Paket />} />
+          <Route path="paket/:namaPaket" element={<PaketDetail />} />
+
           <Route path="booking" element={<Booking />} />
+          <Route path="booking/:kodeBooking" element={<BookingDetail />} />
+
           <Route path="user" element={<User />} />
-          <Route path="paket/:id" element={<PaketDetail />} />
-          <Route path="booking/:id" element={<BookingDetail />} />
         </Route>
       </Routes>
     </Suspense>

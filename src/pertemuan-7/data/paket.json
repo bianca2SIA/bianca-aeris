@@ -1,164 +1,294 @@
-
-[
-  {
-    "id": 1,
-    "name": "Bali Tour 3D2N",
-    "location": "Bali",
-    "price": "Rp 2.500.000",
-    "duration": "3 Hari",
-    "status": "Active"
+{
+  "paketBaru": {
+    "nama": "Paket Bali Beach Escape",
+    "lokasi": "Bali, Indonesia",
+    "harga": "Rp 4.500.000",
+    "durasi": "5 Hari / 4 Malam",
+    "deskripsi": "Paket wisata untuk customer yang ingin menikmati liburan santai di Bali dengan pantai, budaya, hotel nyaman, dan aktivitas menarik. Cocok untuk keluarga, pasangan, maupun liburan bersama teman.",
+    "gambar": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=80",
+    "preview": [
+      "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=200&q=80",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=200&q=80",
+      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=200&q=80"
+    ]
   },
-  {
-    "id": 2,
-    "name": "Lombok Trip",
-    "location": "Lombok",
-    "price": "Rp 3.200.000",
-    "duration": "4 Hari",
-    "status": "Active"
-  },
-  {
-    "id": 3,
-    "name": "Raja Ampat Explore",
-    "location": "Papua",
-    "price": "Rp 7.800.000",
-    "duration": "5 Hari",
-    "status": "Inactive"
-  },
-  {
-    "id": 4,
-    "name": "Bandung Holiday",
-    "location": "Bandung",
-    "price": "Rp 1.800.000",
-    "duration": "2 Hari",
-    "status": "Active"
-  },
-  {
-    "id": 5,
-    "name": "Yogyakarta Trip",
-    "location": "Jogja",
-    "price": "Rp 2.200.000",
-    "duration": "3 Hari",
-    "status": "Active"
-  },
-  {
-    "id": 6,
-    "name": "Bromo Sunrise",
-    "location": "Malang",
-    "price": "Rp 1.500.000",
-    "duration": "2 Hari",
-    "status": "Active"
-  },
-  {
-    "id": 7,
-    "name": "Labuan Bajo",
-    "location": "NTT",
-    "price": "Rp 5.200.000",
-    "duration": "4 Hari",
-    "status": "Active"
-  },
-  {
-    "id": 8,
-    "name": "Malang Trip",
-    "location": "Malang",
-    "price": "Rp 1.900.000",
-    "duration": "3 Hari",
-    "status": "Inactive"
-  },
-  {
-    "id": 9,
-    "name": "Jakarta City Tour",
-    "location": "Jakarta",
-    "price": "Rp 1.200.000",
-    "duration": "1 Hari",
-    "status": "Active"
-  },
-  {
-    "id": 10,
-    "name": "Singapore Tour",
-    "location": "Singapore",
-    "price": "Rp 6.500.000",
-    "duration": "3 Hari",
-    "status": "Active"
-  },
-  {
-    "id": 11,
-    "name": "Thailand Trip",
-    "location": "Thailand",
-    "price": "Rp 5.800.000",
-    "duration": "4 Hari",
-    "status": "Active"
-  },
-  {
-    "id": 12,
-    "name": "Malaysia Tour",
-    "location": "Malaysia",
-    "price": "Rp 4.300.000",
-    "duration": "3 Hari",
-    "status": "Inactive"
-  },
-  {
-    "id": 13,
-    "name": "Bali Luxury",
-    "location": "Bali",
-    "price": "Rp 8.200.000",
-    "duration": "5 Hari",
-    "status": "Active"
-  },
-  {
-    "id": 14,
-    "name": "Medan Trip",
-    "location": "Medan",
-    "price": "Rp 2.700.000",
-    "duration": "3 Hari",
-    "status": "Inactive"
-  },
-  {
-    "id": 15,
-    "name": "Padang Tour",
-    "location": "Padang",
-    "price": "Rp 3.100.000",
-    "duration": "3 Hari",
-    "status": "Active"
-  },
-  {
-    "id": 16,
-    "name": "Makassar Trip",
-    "location": "Makassar",
-    "price": "Rp 3.600.000",
-    "duration": "4 Hari",
-    "status": "Active"
-  },
-  {
-    "id": 17,
-    "name": "Bandung Staycation",
-    "location": "Bandung",
-    "price": "Rp 1.400.000",
-    "duration": "2 Hari",
-    "status": "Active"
-  },
-  {
-    "id": 18,
-    "name": "Jogja Adventure",
-    "location": "Jogja",
-    "price": "Rp 2.900.000",
-    "duration": "3 Hari",
-    "status": "Inactive"
-  },
-  {
-    "id": 19,
-    "name": "Bali Honeymoon",
-    "location": "Bali",
-    "price": "Rp 9.500.000",
-    "duration": "5 Hari",
-    "status": "Active"
-  },
-  {
-    "id": 20,
-    "name": "Lombok Explore",
-    "location": "Lombok",
-    "price": "Rp 3.800.000",
-    "duration": "4 Hari",
-    "status": "Active"
-  }
-]
-
+  "fasilitasUtama": [
+    {
+      "icon": "beach",
+      "judul": "Paket Lengkap",
+      "deskripsi": "Sudah termasuk tiket wisata, transportasi, dan jadwal perjalanan."
+    },
+    {
+      "icon": "hotel",
+      "judul": "Akomodasi Nyaman",
+      "deskripsi": "Customer mendapatkan hotel atau penginapan sesuai pilihan paket."
+    },
+    {
+      "icon": "service",
+      "judul": "Layanan Customer",
+      "deskripsi": "Admin membantu customer mulai dari konsultasi sampai keberangkatan."
+    },
+    {
+      "icon": "activity",
+      "judul": "Aktivitas Wisata",
+      "deskripsi": "Tersedia aktivitas menarik sesuai destinasi yang dipilih customer."
+    },
+    {
+      "icon": "promo",
+      "judul": "Promo Member",
+      "deskripsi": "Customer aktif dan member loyal bisa mendapatkan promo khusus."
+    }
+  ],
+  "paketPopuler": [
+    {
+      "nama": "Paket Bandung Family Trip",
+      "lokasi": "Bandung, Jawa Barat",
+      "rating": "4/5",
+      "gambar": "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?auto=format&fit=crop&w=300&q=80"
+    },
+    {
+      "nama": "Paket Bali Honeymoon",
+      "lokasi": "Bali, Indonesia",
+      "rating": "5/5",
+      "gambar": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=300&q=80"
+    },
+    {
+      "nama": "Paket Jogja Heritage",
+      "lokasi": "Yogyakarta, Indonesia",
+      "rating": "4.5/5",
+      "gambar": "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=300&q=80"
+    },
+    {
+      "nama": "Paket Lombok Eksotis",
+      "lokasi": "Lombok, NTB",
+      "rating": "4.5/5",
+      "gambar": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=300&q=80"
+    },
+    {
+      "nama": "Paket Bromo Sunrise Trip",
+      "lokasi": "Malang, Jawa Timur",
+      "rating": "5/5",
+      "gambar": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=300&q=80"
+    },
+    {
+      "nama": "Paket Labuan Bajo",
+      "lokasi": "Nusa Tenggara Timur",
+      "rating": "4.8/5",
+      "gambar": "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=300&q=80"
+    },
+    {
+      "nama": "Paket Raja Ampat",
+      "lokasi": "Papua Barat",
+      "rating": "5/5",
+      "gambar": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=300&q=80"
+    },
+    {
+      "nama": "Paket Danau Toba",
+      "lokasi": "Sumatera Utara",
+      "rating": "4.6/5",
+      "gambar": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=300&q=80"
+    },
+    {
+      "nama": "Paket Jakarta City Tour",
+      "lokasi": "Jakarta, Indonesia",
+      "rating": "4/5",
+      "gambar": "https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=300&q=80"
+    },
+    {
+      "nama": "Paket Yogyakarta Student Trip",
+      "lokasi": "Yogyakarta, Indonesia",
+      "rating": "4.7/5",
+      "gambar": "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=300&q=80"
+    },
+    {
+      "nama": "Paket Medan Danau Toba",
+      "lokasi": "Medan, Sumatera Utara",
+      "rating": "4.5/5",
+      "gambar": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=300&q=80"
+    },
+    {
+      "nama": "Paket Makassar Explore",
+      "lokasi": "Makassar, Sulawesi Selatan",
+      "rating": "4.4/5",
+      "gambar": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=300&q=80"
+    }
+  ],
+  "paketUnggulan": [
+    {
+      "nama": "Paket Bali Beach Escape",
+      "lokasi": "Bali, Indonesia",
+      "durasi": "5 Hari / 4 Malam",
+      "rating": "4.8",
+      "harga": "Rp 4.500.000",
+      "gambar": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=700&q=80",
+      "akomodasi": "Menginap di hotel dekat pantai dengan fasilitas lengkap.",
+      "makan": "Sarapan setiap hari dan satu kali makan malam spesial.",
+      "ekstra": "Gratis antar jemput bandara dan dokumentasi perjalanan.",
+      "aktivitas": [
+        "Mengunjungi Pantai Pandawa dan Tanah Lot",
+        "Wisata budaya ke Garuda Wisnu Kencana",
+        "Menikmati sunset di Jimbaran",
+        "Waktu bebas untuk belanja oleh-oleh khas Bali"
+      ]
+    },
+    {
+      "nama": "Paket Bromo Sunrise Trip",
+      "lokasi": "Malang, Jawa Timur",
+      "durasi": "3 Hari / 2 Malam",
+      "rating": "5",
+      "harga": "Rp 2.800.000",
+      "gambar": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=700&q=80",
+      "akomodasi": "Menginap di penginapan nyaman dekat kawasan wisata Bromo.",
+      "makan": "Sarapan dan makan malam selama perjalanan.",
+      "ekstra": "Include jeep Bromo, tiket masuk, dan guide lokal.",
+      "aktivitas": [
+        "Melihat sunrise dari Penanjakan",
+        "Mengunjungi Kawah Bromo dan Pasir Berbisik",
+        "Foto di Bukit Teletubbies",
+        "City tour singkat di Malang"
+      ]
+    },
+    {
+      "nama": "Paket Labuan Bajo Sailing Trip",
+      "lokasi": "Labuan Bajo, NTT",
+      "durasi": "5 Hari / 4 Malam",
+      "rating": "4.9",
+      "harga": "Rp 6.500.000",
+      "gambar": "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=700&q=80",
+      "akomodasi": "Menginap di hotel dan kapal wisata sesuai jadwal perjalanan.",
+      "makan": "Makan 3 kali sehari selama sailing trip.",
+      "ekstra": "Termasuk dokumentasi, tiket wisata, dan guide lokal.",
+      "aktivitas": [
+        "Mengunjungi Pulau Padar",
+        "Snorkeling di Pink Beach",
+        "Melihat Komodo di kawasan konservasi",
+        "Menikmati sunset dari kapal"
+      ]
+    },
+    {
+      "nama": "Paket Lombok Eksotis",
+      "lokasi": "Lombok, NTB",
+      "durasi": "4 Hari / 3 Malam",
+      "rating": "4.7",
+      "harga": "Rp 3.750.000",
+      "gambar": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=700&q=80",
+      "akomodasi": "Hotel nyaman dekat area wisata pantai Lombok.",
+      "makan": "Sarapan harian dan makan malam khas Lombok.",
+      "ekstra": "Gratis transportasi lokal dan guide wisata.",
+      "aktivitas": [
+        "Wisata Pantai Kuta Mandalika",
+        "Mengunjungi Desa Sade",
+        "Snorkeling di Gili Trawangan",
+        "Berburu oleh-oleh khas Lombok"
+      ]
+    },
+    {
+      "nama": "Paket Raja Ampat Explorer",
+      "lokasi": "Papua Barat",
+      "durasi": "6 Hari / 5 Malam",
+      "rating": "5",
+      "harga": "Rp 8.900.000",
+      "gambar": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=700&q=80",
+      "akomodasi": "Menginap di resort atau homestay dekat area wisata laut.",
+      "makan": "Makan lengkap selama perjalanan.",
+      "ekstra": "Termasuk transportasi laut, dokumentasi, dan tiket wisata.",
+      "aktivitas": [
+        "Island hopping Raja Ampat",
+        "Snorkeling di spot terbaik",
+        "Mengunjungi Piaynemo",
+        "Foto landscape dan sunset"
+      ]
+    },
+    {
+      "nama": "Paket Jogja Heritage",
+      "lokasi": "Yogyakarta, Indonesia",
+      "durasi": "3 Hari / 2 Malam",
+      "rating": "4.6",
+      "harga": "Rp 2.200.000",
+      "gambar": "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=700&q=80",
+      "akomodasi": "Hotel strategis dekat Malioboro dan pusat kota.",
+      "makan": "Sarapan harian dan makan malam khas Jogja.",
+      "ekstra": "Guide lokal, transportasi wisata, dan tiket destinasi.",
+      "aktivitas": [
+        "Mengunjungi Candi Prambanan",
+        "Wisata Malioboro",
+        "Tour Keraton Yogyakarta",
+        "Belanja oleh-oleh Bakpia"
+      ]
+    }
+  ],
+  "paketRekomendasi": [
+    {
+      "nama": "Paket Labuan Bajo",
+      "lokasi": "Nusa Tenggara Timur",
+      "harga": "Rp 6.500.000",
+      "gambar": "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      "nama": "Paket Raja Ampat",
+      "lokasi": "Papua Barat",
+      "harga": "Rp 8.900.000",
+      "gambar": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      "nama": "Paket Jakarta City Tour",
+      "lokasi": "Jakarta, Indonesia",
+      "harga": "Rp 1.200.000",
+      "gambar": "https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      "nama": "Paket Danau Toba",
+      "lokasi": "Sumatera Utara",
+      "harga": "Rp 3.750.000",
+      "gambar": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      "nama": "Paket Bali Honeymoon",
+      "lokasi": "Bali, Indonesia",
+      "harga": "Rp 5.200.000",
+      "gambar": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      "nama": "Paket Bandung Family Trip",
+      "lokasi": "Bandung, Jawa Barat",
+      "harga": "Rp 1.500.000",
+      "gambar": "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      "nama": "Paket Lombok Eksotis",
+      "lokasi": "Lombok, NTB",
+      "harga": "Rp 3.750.000",
+      "gambar": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      "nama": "Paket Bromo Sunrise Trip",
+      "lokasi": "Malang, Jawa Timur",
+      "harga": "Rp 2.800.000",
+      "gambar": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      "nama": "Paket Jogja Heritage",
+      "lokasi": "Yogyakarta, Indonesia",
+      "harga": "Rp 2.200.000",
+      "gambar": "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      "nama": "Paket Makassar Explore",
+      "lokasi": "Makassar, Sulawesi Selatan",
+      "harga": "Rp 2.950.000",
+      "gambar": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      "nama": "Paket Medan Danau Toba",
+      "lokasi": "Medan, Sumatera Utara",
+      "harga": "Rp 3.600.000",
+      "gambar": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      "nama": "Paket Semarang Heritage",
+      "lokasi": "Semarang, Jawa Tengah",
+      "harga": "Rp 1.850.000",
+      "gambar": "https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=400&q=80"
+    }
+  ]
+}

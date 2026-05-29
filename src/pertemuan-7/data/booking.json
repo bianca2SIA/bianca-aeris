@@ -1,162 +1,182 @@
 [
   {
-    "id": 1,
-    "customer": "Andi Saputra",
-    "package": "Bali Tour",
-    "date": "12 Mei 2026",
-    "total": "Rp 2.500.000",
-    "status": "Confirmed"
+    "nama": "Bianca Bahi",
+    "kode": "BKG12001",
+    "paket": "Paket Bali Beach Escape",
+    "durasi": "5 Hari / 4 Malam",
+    "tanggal": "12 Jun - 16 Jun",
+    "harga": "Rp 4.500.000",
+    "status": "Dikonfirmasi"
   },
   {
-    "id": 2,
-    "customer": "Siti Rahma",
-    "package": "Lombok Trip",
-    "date": "15 Mei 2026",
-    "total": "Rp 3.200.000",
-    "status": "Pending"
+    "nama": "Rani Putri",
+    "kode": "BKG12002",
+    "paket": "Paket Bromo Sunrise Trip",
+    "durasi": "3 Hari / 2 Malam",
+    "tanggal": "15 Jun - 17 Jun",
+    "harga": "Rp 2.800.000",
+    "status": "Menunggu"
   },
   {
-    "id": 3,
-    "customer": "Budi Santoso",
-    "package": "Raja Ampat",
-    "date": "20 Mei 2026",
-    "total": "Rp 7.800.000",
-    "status": "Cancelled"
+    "nama": "Ahmad Rizky",
+    "kode": "BKG12003",
+    "paket": "Paket Lombok Eksotis",
+    "durasi": "4 Hari / 3 Malam",
+    "tanggal": "18 Jun - 21 Jun",
+    "harga": "Rp 3.750.000",
+    "status": "Dikonfirmasi"
   },
   {
-    "id": 4,
-    "customer": "Rina Oktavia",
-    "package": "Bandung Holiday",
-    "date": "25 Mei 2026",
-    "total": "Rp 1.800.000",
-    "status": "Confirmed"
+    "nama": "Salsa Amanda",
+    "kode": "BKG12004",
+    "paket": "Paket Jogja Heritage",
+    "durasi": "3 Hari / 2 Malam",
+    "tanggal": "20 Jun - 22 Jun",
+    "harga": "Rp 2.200.000",
+    "status": "Dibatalkan"
   },
   {
-    "id": 5,
-    "customer": "Dewi Lestari",
-    "package": "Yogyakarta Trip",
-    "date": "28 Mei 2026",
-    "total": "Rp 2.200.000",
-    "status": "Pending"
+    "nama": "Fajar Nugroho",
+    "kode": "BKG12005",
+    "paket": "Paket Labuan Bajo",
+    "durasi": "5 Hari / 4 Malam",
+    "tanggal": "22 Jun - 26 Jun",
+    "harga": "Rp 6.500.000",
+    "status": "Dikonfirmasi"
   },
   {
-    "id": 6,
-    "customer": "Fajar Nugroho",
-    "package": "Bromo Sunrise",
-    "date": "30 Mei 2026",
-    "total": "Rp 1.500.000",
-    "status": "Confirmed"
+    "nama": "Nadia Safitri",
+    "kode": "BKG12006",
+    "paket": "Paket Bandung Family Trip",
+    "durasi": "2 Hari / 1 Malam",
+    "tanggal": "24 Jun - 25 Jun",
+    "harga": "Rp 1.500.000",
+    "status": "Menunggu"
   },
   {
-    "id": 7,
-    "customer": "Agus Pratama",
-    "package": "Labuan Bajo",
-    "date": "02 Juni 2026",
-    "total": "Rp 5.200.000",
-    "status": "Confirmed"
+    "nama": "Dimas Pratama",
+    "kode": "BKG12007",
+    "paket": "Paket Raja Ampat",
+    "durasi": "6 Hari / 5 Malam",
+    "tanggal": "26 Jun - 1 Jul",
+    "harga": "Rp 8.900.000",
+    "status": "Dikonfirmasi"
   },
   {
-    "id": 8,
-    "customer": "Putri Amelia",
-    "package": "Malang Trip",
-    "date": "05 Juni 2026",
-    "total": "Rp 1.900.000",
-    "status": "Cancelled"
+    "nama": "Citra Lestari",
+    "kode": "BKG12008",
+    "paket": "Paket Danau Toba",
+    "durasi": "4 Hari / 3 Malam",
+    "tanggal": "28 Jun - 1 Jul",
+    "harga": "Rp 3.750.000",
+    "status": "Dikonfirmasi"
   },
   {
-    "id": 9,
-    "customer": "Yoga Prakoso",
-    "package": "Jakarta City Tour",
-    "date": "08 Juni 2026",
-    "total": "Rp 1.200.000",
-    "status": "Pending"
+    "nama": "Putri Amelia",
+    "kode": "BKG12009",
+    "paket": "Paket Bali Honeymoon",
+    "durasi": "5 Hari / 4 Malam",
+    "tanggal": "1 Jul - 5 Jul",
+    "harga": "Rp 5.200.000",
+    "status": "Dikonfirmasi"
   },
   {
-    "id": 10,
-    "customer": "Lina Marlina",
-    "package": "Singapore Tour",
-    "date": "10 Juni 2026",
-    "total": "Rp 6.500.000",
-    "status": "Confirmed"
+    "nama": "Yoga Prakoso",
+    "kode": "BKG12010",
+    "paket": "Paket Jogja Heritage",
+    "durasi": "3 Hari / 2 Malam",
+    "tanggal": "2 Jul - 4 Jul",
+    "harga": "Rp 2.200.000",
+    "status": "Menunggu"
   },
   {
-    "id": 11,
-    "customer": "Rizky Hidayat",
-    "package": "Thailand Trip",
-    "date": "12 Juni 2026",
-    "total": "Rp 5.800.000",
-    "status": "Confirmed"
+    "nama": "Lina Marlina",
+    "kode": "BKG12011",
+    "paket": "Paket Lombok Eksotis",
+    "durasi": "4 Hari / 3 Malam",
+    "tanggal": "4 Jul - 7 Jul",
+    "harga": "Rp 3.750.000",
+    "status": "Dikonfirmasi"
   },
   {
-    "id": 12,
-    "customer": "Nina Kartika",
-    "package": "Malaysia Tour",
-    "date": "15 Juni 2026",
-    "total": "Rp 4.300.000",
-    "status": "Pending"
+    "nama": "Arif Kurniawan",
+    "kode": "BKG12012",
+    "paket": "Paket Jakarta City Tour",
+    "durasi": "2 Hari / 1 Malam",
+    "tanggal": "5 Jul - 6 Jul",
+    "harga": "Rp 1.200.000",
+    "status": "Dibatalkan"
   },
   {
-    "id": 13,
-    "customer": "Dian Pratama",
-    "package": "Bali Luxury",
-    "date": "18 Juni 2026",
-    "total": "Rp 8.200.000",
-    "status": "Confirmed"
+    "nama": "Dewi Lestari",
+    "kode": "BKG12013",
+    "paket": "Paket Bromo Sunrise Trip",
+    "durasi": "3 Hari / 2 Malam",
+    "tanggal": "7 Jul - 9 Jul",
+    "harga": "Rp 2.800.000",
+    "status": "Dikonfirmasi"
   },
   {
-    "id": 14,
-    "customer": "Wahyu Saputra",
-    "package": "Medan Trip",
-    "date": "20 Juni 2026",
-    "total": "Rp 2.700.000",
-    "status": "Cancelled"
+    "nama": "Rizky Hidayat",
+    "kode": "BKG12014",
+    "paket": "Paket Bandung Family Trip",
+    "durasi": "2 Hari / 1 Malam",
+    "tanggal": "9 Jul - 10 Jul",
+    "harga": "Rp 1.500.000",
+    "status": "Menunggu"
   },
   {
-    "id": 15,
-    "customer": "Intan Sari",
-    "package": "Padang Tour",
-    "date": "22 Juni 2026",
-    "total": "Rp 3.100.000",
-    "status": "Pending"
+    "nama": "Tika Ramadhani",
+    "kode": "BKG12015",
+    "paket": "Paket Danau Toba",
+    "durasi": "4 Hari / 3 Malam",
+    "tanggal": "10 Jul - 13 Jul",
+    "harga": "Rp 3.750.000",
+    "status": "Dikonfirmasi"
   },
   {
-    "id": 16,
-    "customer": "Reza Maulana",
-    "package": "Makassar Trip",
-    "date": "25 Juni 2026",
-    "total": "Rp 3.600.000",
-    "status": "Confirmed"
+    "nama": "Hendra Wijaya",
+    "kode": "BKG12016",
+    "paket": "Paket Labuan Bajo",
+    "durasi": "5 Hari / 4 Malam",
+    "tanggal": "12 Jul - 16 Jul",
+    "harga": "Rp 6.500.000",
+    "status": "Dikonfirmasi"
   },
   {
-    "id": 17,
-    "customer": "Farah Nabila",
-    "package": "Bandung Staycation",
-    "date": "27 Juni 2026",
-    "total": "Rp 1.400.000",
-    "status": "Confirmed"
+    "nama": "Farah Nabila",
+    "kode": "BKG12017",
+    "paket": "Paket Lombok Eksotis",
+    "durasi": "4 Hari / 3 Malam",
+    "tanggal": "14 Jul - 17 Jul",
+    "harga": "Rp 3.750.000",
+    "status": "Dibatalkan"
   },
   {
-    "id": 18,
-    "customer": "Hendra Wijaya",
-    "package": "Jogja Adventure",
-    "date": "30 Juni 2026",
-    "total": "Rp 2.900.000",
-    "status": "Cancelled"
+    "nama": "Agus Pratama",
+    "kode": "BKG12018",
+    "paket": "Paket Raja Ampat",
+    "durasi": "6 Hari / 5 Malam",
+    "tanggal": "17 Jul - 22 Jul",
+    "harga": "Rp 8.900.000",
+    "status": "Dikonfirmasi"
   },
   {
-    "id": 19,
-    "customer": "Tika Ramadhani",
-    "package": "Bali Honeymoon",
-    "date": "02 Juli 2026",
-    "total": "Rp 9.500.000",
-    "status": "Confirmed"
+    "nama": "Intan Sari",
+    "kode": "BKG12019",
+    "paket": "Paket Bali Beach Escape",
+    "durasi": "5 Hari / 4 Malam",
+    "tanggal": "19 Jul - 23 Jul",
+    "harga": "Rp 4.500.000",
+    "status": "Dikonfirmasi"
   },
   {
-    "id": 20,
-    "customer": "Arif Kurniawan",
-    "package": "Lombok Explore",
-    "date": "05 Juli 2026",
-    "total": "Rp 3.800.000",
-    "status": "Pending"
+    "nama": "Wahyu Saputra",
+    "kode": "BKG12020",
+    "paket": "Paket Jogja Heritage",
+    "durasi": "3 Hari / 2 Malam",
+    "tanggal": "21 Jul - 23 Jul",
+    "harga": "Rp 2.200.000",
+    "status": "Menunggu"
   }
 ]
