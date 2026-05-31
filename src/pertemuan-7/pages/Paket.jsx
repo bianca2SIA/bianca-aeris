@@ -10,7 +10,14 @@ import {
   FaSpa,
   FaSwimmer,
   FaLeaf,
+  FaInfoCircle,
 } from "react-icons/fa";
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 import paketData from "../data/paket.json";
 import { Link } from "react-router-dom";
@@ -104,9 +111,12 @@ export default function Paket() {
                 </div>
               </div>
 
-              <button className="w-full h-[48px] rounded-[7px] bg-[#70A9F8] hover:bg-[#5D9AF2] text-white font-bold hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                Edit Detail
-              </button>
+              <Link
+                to={`/paket/${encodeURIComponent(paketBaru.nama)}`}
+                className="w-full h-[48px] rounded-[7px] bg-[#70A9F8] hover:bg-[#5D9AF2] text-white font-bold hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex items-center justify-center"
+              >
+                Lihat Detail
+              </Link>
             </div>
 
             <div className="bg-[#F7F7F8] rounded-[14px] p-5 space-y-5">
@@ -137,12 +147,15 @@ export default function Paket() {
 
           <div className="space-y-4">
             {paketUnggulan.map((item) => (
-              <Link
-  to={`/paket/${encodeURIComponent(item.nama)}`}
-  key={item.nama}
-  className="bg-white rounded-[14px] grid grid-cols-[230px_1fr] overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer"
->
-                <div className="relative h-[230px] overflow-hidden">
+              <div
+                key={item.nama}
+                className="bg-white rounded-[14px] grid grid-cols-[230px_1fr] overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+              >
+                {/* GAMBAR TETAP BISA DIKLIK KE DETAIL */}
+                <Link
+                  to={`/paket/${encodeURIComponent(item.nama)}`}
+                  className="relative h-[230px] overflow-hidden block"
+                >
                   <img
                     src={item.gambar}
                     alt={item.nama}
@@ -153,14 +166,16 @@ export default function Paket() {
                     <FaStar className="text-[#FFD65A]" />
                     {item.rating}
                   </div>
-                </div>
+                </Link>
 
                 <div className="p-5">
                   <div className="flex justify-between mb-4">
                     <div>
-                      <h3 className="text-[21px] font-bold mb-2">
-                        {item.nama}
-                      </h3>
+                      <Link to={`/paket/${encodeURIComponent(item.nama)}`}>
+                        <h3 className="text-[21px] font-bold mb-2 hover:text-[#70A9F8] transition">
+                          {item.nama}
+                        </h3>
+                      </Link>
 
                       <div className="flex items-center gap-5 text-[#9CA1AA] text-[13px] font-semibold">
                         <span>{item.durasi}</span>
@@ -223,8 +238,83 @@ export default function Paket() {
                       </ul>
                     </div>
                   </div>
+
+                  {/* SHADCN POPOVER DI CARD-CARD BAWAH */}
+                  <div className="mt-5 flex items-center justify-between">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <button
+                          type="button"
+                          className="h-[38px] px-4 rounded-[9px] bg-[#EAF4FF] text-[#70A9F8] text-[13px] font-bold flex items-center gap-2 hover:bg-[#70A9F8] hover:text-white hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+                        >
+                          <FaInfoCircle className="text-[13px]" />
+                          Info Paket
+                        </button>
+                      </PopoverTrigger>
+
+                      <PopoverContent
+                        align="start"
+                        side="top"
+                        className="w-[290px] rounded-[14px] border border-[#E8EEF7] bg-white p-4 shadow-xl"
+                      >
+                        <div>
+                          <h4 className="text-[15px] font-bold text-[#202436] mb-1">
+                            {item.nama}
+                          </h4>
+
+                          <p className="text-[12px] text-[#9AA0AA] flex items-center gap-1 mb-4">
+                            <FaMapMarkerAlt className="text-[#70A9F8]" />
+                            {item.lokasi}
+                          </p>
+
+                          <div className="space-y-3">
+                            <div className="flex items-center justify-between bg-[#F8FBFF] rounded-[10px] px-3 py-2">
+                              <span className="text-[12px] text-[#9AA0AA] font-semibold">
+                                Harga
+                              </span>
+                              <span className="text-[13px] text-[#70A9F8] font-bold">
+                                {item.harga}
+                              </span>
+                            </div>
+
+                            <div className="flex items-center justify-between bg-[#F8FBFF] rounded-[10px] px-3 py-2">
+                              <span className="text-[12px] text-[#9AA0AA] font-semibold">
+                                Durasi
+                              </span>
+                              <span className="text-[13px] text-[#202436] font-bold">
+                                {item.durasi}
+                              </span>
+                            </div>
+
+                            <div className="bg-[#F8FBFF] rounded-[10px] px-3 py-2">
+                              <p className="text-[12px] text-[#9AA0AA] font-semibold mb-1">
+                                Aktivitas Utama
+                              </p>
+                              <p className="text-[12px] text-[#596070] leading-5">
+                                {item.aktivitas[0]}
+                              </p>
+                            </div>
+                          </div>
+
+                          <Link
+                            to={`/paket/${encodeURIComponent(item.nama)}`}
+                            className="mt-4 h-[36px] rounded-[8px] bg-[#70A9F8] hover:bg-[#5D9AF2] text-white text-[12px] font-bold flex items-center justify-center transition"
+                          >
+                            Buka Detail Paket
+                          </Link>
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+
+                    <Link
+                      to={`/paket/${encodeURIComponent(item.nama)}`}
+                      className="h-[38px] px-4 rounded-[9px] bg-[#70A9F8] text-white text-[13px] font-bold flex items-center justify-center hover:bg-[#5D9AF2] hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+                    >
+                      Lihat Detail
+                    </Link>
+                  </div>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         </section>

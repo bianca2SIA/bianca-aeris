@@ -12,30 +12,69 @@ import {
   FaChevronRight,
 } from "react-icons/fa";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import dataBooking from "../data/booking.json";
 import paketTeratas from "../data/paketTeratas.json";
 
 export default function Booking() {
   const navigate = useNavigate();
+
   const [currentPage, setCurrentPage] = useState(1);
+  const [statusFilter, setStatusFilter] = useState("semua");
 
   const dataPerPage = 8;
-  const totalData = dataBooking.length;
+
+  const filteredBooking =
+    statusFilter === "semua"
+      ? dataBooking
+      : dataBooking.filter((item) => item.status === statusFilter);
+
+  const totalData = filteredBooking.length;
   const totalPages = Math.ceil(totalData / dataPerPage);
 
   const startIndex = (currentPage - 1) * dataPerPage;
   const endIndex = startIndex + dataPerPage;
-  const currentBookings = dataBooking.slice(startIndex, endIndex);
+  const currentBookings = filteredBooking.slice(startIndex, endIndex);
 
   const totalBooking = dataBooking.length;
+
   const totalDikonfirmasi = dataBooking.filter(
     (item) => item.status === "Dikonfirmasi"
   ).length;
+
+  const totalPendapatan = dataBooking.reduce((total, item) => {
+    const angka = Number(String(item.harga).replace(/[^0-9]/g, ""));
+    return total + angka;
+  }, 0);
+
+  const formatRupiahSingkat = (angka) => {
+    if (angka >= 1000000000) {
+      return `Rp ${(angka / 1000000000).toFixed(1).replace(".", ",")} M`;
+    }
+
+    if (angka >= 1000000) {
+      return `Rp ${(angka / 1000000).toFixed(1).replace(".", ",")} Jt`;
+    }
+
+    return `Rp ${angka.toLocaleString("id-ID")}`;
+  };
 
   const getStatusStyle = (status) => {
     if (status === "Dikonfirmasi") return "bg-[#5A91D6] text-white";
     if (status === "Menunggu") return "bg-[#EAF4FF] text-[#5A91D6]";
     return "bg-[#FFE5E8] text-[#F06C7A]";
+  };
+
+  const handleStatusChange = (value) => {
+    setStatusFilter(value);
+    setCurrentPage(1);
   };
 
   const handlePrevPage = () => {
@@ -61,6 +100,7 @@ export default function Booking() {
                   <div className="w-[42px] h-[42px] rounded-[8px] bg-[#EAF4FF] flex items-center justify-center text-[#70A9F8]">
                     <FaCalendarCheck />
                   </div>
+
                   <p className="text-[#9AA0AA] text-sm font-medium">
                     Total Booking
                   </p>
@@ -83,6 +123,7 @@ export default function Booking() {
                   <div className="w-[42px] h-[42px] rounded-[8px] bg-[#EAF4FF] flex items-center justify-center text-[#70A9F8]">
                     <FaUsers />
                   </div>
+
                   <p className="text-[#9AA0AA] text-sm font-medium">
                     Booking Dikonfirmasi
                   </p>
@@ -105,12 +146,15 @@ export default function Booking() {
                   <div className="w-[42px] h-[42px] rounded-[8px] bg-[#EAF4FF] flex items-center justify-center text-[#70A9F8]">
                     <FaMoneyBillWave />
                   </div>
+
                   <p className="text-[#9AA0AA] text-sm font-medium">
                     Total Pendapatan
                   </p>
                 </div>
 
-                <h2 className="text-[26px] font-bold">Rp 147,9 Jt</h2>
+                <h2 className="text-[26px] font-bold">
+                  {formatRupiahSingkat(totalPendapatan)}
+                </h2>
 
                 <p className="text-[12px] text-[#9AA0AA] mt-2">
                   <span className="text-[#5A91D6] font-bold">↗ +3.75%</span>{" "}
@@ -233,18 +277,127 @@ export default function Booking() {
             </div>
           </div>
 
-         <div className="flex items-center justify-between mb-3">
-  <h3 className="font-bold text-[17px]">Data Booking</h3>
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <h3 className="font-bold text-[17px]">Data Booking</h3>
+              <p className="text-[12px] text-[#9AA0AA] mt-1">
+                Filter status booking menggunakan komponen Select.
+              </p>
+            </div>
 
             <div className="flex items-center gap-3">
               <div className="w-[250px] h-[38px] bg-white rounded-[8px] flex items-center px-4 gap-3">
                 <FaSearch className="text-[#B9C0CA] text-sm" />
+
                 <input
                   type="text"
                   placeholder="Cari nama, paket, dll"
                   className="w-full outline-none text-sm placeholder:text-[#B9C0CA]"
                 />
               </div>
+
+            <Select value={statusFilter} onValueChange={handleStatusChange}>
+  <SelectTrigger
+    className="
+      w-[190px]
+      h-[42px]
+      bg-white
+      border
+      border-[#E8EEF7]
+      rounded-[12px]
+      px-4
+      text-[13px]
+      font-bold
+      text-[#596070]
+      shadow-sm
+      hover:border-[#70A9F8]
+      hover:shadow-md
+      focus:ring-2
+      focus:ring-[#70A9F8]/20
+      focus:border-[#70A9F8]
+      transition-all
+      duration-300
+    "
+  >
+    <SelectValue placeholder="Filter Status" />
+  </SelectTrigger>
+
+  <SelectContent
+    className="
+      bg-white
+      border
+      border-[#E8EEF7]
+      rounded-[14px]
+      shadow-xl
+      p-2
+      text-[#596070]
+    "
+  >
+    <SelectItem
+      value="semua"
+      className="
+        rounded-[10px]
+        px-3
+        py-2
+        text-[13px]
+        font-semibold
+        cursor-pointer
+        focus:bg-[#EAF4FF]
+        focus:text-[#5A91D6]
+      "
+    >
+      Semua Status
+    </SelectItem>
+
+    <SelectItem
+      value="Dikonfirmasi"
+      className="
+        rounded-[10px]
+        px-3
+        py-2
+        text-[13px]
+        font-semibold
+        cursor-pointer
+        focus:bg-[#EAF4FF]
+        focus:text-[#5A91D6]
+      "
+    >
+      Dikonfirmasi
+    </SelectItem>
+
+    <SelectItem
+      value="Menunggu"
+      className="
+        rounded-[10px]
+        px-3
+        py-2
+        text-[13px]
+        font-semibold
+        cursor-pointer
+        focus:bg-[#FFF7E6]
+        focus:text-[#C48A00]
+      "
+    >
+      Menunggu
+    </SelectItem>
+
+    <SelectItem
+      value="Dibatalkan"
+      className="
+        rounded-[10px]
+        px-3
+        py-2
+        text-[13px]
+        font-semibold
+        cursor-pointer
+        focus:bg-[#FFE5E8]
+        focus:text-[#F06C7A]
+      "
+    >
+      Dibatalkan
+    </SelectItem>
+  </SelectContent>
+</Select>
 
               <button className="h-[38px] px-4 bg-white rounded-[8px] text-sm font-semibold text-[#8F96A3] flex items-center gap-2 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
                 <FaCalendarAlt />
@@ -315,47 +468,58 @@ export default function Booking() {
           </thead>
 
           <tbody>
-            {currentBookings.map((item) => (
-              <tr
-                key={item.kode}
-                onClick={() => handleRowClick(item.kode)}
-                className="border-b border-[#EEF1F5] hover:bg-[#F8FBFF] hover:shadow-md hover:-translate-y-[2px] transition-all duration-300 cursor-pointer"
-              >
-                <td className="px-6 py-4 text-[14px] font-semibold hover:text-[#70A9F8] transition">
-                  {item.nama}
-                </td>
+            {currentBookings.length > 0 ? (
+              currentBookings.map((item) => (
+                <tr
+                  key={item.kode}
+                  onClick={() => handleRowClick(item.kode)}
+                  className="border-b border-[#EEF1F5] hover:bg-[#F8FBFF] hover:shadow-md hover:-translate-y-[2px] transition-all duration-300 cursor-pointer"
+                >
+                  <td className="px-6 py-4 text-[14px] font-semibold hover:text-[#70A9F8] transition">
+                    {item.nama}
+                  </td>
 
-                <td className="px-6 py-4 text-[14px] text-[#596070]">
-                  {item.kode}
-                </td>
+                  <td className="px-6 py-4 text-[14px] text-[#596070]">
+                    {item.kode}
+                  </td>
 
-                <td className="px-6 py-4 text-[14px] font-semibold text-[#596070]">
-                  {item.paket}
-                </td>
+                  <td className="px-6 py-4 text-[14px] font-semibold text-[#596070]">
+                    {item.paket}
+                  </td>
 
-                <td className="px-6 py-4 text-[14px] text-[#596070]">
-                  {item.durasi}
-                </td>
+                  <td className="px-6 py-4 text-[14px] text-[#596070]">
+                    {item.durasi}
+                  </td>
 
-                <td className="px-6 py-4 text-[14px] text-[#596070]">
-                  {item.tanggal}
-                </td>
+                  <td className="px-6 py-4 text-[14px] text-[#596070]">
+                    {item.tanggal}
+                  </td>
 
-                <td className="px-6 py-4 text-[14px] font-bold text-[#596070]">
-                  {item.harga}
-                </td>
+                  <td className="px-6 py-4 text-[14px] font-bold text-[#596070]">
+                    {item.harga}
+                  </td>
 
-                <td className="px-6 py-4">
-                  <span
-                    className={`px-3 py-1 rounded-[6px] text-[12px] font-bold ${getStatusStyle(
-                      item.status
-                    )}`}
-                  >
-                    {item.status}
-                  </span>
+                  <td className="px-6 py-4">
+                    <span
+                      className={`px-3 py-1 rounded-[6px] text-[12px] font-bold ${getStatusStyle(
+                        item.status
+                      )}`}
+                    >
+                      {item.status}
+                    </span>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan="7"
+                  className="px-6 py-10 text-center text-[#9AA0AA] text-sm"
+                >
+                  Tidak ada data booking untuk status yang dipilih.
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
 
@@ -364,7 +528,8 @@ export default function Booking() {
             <span>Menampilkan</span>
 
             <button className="h-[34px] px-3 rounded-[8px] bg-[#F4F5F7] font-semibold text-[#596070]">
-              {startIndex + 1} - {Math.min(endIndex, totalData)}
+              {totalData === 0 ? 0 : startIndex + 1} -{" "}
+              {Math.min(endIndex, totalData)}
             </button>
 
             <span>dari {totalData} booking</span>
@@ -402,9 +567,9 @@ export default function Booking() {
 
             <button
               onClick={handleNextPage}
-              disabled={currentPage === totalPages}
+              disabled={currentPage === totalPages || totalPages === 0}
               className={`h-[34px] px-3 rounded-[8px] flex items-center gap-2 transition ${
-                currentPage === totalPages
+                currentPage === totalPages || totalPages === 0
                   ? "bg-[#F4F5F7] text-[#C0C4CC] cursor-not-allowed"
                   : "bg-[#F4F5F7] hover:bg-[#EAF4FF] text-[#596070]"
               }`}
