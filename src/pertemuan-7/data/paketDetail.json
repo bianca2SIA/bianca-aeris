@@ -58,6 +58,7 @@
       }
     ]
   },
+
   "Paket Bromo Sunrise Trip": {
     "peserta": "15 peserta",
     "tanggal": "10 Agustus 2028 — 12 Agustus 2028",
@@ -105,7 +106,110 @@
       }
     ]
   },
-  "Paket Labuan Bajo Sailing Trip": {
+
+  "Paket Lombok Eksotis": {
+    "peserta": "16 peserta",
+    "tanggal": "14 Agustus 2028 — 17 Agustus 2028",
+    "deskripsi": "Paket Lombok Eksotis cocok untuk customer yang ingin menikmati pantai, budaya lokal, snorkeling, dan suasana liburan yang santai.",
+    "gambarUtama": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80",
+    "galeri": [
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=500&q=80",
+      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=500&q=80"
+    ],
+    "termasuk": [
+      "Hotel nyaman dekat area wisata",
+      "Transportasi lokal",
+      "Sarapan setiap hari",
+      "Guide lokal",
+      "Tiket destinasi wisata",
+      "Dokumentasi perjalanan",
+      "Snorkeling basic equipment",
+      "Asuransi perjalanan"
+    ],
+    "tidakTermasuk": [
+      "Tiket dari kota asal",
+      "Pengeluaran pribadi",
+      "Upgrade kamar",
+      "Aktivitas tambahan di luar jadwal"
+    ],
+    "rencanaPerjalanan": [
+      {
+        "hari": "Hari 1",
+        "tanggal": "14 Agu 28",
+        "tempat": "Kedatangan di Lombok",
+        "aktivitas": "Penjemputan, check-in hotel, dan briefing perjalanan."
+      },
+      {
+        "hari": "Hari 2",
+        "tanggal": "15 Agu 28",
+        "tempat": "Kuta Mandalika dan Desa Sade",
+        "aktivitas": "Wisata budaya ke Desa Sade dan menikmati Pantai Kuta Mandalika."
+      },
+      {
+        "hari": "Hari 3",
+        "tanggal": "16 Agu 28",
+        "tempat": "Gili Trawangan",
+        "aktivitas": "Snorkeling, island hopping, dan menikmati sunset."
+      },
+      {
+        "hari": "Hari 4",
+        "tanggal": "17 Agu 28",
+        "tempat": "Kepulangan",
+        "aktivitas": "Belanja oleh-oleh dan transfer ke bandara."
+      }
+    ]
+  },
+
+  "Paket Jogja Heritage": {
+    "peserta": "18 peserta",
+    "tanggal": "18 Agustus 2028 — 20 Agustus 2028",
+    "deskripsi": "Paket Jogja Heritage cocok untuk customer yang ingin menikmati wisata budaya, sejarah, kuliner, dan suasana khas Yogyakarta.",
+    "gambarUtama": "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=900&q=80",
+    "galeri": [
+      "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=500&q=80",
+      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=500&q=80"
+    ],
+    "termasuk": [
+      "Hotel dekat pusat kota",
+      "Transportasi lokal",
+      "Sarapan setiap hari",
+      "Guide lokal",
+      "Tiket destinasi wisata",
+      "Dokumentasi perjalanan",
+      "City tour",
+      "Asuransi perjalanan"
+    ],
+    "tidakTermasuk": [
+      "Tiket dari kota asal",
+      "Pengeluaran pribadi",
+      "Sewa kostum tambahan",
+      "Aktivitas di luar itinerary"
+    ],
+    "rencanaPerjalanan": [
+      {
+        "hari": "Hari 1",
+        "tanggal": "18 Agu 28",
+        "tempat": "Kedatangan di Yogyakarta",
+        "aktivitas": "Penjemputan, check-in hotel, dan wisata Malioboro."
+      },
+      {
+        "hari": "Hari 2",
+        "tanggal": "19 Agu 28",
+        "tempat": "Prambanan dan Keraton",
+        "aktivitas": "Mengunjungi Candi Prambanan, Keraton Yogyakarta, dan wisata kuliner."
+      },
+      {
+        "hari": "Hari 3",
+        "tanggal": "20 Agu 28",
+        "tempat": "Kepulangan",
+        "aktivitas": "Belanja oleh-oleh Bakpia dan transfer pulang."
+      }
+    ]
+  },
+
+  "Paket Labuan Bajo": {
     "peserta": "18 peserta",
     "tanggal": "5 Agustus 2028 — 9 Agustus 2028",
     "deskripsi": "Paket sailing trip Labuan Bajo untuk menjelajahi Pulau Padar, Pink Beach, Pulau Komodo, dan spot snorkeling terbaik. Cocok untuk customer yang ingin menikmati wisata alam dan laut.",
@@ -164,6 +268,199 @@
       }
     ]
   },
+
+  "Paket Raja Ampat": {
+    "peserta": "16 peserta",
+    "tanggal": "21 Agustus 2028 — 26 Agustus 2028",
+    "deskripsi": "Paket Raja Ampat cocok untuk customer yang ingin menikmati wisata laut, snorkeling, island hopping, dan pemandangan alam Papua Barat.",
+    "gambarUtama": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80",
+    "galeri": [
+      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=500&q=80",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80"
+    ],
+    "termasuk": [
+      "Resort atau homestay sesuai paket",
+      "Transportasi laut",
+      "Makan selama perjalanan",
+      "Guide lokal",
+      "Tiket destinasi wisata",
+      "Dokumentasi perjalanan",
+      "Snorkeling basic equipment",
+      "Asuransi perjalanan"
+    ],
+    "tidakTermasuk": [
+      "Tiket pesawat dari kota asal",
+      "Pengeluaran pribadi",
+      "Upgrade fasilitas pribadi",
+      "Aktivitas tambahan di luar jadwal"
+    ],
+    "rencanaPerjalanan": [
+      {
+        "hari": "Hari 1",
+        "tanggal": "21 Agu 28",
+        "tempat": "Kedatangan di Sorong",
+        "aktivitas": "Penjemputan, briefing, dan persiapan menuju Raja Ampat."
+      },
+      {
+        "hari": "Hari 2",
+        "tanggal": "22 Agu 28",
+        "tempat": "Piaynemo",
+        "aktivitas": "Island hopping dan foto panorama Piaynemo."
+      },
+      {
+        "hari": "Hari 3",
+        "tanggal": "23 Agu 28",
+        "tempat": "Spot Snorkeling",
+        "aktivitas": "Snorkeling di spot terbaik dan menikmati wisata laut."
+      },
+      {
+        "hari": "Hari 4",
+        "tanggal": "24 Agu 28",
+        "tempat": "Desa Wisata",
+        "aktivitas": "Mengunjungi desa lokal dan melihat budaya setempat."
+      },
+      {
+        "hari": "Hari 5",
+        "tanggal": "25 Agu 28",
+        "tempat": "Sunset Point",
+        "aktivitas": "Waktu bebas dan menikmati sunset."
+      },
+      {
+        "hari": "Hari 6",
+        "tanggal": "26 Agu 28",
+        "tempat": "Kepulangan",
+        "aktivitas": "Check-out dan transfer pulang."
+      }
+    ]
+  },
+
+  "Paket Bandung Family Trip": {
+    "peserta": "14 peserta",
+    "tanggal": "22 Agustus 2028 — 23 Agustus 2028",
+    "deskripsi": "Paket Bandung Family Trip cocok untuk keluarga yang ingin liburan singkat ke Bandung dengan destinasi alam, kuliner, dan tempat wisata keluarga.",
+    "gambarUtama": "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?auto=format&fit=crop&w=900&q=80",
+    "galeri": [
+      "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=500&q=80",
+      "https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=500&q=80"
+    ],
+    "termasuk": [
+      "Hotel atau penginapan keluarga",
+      "Transportasi lokal",
+      "Tiket wisata",
+      "Sarapan",
+      "Guide lokal",
+      "Dokumentasi perjalanan",
+      "Layanan customer service",
+      "Asuransi perjalanan"
+    ],
+    "tidakTermasuk": [
+      "Tiket dari kota asal",
+      "Pengeluaran pribadi",
+      "Makan di luar jadwal",
+      "Aktivitas tambahan di luar paket"
+    ],
+    "rencanaPerjalanan": [
+      {
+        "hari": "Hari 1",
+        "tanggal": "22 Agu 28",
+        "tempat": "Lembang",
+        "aktivitas": "Mengunjungi wisata keluarga di Lembang dan kuliner malam."
+      },
+      {
+        "hari": "Hari 2",
+        "tanggal": "23 Agu 28",
+        "tempat": "City Tour Bandung",
+        "aktivitas": "City tour, belanja oleh-oleh, dan transfer pulang."
+      }
+    ]
+  },
+
+  "Paket Jakarta City Tour": {
+    "peserta": "20 peserta",
+    "tanggal": "24 Agustus 2028",
+    "deskripsi": "Paket Jakarta City Tour cocok untuk customer yang ingin menikmati wisata kota, museum, kuliner, dan ikon wisata Jakarta dalam waktu singkat.",
+    "gambarUtama": "https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=900&q=80",
+    "galeri": [
+      "https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=500&q=80",
+      "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=500&q=80"
+    ],
+    "termasuk": [
+      "Transportasi lokal",
+      "Tiket destinasi wisata",
+      "Guide lokal",
+      "Makan siang",
+      "Dokumentasi perjalanan",
+      "Layanan customer service",
+      "Air mineral",
+      "Asuransi perjalanan"
+    ],
+    "tidakTermasuk": [
+      "Pengeluaran pribadi",
+      "Transportasi dari kota asal",
+      "Aktivitas tambahan",
+      "Makan di luar jadwal"
+    ],
+    "rencanaPerjalanan": [
+      {
+        "hari": "Hari 1",
+        "tanggal": "24 Agu 28",
+        "tempat": "City Tour Jakarta",
+        "aktivitas": "Mengunjungi Monas, Kota Tua, museum, kuliner, dan pusat oleh-oleh."
+      }
+    ]
+  },
+
+  "Paket Danau Toba": {
+    "peserta": "17 peserta",
+    "tanggal": "25 Agustus 2028 — 27 Agustus 2028",
+    "deskripsi": "Paket Danau Toba cocok untuk customer yang ingin menikmati wisata alam Sumatera Utara, pemandangan danau, budaya Batak, dan suasana liburan santai.",
+    "gambarUtama": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=80",
+    "galeri": [
+      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=500&q=80",
+      "https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=500&q=80"
+    ],
+    "termasuk": [
+      "Penginapan dekat Danau Toba",
+      "Transportasi lokal",
+      "Tiket wisata",
+      "Makan sesuai jadwal",
+      "Guide lokal",
+      "Dokumentasi perjalanan",
+      "Kapal penyeberangan",
+      "Asuransi perjalanan"
+    ],
+    "tidakTermasuk": [
+      "Tiket dari kota asal",
+      "Pengeluaran pribadi",
+      "Upgrade kamar",
+      "Aktivitas tambahan"
+    ],
+    "rencanaPerjalanan": [
+      {
+        "hari": "Hari 1",
+        "tanggal": "25 Agu 28",
+        "tempat": "Kedatangan di Medan",
+        "aktivitas": "Penjemputan dan perjalanan menuju kawasan Danau Toba."
+      },
+      {
+        "hari": "Hari 2",
+        "tanggal": "26 Agu 28",
+        "tempat": "Pulau Samosir",
+        "aktivitas": "Menyeberang ke Samosir, wisata budaya Batak, dan foto panorama."
+      },
+      {
+        "hari": "Hari 3",
+        "tanggal": "27 Agu 28",
+        "tempat": "Kepulangan",
+        "aktivitas": "Check-out, belanja oleh-oleh, dan transfer pulang."
+      }
+    ]
+  },
+
   "default": {
     "peserta": "15 peserta",
     "tanggal": "5 Agustus 2028 — 9 Agustus 2028",

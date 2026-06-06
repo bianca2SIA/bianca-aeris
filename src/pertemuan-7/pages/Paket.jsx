@@ -19,8 +19,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-import paketData from "../data/paket.json";
 import { Link } from "react-router-dom";
+import paketData from "../data/paket.json";
 
 const iconMap = {
   beach: <FaUmbrellaBeach />,
@@ -40,7 +40,7 @@ export default function Paket() {
   } = paketData;
 
   return (
-    <div className="min-h-[calc(100vh-76px)] bg-[#F4F5F7] px-8 py-7 text-[#202436]">
+    <div className="min-h-[calc(100vh-76px)] bg-[#F4F5F7] px-4 md:px-6 xl:px-8 py-5 xl:py-7 text-[#202436] overflow-x-hidden">
       {/* JUDUL KECIL */}
       <div className="flex items-center justify-between mb-5">
         <h2 className="text-[17px] font-bold">Paket Baru</h2>
@@ -51,7 +51,7 @@ export default function Paket() {
         </button>
       </div>
 
-      <div className="grid grid-cols-[1fr_310px] gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-[1fr_310px] gap-6">
         {/* KIRI */}
         <section>
           {/* HERO PACKAGE */}
@@ -63,7 +63,7 @@ export default function Paket() {
                 className="w-full h-full object-cover hover:scale-105 transition duration-500"
               />
 
-              <div className="absolute bottom-5 left-5 right-5 grid grid-cols-3 gap-3">
+              <div className="absolute bottom-5 left-5 right-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
                 {paketBaru.preview.map((gambar, index) => (
                   <img
                     key={index}
@@ -149,7 +149,7 @@ export default function Paket() {
             {paketUnggulan.map((item) => (
               <div
                 key={item.nama}
-                className="bg-white rounded-[14px] grid grid-cols-[230px_1fr] overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                className="bg-white rounded-[14px] grid grid-cols-1 lg:grid-cols-[230px_1fr] overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
               >
                 {/* GAMBAR TETAP BISA DIKLIK KE DETAIL */}
                 <Link
@@ -194,7 +194,7 @@ export default function Paket() {
                     </div>
                   </div>
 
-                  <div className="border-t border-[#EEF0F4] pt-5 grid grid-cols-2 gap-8">
+                  <div className="border-t border-[#EEF0F4] pt-5 grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-3">
                       <div>
                         <p className="text-[#C4C6CC] text-xs font-bold mb-1">
@@ -339,7 +339,9 @@ export default function Paket() {
                 />
 
                 <div>
-                  <h4 className="font-bold text-[15px] mb-1">{item.nama}</h4>
+                  <h4 className="font-bold text-[15px] mb-1">
+                    {item.nama}
+                  </h4>
 
                   <p className="text-[#9AA0A8] text-[12px] flex items-center gap-1 mb-2">
                     <FaMapMarkerAlt />
@@ -350,7 +352,9 @@ export default function Paket() {
                     {[1, 2, 3, 4].map((i) => (
                       <FaStar key={i} className="text-[#FFD85C] text-sm" />
                     ))}
+
                     <FaRegStar className="text-[#FFD85C] text-sm" />
+
                     <span className="text-[#9AA0A8] text-xs ml-2">
                       {item.rating}
                     </span>
@@ -366,49 +370,42 @@ export default function Paket() {
               <FaEllipsisH className="text-[#272B36]" />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-4">
               {paketRekomendasi.map((item) => (
-                <div
+                <Link
                   key={item.nama}
-                  className="border border-[#E8EBF0] rounded-[12px] overflow-hidden bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                  to={`/paket/${encodeURIComponent(item.nama)}`}
+                  className="border border-[#E8EBF0] rounded-[14px] bg-white p-3 flex gap-3 hover:shadow-xl hover:-translate-y-1 hover:border-[#70A9F8] transition-all duration-300"
                 >
                   <img
                     src={item.gambar}
                     alt={item.nama}
-                    className="w-full h-[135px] object-cover hover:scale-105 transition duration-500"
+                    className="w-[88px] h-[88px] rounded-[10px] object-cover shrink-0"
                   />
 
-                  <div className="p-3">
-                    <h4 className="font-bold text-[15px] leading-5 mb-1">
+                  <div className="min-w-0 flex-1">
+                    <h4 className="font-bold text-[14px] leading-5 mb-1 text-[#202436] hover:text-[#70A9F8] transition">
                       {item.nama}
                     </h4>
 
-                    <p className="text-[#9AA0A8] text-[12px] flex items-center gap-1 mb-2">
-                      <FaMapMarkerAlt />
-                      {item.lokasi}
+                    <p className="text-[#9AA0A8] text-[12px] flex items-start gap-1 mb-2 leading-4">
+                      <FaMapMarkerAlt className="mt-[2px] shrink-0" />
+                      <span className="leading-4">{item.lokasi}</span>
                     </p>
 
-                    <p className="text-[#6DA5EF] text-[17px] font-bold">
+                    <p className="text-[#6DA5EF] text-[15px] font-bold leading-5 break-words">
                       {item.harga}
-                      <span className="text-[#9AA0A8] text-xs font-medium">
+                      <span className="text-[#9AA0A8] text-[11px] font-medium ml-1">
                         /orang
                       </span>
                     </p>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
         </aside>
       </div>
-
-      {/* FOOTER */}
-      <footer className="flex items-center gap-8 mt-8 text-[#B0B3BB] text-sm">
-        <span>Copyright © 2024 TravelGo</span>
-        <span>Privacy Policy</span>
-        <span>Term and conditions</span>
-        <span>Contact</span>
-      </footer>
     </div>
   );
 }

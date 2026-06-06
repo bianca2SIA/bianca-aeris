@@ -8,17 +8,10 @@ import {
   FaEllipsisH,
   FaSearch,
   FaCalendarAlt,
+  FaChevronDown,
   FaChevronLeft,
   FaChevronRight,
 } from "react-icons/fa";
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 import dataBooking from "../data/booking.json";
 import paketTeratas from "../data/paketTeratas.json";
@@ -28,6 +21,7 @@ export default function Booking() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [statusFilter, setStatusFilter] = useState("semua");
+  const [isStatusOpen, setIsStatusOpen] = useState(false);
 
   const dataPerPage = 8;
 
@@ -54,6 +48,21 @@ export default function Booking() {
     return total + angka;
   }, 0);
 
+  const statusOptions = [
+    { label: "Semua Status", value: "semua" },
+    { label: "Dikonfirmasi", value: "Dikonfirmasi" },
+    { label: "Menunggu", value: "Menunggu" },
+    { label: "Dibatalkan", value: "Dibatalkan" },
+  ];
+
+  const getStatusLabel = () => {
+    const selectedStatus = statusOptions.find(
+      (item) => item.value === statusFilter
+    );
+
+    return selectedStatus ? selectedStatus.label : "Semua Status";
+  };
+
   const formatRupiahSingkat = (angka) => {
     if (angka >= 1000000000) {
       return `Rp ${(angka / 1000000000).toFixed(1).replace(".", ",")} M`;
@@ -75,6 +84,7 @@ export default function Booking() {
   const handleStatusChange = (value) => {
     setStatusFilter(value);
     setCurrentPage(1);
+    setIsStatusOpen(false);
   };
 
   const handlePrevPage = () => {
@@ -91,8 +101,10 @@ export default function Booking() {
 
   return (
     <div className="min-h-[calc(100vh-76px)] bg-[#F4F5F7] px-8 py-7 text-[#202436]">
+      {/* BAGIAN ATAS */}
       <div className="grid grid-cols-[1fr_300px] gap-6 mb-7">
         <section>
+          {/* CARD SUMMARY */}
           <div className="bg-[#EAF4FF] rounded-[14px] p-4 grid grid-cols-3 gap-5 mb-6">
             <div className="bg-white rounded-[12px] p-4 flex items-center justify-between shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
               <div>
@@ -166,7 +178,8 @@ export default function Booking() {
             </div>
           </div>
 
-          <div className="bg-white rounded-[14px] p-5 mb-7 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+          {/* CHART */}
+          <div className="bg-white rounded-[14px] p-5 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
             <div className="flex items-center justify-between mb-5">
               <div>
                 <h3 className="font-bold text-[17px]">Ringkasan Perjalanan</h3>
@@ -276,142 +289,10 @@ export default function Booking() {
               </div>
             </div>
           </div>
-
-          <div className="flex items-center justify-between mb-3">
-            <div>
-              <h3 className="font-bold text-[17px]">Data Booking</h3>
-              <p className="text-[12px] text-[#9AA0AA] mt-1">
-                Filter status booking menggunakan komponen Select.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="w-[250px] h-[38px] bg-white rounded-[8px] flex items-center px-4 gap-3">
-                <FaSearch className="text-[#B9C0CA] text-sm" />
-
-                <input
-                  type="text"
-                  placeholder="Cari nama, paket, dll"
-                  className="w-full outline-none text-sm placeholder:text-[#B9C0CA]"
-                />
-              </div>
-
-            <Select value={statusFilter} onValueChange={handleStatusChange}>
-  <SelectTrigger
-    className="
-      w-[190px]
-      h-[42px]
-      bg-white
-      border
-      border-[#E8EEF7]
-      rounded-[12px]
-      px-4
-      text-[13px]
-      font-bold
-      text-[#596070]
-      shadow-sm
-      hover:border-[#70A9F8]
-      hover:shadow-md
-      focus:ring-2
-      focus:ring-[#70A9F8]/20
-      focus:border-[#70A9F8]
-      transition-all
-      duration-300
-    "
-  >
-    <SelectValue placeholder="Filter Status" />
-  </SelectTrigger>
-
-  <SelectContent
-    className="
-      bg-white
-      border
-      border-[#E8EEF7]
-      rounded-[14px]
-      shadow-xl
-      p-2
-      text-[#596070]
-    "
-  >
-    <SelectItem
-      value="semua"
-      className="
-        rounded-[10px]
-        px-3
-        py-2
-        text-[13px]
-        font-semibold
-        cursor-pointer
-        focus:bg-[#EAF4FF]
-        focus:text-[#5A91D6]
-      "
-    >
-      Semua Status
-    </SelectItem>
-
-    <SelectItem
-      value="Dikonfirmasi"
-      className="
-        rounded-[10px]
-        px-3
-        py-2
-        text-[13px]
-        font-semibold
-        cursor-pointer
-        focus:bg-[#EAF4FF]
-        focus:text-[#5A91D6]
-      "
-    >
-      Dikonfirmasi
-    </SelectItem>
-
-    <SelectItem
-      value="Menunggu"
-      className="
-        rounded-[10px]
-        px-3
-        py-2
-        text-[13px]
-        font-semibold
-        cursor-pointer
-        focus:bg-[#FFF7E6]
-        focus:text-[#C48A00]
-      "
-    >
-      Menunggu
-    </SelectItem>
-
-    <SelectItem
-      value="Dibatalkan"
-      className="
-        rounded-[10px]
-        px-3
-        py-2
-        text-[13px]
-        font-semibold
-        cursor-pointer
-        focus:bg-[#FFE5E8]
-        focus:text-[#F06C7A]
-      "
-    >
-      Dibatalkan
-    </SelectItem>
-  </SelectContent>
-</Select>
-
-              <button className="h-[38px] px-4 bg-white rounded-[8px] text-sm font-semibold text-[#8F96A3] flex items-center gap-2 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-                <FaCalendarAlt />
-                Hari Ini
-              </button>
-
-              <button className="h-[38px] px-4 bg-[#70A9F8] hover:bg-[#5D9AF2] text-white rounded-[8px] text-sm font-bold flex items-center gap-2 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                + Tambah Booking
-              </button>
-            </div>
-          </div>
         </section>
 
-        <aside className="row-span-2">
+        {/* SIDEBAR KANAN */}
+        <aside>
           <div className="bg-white rounded-[14px] p-5 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
             <div className="flex items-center justify-between mb-5">
               <h3 className="font-bold text-[17px]">Paket Teratas</h3>
@@ -453,7 +334,86 @@ export default function Booking() {
         </aside>
       </div>
 
-      <div className="bg-white rounded-[14px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 -mt-8">
+      {/* HEADER DATA BOOKING - SUDAH KELUAR DARI GRID ATAS */}
+      <div className="w-full flex items-start justify-between gap-4 mb-4">
+        <div className="shrink-0">
+          <h3 className="font-bold text-[17px]">Data Booking</h3>
+          <p className="text-[12px] text-[#9AA0AA] mt-1">
+            filter status booking berdasarkan pilihan admin.
+          </p>
+        </div>
+
+        <div className="ml-auto flex items-center justify-end gap-3">
+          <div className="w-[330px] h-[44px] bg-white rounded-[12px] flex items-center px-4 gap-3 border border-[#EEF1F5] shadow-sm hover:shadow-md focus-within:border-[#70A9F8] focus-within:shadow-md transition-all duration-300">
+            <FaSearch className="text-[#B9C0CA] text-sm shrink-0" />
+
+            <input
+              type="text"
+              placeholder="Cari nama, paket, dll"
+              className="
+                w-full
+                bg-transparent
+                border-none
+                outline-none
+                ring-0
+                focus:outline-none
+                focus:ring-0
+                focus:border-none
+                text-sm
+                placeholder:text-[#B9C0CA]
+              "
+            />
+          </div>
+
+          {/* DROPDOWN STATUS */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setIsStatusOpen(!isStatusOpen)}
+              className="h-[44px] min-w-[170px] px-4 bg-white rounded-[12px] flex items-center justify-between gap-2 text-[#596070] border border-[#EEF1F5] shadow-sm hover:border-[#70A9F8] transition-all duration-200 text-sm font-bold"
+            >
+              {getStatusLabel()}
+
+              <FaChevronDown
+                className={`text-xs text-[#9AA0AA] transition-transform duration-200 ${
+                  isStatusOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+
+            {isStatusOpen && (
+              <div className="absolute right-0 top-[50px] w-[180px] bg-white rounded-[12px] shadow-lg border border-[#E8EDF3] p-2 z-30">
+                {statusOptions.map((status) => (
+                  <button
+                    key={status.value}
+                    type="button"
+                    onClick={() => handleStatusChange(status.value)}
+                    className={`w-full text-left px-3 py-2 rounded-[8px] text-sm font-semibold transition-all duration-200 ${
+                      statusFilter === status.value
+                        ? "bg-[#70A9F8] text-white"
+                        : "text-[#596070] hover:bg-[#F4F8FF] hover:text-[#70A9F8]"
+                    }`}
+                  >
+                    {status.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <button className="h-[44px] px-4 bg-white rounded-[12px] text-sm font-semibold text-[#8F96A3] flex items-center gap-2 shadow-sm hover:shadow-md transition-all duration-300">
+            <FaCalendarAlt />
+            Hari Ini
+          </button>
+
+          <button className="h-[44px] px-5 bg-[#70A9F8] hover:bg-[#5D9AF2] text-white rounded-[12px] text-sm font-bold flex items-center gap-2 shadow-sm hover:shadow-lg transition-all duration-300">
+            + Tambah Booking
+          </button>
+        </div>
+      </div>
+
+      {/* TABLE */}
+      <div className="bg-white rounded-[14px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
         <table className="w-full">
           <thead className="bg-[#EAF4FF]">
             <tr className="text-left text-[13px] text-[#8F96A3]">
@@ -580,13 +540,6 @@ export default function Booking() {
           </div>
         </div>
       </div>
-
-      <footer className="flex items-center gap-8 mt-8 text-[#B0B3BB] text-sm">
-        <span>Copyright © 2024 TravelGo</span>
-        <span>Privacy Policy</span>
-        <span>Term and conditions</span>
-        <span>Contact</span>
-      </footer>
     </div>
   );
 }

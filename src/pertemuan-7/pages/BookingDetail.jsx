@@ -96,7 +96,7 @@ export default function BookingDetail() {
   ];
 
   return (
-    <div className="min-h-[calc(100vh-76px)] bg-[#F4F5F7] px-8 py-7 text-[#202436]">
+    <div className="min-h-[calc(100vh-76px)] bg-[#F4F5F7] px-4 md:px-6 xl:px-8 py-5 xl:py-7 text-[#202436]">
       <div className="flex items-center justify-between mb-5">
         <Link
           to="/booking"
@@ -148,7 +148,7 @@ export default function BookingDetail() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 text-[13px] text-[#596070] font-semibold">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-[13px] text-[#596070] font-semibold">
                   <p className="flex items-center gap-2">
                     <FaPhoneAlt className="text-[#B9C0CA]" />
                     {customerDetail.hp}
@@ -166,7 +166,7 @@ export default function BookingDetail() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="bg-[#F7F7F8] rounded-[14px] p-5 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                   <div className="w-[44px] h-[44px] rounded-[10px] bg-[#EAF4FF] flex items-center justify-center text-[#70A9F8] mb-4">
                     <FaCalendarAlt />
@@ -355,12 +355,7 @@ export default function BookingDetail() {
         </aside>
       </div>
 
-      <footer className="flex items-center gap-8 mt-8 text-[#B0B3BB] text-sm">
-        <span>Copyright © 2024 TravelGo</span>
-        <span>Privacy Policy</span>
-        <span>Term and conditions</span>
-        <span>Contact</span>
-      </footer>
+    
     </div>
   );
 }

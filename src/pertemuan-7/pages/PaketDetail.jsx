@@ -31,7 +31,7 @@ export default function PaketDetail() {
     paketDetailData[paketDasar.nama] || paketDetailData.default;
 
   return (
-    <div className="min-h-[calc(100vh-76px)] bg-[#F4F5F7] px-8 py-7 text-[#202436]">
+    <div className="min-h-[calc(100vh-76px)] bg-[#F4F5F7] px-4 md:px-6 xl:px-8 py-5 xl:py-7 text-[#202436] overflow-x-hidden">
       <div className="flex items-center justify-between mb-5">
         <Link
           to="/paket"
@@ -68,7 +68,7 @@ export default function PaketDetail() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="h-[195px] rounded-[14px] overflow-hidden shadow-sm group">
                   <img
                     src={detail.galeri[1]}
@@ -236,12 +236,7 @@ export default function PaketDetail() {
         </aside>
       </div>
 
-      <footer className="flex items-center gap-8 mt-8 text-[#B0B3BB] text-sm">
-        <span>Copyright © 2024 TravelGo</span>
-        <span>Privacy Policy</span>
-        <span>Term and conditions</span>
-        <span>Contact</span>
-      </footer>
+    
     </div>
   );
 }

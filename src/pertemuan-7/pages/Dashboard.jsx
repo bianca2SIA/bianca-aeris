@@ -207,12 +207,12 @@ export default function Dashboard() {
   }));
 
   return (
-    <div className="min-h-[calc(100vh-76px)] bg-[#F4F5F7] px-8 py-7 text-[#202436]">
-      <div className="grid grid-cols-[1fr_300px] gap-6">
+    <div className="min-h-[calc(100vh-76px)] bg-[#F4F5F7] px-4 md:px-6 xl:px-8 py-5 xl:py-7 text-[#202436] overflow-x-hidden">
+      <div className="grid grid-cols-1 xl:grid-cols-[1fr_300px] gap-6">
         {/* KONTEN UTAMA */}
         <section className="space-y-6">
           {/* STAT CARD */}
-          <div className="grid grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {stats.map((item) => (
               <div
                 key={item.title}
@@ -243,7 +243,7 @@ export default function Dashboard() {
           </div>
 
           {/* CHART DAN DESTINASI */}
-          <div className="grid grid-cols-[1.2fr_0.9fr] gap-5">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.9fr] gap-5">
             {/* REVENUE */}
             <div className="bg-white rounded-[14px] p-5 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
               <div className="flex items-center justify-between mb-5">
@@ -452,23 +452,14 @@ export default function Dashboard() {
                         {item.durasi}
                       </p>
 
-                      <div className="flex items-end justify-between">
-                        <div>
-                          <p className="text-[#70A9F8] text-[18px] font-bold">
-                            {item.harga}
-                          </p>
-                          <p className="text-[#9AA0AA] text-[11px]">
-                            per orang
-                          </p>
-                        </div>
-
-                        <Link
-                          to={`/paket/${encodeURIComponent(item.nama)}`}
-                          className="bg-[#70A9F8] text-white text-[12px] font-bold px-4 py-2 rounded-[7px] hover:bg-[#5D9AF2] transition"
-                        >
-                          Detail
-                        </Link>
-                      </div>
+                      <div className="mt-4">
+  <Link
+    to={`/paket/${encodeURIComponent(item.nama)}`}
+    className="w-full h-[38px] bg-[#70A9F8] text-white text-[12px] font-bold rounded-[8px] hover:bg-[#5D9AF2] transition flex items-center justify-center"
+  >
+    Lihat Detail
+  </Link>
+</div>
                     </div>
                   ))}
                 </div>
@@ -522,14 +513,26 @@ export default function Dashboard() {
               <h3 className="font-bold text-[17px]">Booking Terbaru</h3>
 
               <div className="flex items-center gap-3">
-                <div className="w-[250px] h-[38px] bg-[#F8FAFC] rounded-[8px] flex items-center px-4 gap-3">
-                  <FaSearch className="text-[#B9C0CA] text-sm" />
-                  <input
-                    type="text"
-                    placeholder="Cari booking"
-                    className="w-full outline-none bg-transparent text-sm placeholder:text-[#B9C0CA]"
-                  />
-                </div>
+                 <div className="w-[330px] h-[44px] bg-white rounded-[12px] flex items-center px-4 gap-3 border border-[#EEF1F5] shadow-sm hover:shadow-md focus-within:border-[#70A9F8] focus-within:shadow-md transition-all duration-300">
+  <FaSearch className="text-[#B9C0CA] text-sm shrink-0" />
+
+  <input
+    type="text"
+    placeholder="Cari nama, alamat, paket, dll"
+    className="
+      w-full
+      bg-transparent
+      border-none
+      outline-none
+      ring-0
+      focus:outline-none
+      focus:ring-0
+      focus:border-none
+      text-sm
+      placeholder:text-[#B9C0CA]
+    "
+  />
+</div>
 
                 <Link
                   to="/booking"
@@ -725,22 +728,7 @@ export default function Dashboard() {
       </div>
 
       {/* FOOTER */}
-      <footer className="flex items-center justify-between mt-8 text-[#B0B3BB] text-sm">
-        <div className="flex items-center gap-8">
-          <span>Copyright © 2024 TravelGo</span>
-          <span>Privacy Policy</span>
-          <span>Term and conditions</span>
-          <span>Contact</span>
-        </div>
-
-        <div className="flex items-center gap-4 text-[#9AA0AA]">
-          <span>ⓕ</span>
-          <span>𝕏</span>
-          <span>◎</span>
-          <span>▶</span>
-          <span>in</span>
-        </div>
-      </footer>
+    
     </div>
   );
 }

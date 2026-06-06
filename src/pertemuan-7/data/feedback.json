@@ -1,0 +1,92 @@
+{
+  "reviewStats": [
+    { "bulan": "Agu 27", "positif": 950, "negatif": 680 },
+    { "bulan": "Sep 27", "positif": 890, "negatif": 760 },
+    { "bulan": "Okt 27", "positif": 1080, "negatif": 640 },
+    { "bulan": "Nov 27", "positif": 1000, "negatif": 560 },
+    { "bulan": "Des 27", "positif": 880, "negatif": 690 },
+    { "bulan": "Jan 28", "positif": 780, "negatif": 880 },
+    { "bulan": "Feb 28", "positif": 930, "negatif": 800 },
+    { "bulan": "Mar 28", "positif": 1050, "negatif": 680 },
+    { "bulan": "Apr 28", "positif": 1140, "negatif": 770 },
+    { "bulan": "Mei 28", "positif": 1030, "negatif": 630 },
+    { "bulan": "Jun 28", "positif": 900, "negatif": 500 },
+    { "bulan": "Jul 28", "positif": 1000, "negatif": 670 }
+  ],
+  "ratings": [
+    { "nama": "Akomodasi", "nilai": "4.6" },
+    { "nama": "Pemandu Wisata", "nilai": "4.8" },
+    { "nama": "Rencana Perjalanan", "nilai": "4.4" },
+    { "nama": "Layanan Customer", "nilai": "4.7" },
+    { "nama": "Harga Sesuai", "nilai": "4.3" },
+    { "nama": "Keamanan", "nilai": "4.5" },
+    { "nama": "Transportasi", "nilai": "4.5" },
+    { "nama": "Makanan", "nilai": "4.2" }
+  ],
+  "feedbacks": [
+    {
+      "nama": "Camellia Swan",
+      "paket": "Venice Dreams",
+      "rating": "4.5",
+      "avatar": "CS",
+      "image": "",
+      "teks": "Paket Venice Dreams sangat menyenangkan. Perjalanan gondola terasa indah, jadwal rapi, dan pemandu memberi banyak informasi menarik selama perjalanan."
+    },
+    {
+      "nama": "Raphael Goodman",
+      "paket": "Safari Adventure",
+      "rating": "5",
+      "avatar": "",
+      "image": "https://randomuser.me/api/portraits/men/32.jpg",
+      "teks": "Safari Adventure berjalan dengan baik. Pemandunya ramah, tempat wisata menarik, dan pengalaman melihat alam langsung terasa sangat berkesan."
+    },
+    {
+      "nama": "Ludwig Contessa",
+      "paket": "Alpine Escape",
+      "rating": "4",
+      "avatar": "",
+      "image": "https://randomuser.me/api/portraits/men/52.jpg",
+      "teks": "Alpine Escape menawarkan pemandangan yang indah. Penginapan nyaman, jadwal perjalanan pas, dan cocok untuk customer yang suka wisata alam."
+    },
+    {
+      "nama": "Armina Raul Meyes",
+      "paket": "Caribbean Cruise",
+      "rating": "3.5",
+      "avatar": "",
+      "image": "https://randomuser.me/api/portraits/women/22.jpg",
+      "teks": "Paket cruise punya destinasi bagus dan fasilitas nyaman. Ada sedikit keterlambatan jadwal, tapi secara keseluruhan perjalanan tetap menyenangkan."
+    },
+    {
+      "nama": "James Dunn",
+      "paket": "Parisian Romance",
+      "rating": "5",
+      "avatar": "",
+      "image": "https://randomuser.me/api/portraits/men/44.jpg",
+      "teks": "Parisian Romance melebihi ekspektasi. Tour Eiffel, Louvre, hotel, makanan, dan suasana perjalanan sangat cocok untuk liburan pasangan."
+    },
+    {
+      "nama": "Sophia Lee",
+      "paket": "Tokyo Cultural Adventure",
+      "rating": "4.5",
+      "avatar": "",
+      "image": "https://randomuser.me/api/portraits/women/65.jpg",
+      "teks": "Tokyo Cultural Adventure memberi pengalaman budaya yang menarik. Jadwalnya seimbang, pemandu jelas, dan tempat yang dikunjungi sangat seru."
+    },
+    {
+      "nama": "Michael Smith",
+      "paket": "Greek Island Hopping",
+      "rating": "4",
+      "avatar": "MS",
+      "image": "",
+      "teks": "Greek Island Hopping sangat menyenangkan. Akomodasi nyaman, suasana pulau indah, dan walaupun ada sedikit perubahan jadwal, semuanya tetap aman."
+    },
+    {
+      "nama": "Emily Davis",
+      "paket": "Bali Beach Escape",
+      "rating": "5",
+      "avatar": "",
+      "image": "https://randomuser.me/api/portraits/women/44.jpg",
+      "teks": "Bali Beach Escape sangat cocok untuk liburan santai. Pantainya indah, aktivitasnya menarik, dan pelayanan dari tim sangat membantu."
+    }
+  ]
+}

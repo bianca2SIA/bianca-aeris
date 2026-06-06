@@ -1,0 +1,224 @@
+[
+  {
+    "id": 1,
+    "nama": "Lucas Murphy",
+    "email": "lucas.murphy@example.com",
+    "avatar": "",
+    "initial": "LM",
+    "foto": "",
+    "waktu": "3:45 PM",
+    "unread": 1,
+    "status": "last seen recently",
+    "preview": "Saya punya batasan makanan dan ingin tahu apakah paket Parisian Romance bisa disesuaikan.",
+    "chat": [
+      {
+        "from": "customer",
+        "text": "Halo, saya punya batasan makanan. Apakah paket Parisian Romance bisa disesuaikan?",
+        "time": "3:35 PM"
+      },
+      {
+        "from": "admin",
+        "text": "Tentu bisa, Lucas. Kami bisa bantu sesuaikan pilihan makanan sesuai kebutuhan customer.",
+        "time": "3:38 PM"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "nama": "Alexandra Green",
+    "email": "alexandra.green@example.com",
+    "avatar": "https://randomuser.me/api/portraits/women/44.jpg",
+    "initial": "",
+    "foto": "https://randomuser.me/api/portraits/women/44.jpg",
+    "waktu": "09:15 AM",
+    "unread": 3,
+    "status": "online",
+    "preview": "Perusahaan kami tertarik membuat corporate retreat dengan TravelGo.",
+    "chat": [
+      {
+        "from": "customer",
+        "text": "Halo, perusahaan kami tertarik membuat corporate retreat dengan TravelGo. Apakah bisa dibuat paket khusus?",
+        "time": "09:10 AM"
+      },
+      {
+        "from": "admin",
+        "text": "Bisa, Alexandra. Kami bisa bantu siapkan paket khusus sesuai jumlah peserta, destinasi, dan kebutuhan acara.",
+        "time": "09:13 AM"
+      },
+      {
+        "from": "customer",
+        "text": "Baik, nanti saya kirim detail jumlah peserta dan estimasi tanggalnya.",
+        "time": "09:15 AM"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "nama": "David Hernandez",
+    "email": "david.hernandez@example.com",
+    "avatar": "https://randomuser.me/api/portraits/men/52.jpg",
+    "initial": "",
+    "foto": "https://randomuser.me/api/portraits/men/52.jpg",
+    "waktu": "10:00 AM",
+    "unread": 5,
+    "status": "last seen 10 minutes ago",
+    "preview": "Saya ingin upgrade booking Alpine Escape ke fasilitas yang lebih lengkap.",
+    "chat": [
+      {
+        "from": "customer",
+        "text": "Saya ingin upgrade booking Alpine Escape ke fasilitas yang lebih lengkap. Apakah masih bisa?",
+        "time": "09:55 AM"
+      },
+      {
+        "from": "admin",
+        "text": "Masih bisa, David. Kami akan cek ketersediaan kamar dan pilihan upgrade paketnya terlebih dahulu.",
+        "time": "09:58 AM"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "nama": "Mellinda Jenkins",
+    "email": "mellinda.jenkins@example.com",
+    "avatar": "https://randomuser.me/api/portraits/women/65.jpg",
+    "initial": "",
+    "foto": "https://randomuser.me/api/portraits/women/65.jpg",
+    "waktu": "Yesterday",
+    "unread": 2,
+    "status": "last seen yesterday",
+    "preview": "Bisa beri detail lebih banyak tentang paket Safari Adventure?",
+    "chat": [
+      {
+        "from": "customer",
+        "text": "Bisa beri detail lebih banyak tentang paket Safari Adventure? Saya tertarik untuk ikut bulan depan.",
+        "time": "Yesterday"
+      },
+      {
+        "from": "admin",
+        "text": "Tentu, Mellinda. Paket Safari Adventure mencakup guide lokal, transportasi, penginapan, dan dokumentasi perjalanan.",
+        "time": "Yesterday"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "nama": "Osman Farooq",
+    "email": "osman.farooq@example.com",
+    "avatar": "https://randomuser.me/api/portraits/men/32.jpg",
+    "initial": "",
+    "foto": "https://randomuser.me/api/portraits/men/32.jpg",
+    "waktu": "Yesterday",
+    "unread": 0,
+    "status": "last seen recently",
+    "preview": "Oke, terima kasih. Saya akan cek detailnya dan segera menghubungi lagi.",
+    "chat": [
+      {
+        "from": "customer",
+        "text": "Halo, saya sangat menikmati paket Venice Dreams. Bisa bantu booking paket yang mirip untuk trip ke Roma musim semi nanti?",
+        "time": "10:15 AM"
+      },
+      {
+        "from": "admin",
+        "text": "Hai Osman! Senang mendengarnya. Kami bisa bantu carikan paket yang mirip untuk Roma. Apakah kamu sudah punya tanggal tertentu?",
+        "time": "10:20 AM"
+      },
+      {
+        "from": "customer",
+        "text": "Saya mencari untuk dua minggu pertama bulan April. Apakah ada paket yang tersedia di waktu itu?",
+        "time": "10:25 AM"
+      },
+      {
+        "from": "admin",
+        "text": "Ada, kami punya paket Rome Highlights dari 1 April sampai 14 April. Paket ini mencakup kunjungan ke Colosseum, tur kota, dan Vatican City.",
+        "time": "10:30 AM"
+      },
+      {
+        "from": "customer",
+        "text": "Kedengarannya cocok. Bisa kirim itinerary dan detail harganya?",
+        "time": "10:35 AM"
+      },
+      {
+        "from": "admin",
+        "text": "Tentu. Saya akan kirim itinerary lengkap dan detail harga lewat email. Silakan cek inbox sebentar lagi.",
+        "time": "10:40 AM"
+      },
+      {
+        "from": "customer",
+        "text": "Oke, terima kasih. Saya akan cek detailnya dan segera menghubungi lagi.",
+        "time": "10:45 AM"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "nama": "Kalendra Umbara",
+    "email": "kalendra.umbara@example.com",
+    "avatar": "https://randomuser.me/api/portraits/women/22.jpg",
+    "initial": "",
+    "foto": "https://randomuser.me/api/portraits/women/22.jpg",
+    "waktu": "Yesterday",
+    "unread": 1,
+    "status": "last seen yesterday",
+    "preview": "Saya butuh bantuan untuk mengganti tanggal perjalanan Tokyo Cultural Adventure.",
+    "chat": [
+      {
+        "from": "customer",
+        "text": "Saya butuh bantuan untuk mengganti tanggal perjalanan Tokyo Cultural Adventure.",
+        "time": "Yesterday"
+      },
+      {
+        "from": "admin",
+        "text": "Bisa, Kalendra. Tolong kirim tanggal baru yang kamu inginkan, nanti kami cek ketersediaannya.",
+        "time": "Yesterday"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "nama": "Global Travel Services",
+    "email": "partner@globaltravel.com",
+    "avatar": "",
+    "initial": "G",
+    "foto": "",
+    "waktu": "2 days ago",
+    "unread": 3,
+    "status": "offline",
+    "preview": "Kami sudah memperbarui tarif komisi untuk kuartal berikutnya.",
+    "chat": [
+      {
+        "from": "customer",
+        "text": "Kami sudah memperbarui tarif komisi untuk kuartal berikutnya. Mohon dicek kembali.",
+        "time": "2 days ago"
+      },
+      {
+        "from": "admin",
+        "text": "Baik, kami akan review dokumennya dan memberi konfirmasi setelah selesai.",
+        "time": "2 days ago"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "nama": "Luxury Hotels Europe",
+    "email": "info@luxuryhotelseurope.com",
+    "avatar": "",
+    "initial": "L",
+    "foto": "",
+    "waktu": "09/06/28",
+    "unread": 0,
+    "status": "offline",
+    "preview": "Kami senang mengumumkan kerja sama hotel baru dengan TravelGo.",
+    "chat": [
+      {
+        "from": "customer",
+        "text": "Kami senang mengumumkan kerja sama hotel baru dengan TravelGo.",
+        "time": "09/06/28"
+      },
+      {
+        "from": "admin",
+        "text": "Terima kasih. Kami akan teruskan informasi ini ke tim paket wisata.",
+        "time": "09/06/28"
+      }
+    ]
+  }
+]

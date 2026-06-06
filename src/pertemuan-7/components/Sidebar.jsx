@@ -1,4 +1,4 @@
-﻿import { NavLink } from "react-router-dom";
+﻿import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 
 const navItems = [
@@ -6,7 +6,7 @@ const navItems = [
   { to: "/paket", label: "Packages", icon: "card_travel" },
   { to: "/booking", label: "Bookings", icon: "check_box" },
   { to: "/calendar", label: "Calendar", icon: "calendar_month" },
-  { to: "/user", label: "Travelers", icon: "work" },
+  { to: "/travelers", label: "Travelers", icon: "work" },
   { to: "/guides", label: "Guides", icon: "explore" },
   { to: "/gallery", label: "Gallery", icon: "photo_library" },
   { to: "/messages", label: "Messages", icon: "chat_bubble", badge: "7" },
@@ -15,6 +15,16 @@ const navItems = [
 ];
 
 export default function Sidebar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("isLogin");
+    localStorage.removeItem("user");
+    sessionStorage.clear();
+
+    navigate("/login");
+  };
+
   return (
     <aside className="fixed left-0 top-0 z-50 h-screen w-[230px] bg-white border-r border-[#E7EAF0] flex flex-col justify-between overflow-hidden">
       {/* ATAS */}
@@ -41,6 +51,7 @@ export default function Sidebar() {
               <li key={item.to}>
                 <NavLink
                   to={item.to}
+                  end={item.to === "/"}
                   className={({ isActive }) =>
                     `h-[46px] px-4 rounded-[8px] flex items-center gap-4 transition-all duration-200
                     ${
@@ -72,28 +83,15 @@ export default function Sidebar() {
 
       {/* BAWAH */}
       <div className="px-5 pb-8">
-        {/* UPGRADE CARD */}
-        <div className="bg-[#EAF4FF] rounded-[12px] px-4 py-5 text-center mb-8">
-          <p className="text-[14px] leading-5 text-[#202436] mb-4">
-            Enhance Your <br />
-            <span className="font-bold">TravelGo Experience!</span>
-          </p>
-
-          <div className="w-full h-[105px] rounded-[12px] overflow-hidden mb-4">
-            <img
-              src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=500&q=80"
-              alt="Upgrade"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          <button className="bg-white text-[#202436] text-[13px] font-bold px-6 py-2.5 rounded-[8px] shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-            Upgrade Now
-          </button>
-        </div>
+       
+        
 
         {/* LOGOUT */}
-        <button className="w-full flex items-center gap-4 px-4 text-[#9AA0AA] hover:text-[#75A9F8] transition">
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="w-full h-[46px] flex items-center gap-4 px-4 rounded-[8px] text-[#9AA0AA] hover:bg-[#FFF1F1] hover:text-[#F06C7A] transition-all duration-300"
+        >
           <span className="material-symbols-outlined text-[22px]">
             logout
           </span>

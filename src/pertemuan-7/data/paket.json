@@ -95,22 +95,10 @@
       "gambar": "https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=300&q=80"
     },
     {
-      "nama": "Paket Yogyakarta Student Trip",
-      "lokasi": "Yogyakarta, Indonesia",
-      "rating": "4.7/5",
-      "gambar": "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=300&q=80"
-    },
-    {
-      "nama": "Paket Medan Danau Toba",
-      "lokasi": "Medan, Sumatera Utara",
-      "rating": "4.5/5",
-      "gambar": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=300&q=80"
-    },
-    {
-      "nama": "Paket Makassar Explore",
-      "lokasi": "Makassar, Sulawesi Selatan",
-      "rating": "4.4/5",
-      "gambar": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=300&q=80"
+      "nama": "Paket Semarang Heritage",
+      "lokasi": "Semarang, Jawa Tengah",
+      "rating": "4.6/5",
+      "gambar": "https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=300&q=80"
     }
   ],
   "paketUnggulan": [
@@ -149,7 +137,7 @@
       ]
     },
     {
-      "nama": "Paket Labuan Bajo Sailing Trip",
+      "nama": "Paket Labuan Bajo",
       "lokasi": "Labuan Bajo, NTT",
       "durasi": "5 Hari / 4 Malam",
       "rating": "4.9",
@@ -183,7 +171,7 @@
       ]
     },
     {
-      "nama": "Paket Raja Ampat Explorer",
+      "nama": "Paket Raja Ampat",
       "lokasi": "Papua Barat",
       "durasi": "6 Hari / 5 Malam",
       "rating": "5",
@@ -214,6 +202,57 @@
         "Wisata Malioboro",
         "Tour Keraton Yogyakarta",
         "Belanja oleh-oleh Bakpia"
+      ]
+    },
+    {
+      "nama": "Paket Bandung Family Trip",
+      "lokasi": "Bandung, Jawa Barat",
+      "durasi": "2 Hari / 1 Malam",
+      "rating": "4.5",
+      "harga": "Rp 1.500.000",
+      "gambar": "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?auto=format&fit=crop&w=700&q=80",
+      "akomodasi": "Menginap di hotel atau penginapan keluarga yang nyaman.",
+      "makan": "Sarapan dan makan malam selama perjalanan.",
+      "ekstra": "Termasuk transportasi lokal dan dokumentasi.",
+      "aktivitas": [
+        "Wisata keluarga di Lembang",
+        "City tour Bandung",
+        "Kuliner khas Bandung",
+        "Belanja oleh-oleh"
+      ]
+    },
+    {
+      "nama": "Paket Jakarta City Tour",
+      "lokasi": "Jakarta, Indonesia",
+      "durasi": "1 Hari",
+      "rating": "4",
+      "harga": "Rp 1.200.000",
+      "gambar": "https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=700&q=80",
+      "akomodasi": "Tidak termasuk penginapan karena paket city tour satu hari.",
+      "makan": "Makan siang selama city tour.",
+      "ekstra": "Termasuk transportasi lokal, guide, dan tiket destinasi.",
+      "aktivitas": [
+        "Mengunjungi Monas",
+        "Wisata Kota Tua",
+        "Museum dan kuliner",
+        "Belanja oleh-oleh Jakarta"
+      ]
+    },
+    {
+      "nama": "Paket Danau Toba",
+      "lokasi": "Sumatera Utara",
+      "durasi": "3 Hari / 2 Malam",
+      "rating": "4.6",
+      "harga": "Rp 3.750.000",
+      "gambar": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=700&q=80",
+      "akomodasi": "Menginap di penginapan dekat kawasan Danau Toba.",
+      "makan": "Makan sesuai jadwal perjalanan.",
+      "ekstra": "Termasuk kapal penyeberangan, guide, dan dokumentasi.",
+      "aktivitas": [
+        "Wisata Danau Toba",
+        "Menyeberang ke Pulau Samosir",
+        "Melihat budaya Batak",
+        "Belanja oleh-oleh khas Sumatera Utara"
       ]
     }
   ],
@@ -273,6 +312,12 @@
       "gambar": "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=400&q=80"
     },
     {
+      "nama": "Paket Semarang Heritage",
+      "lokasi": "Semarang, Jawa Tengah",
+      "harga": "Rp 1.850.000",
+      "gambar": "https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=400&q=80"
+    },
+    {
       "nama": "Paket Makassar Explore",
       "lokasi": "Makassar, Sulawesi Selatan",
       "harga": "Rp 2.950.000",
@@ -283,12 +328,6 @@
       "lokasi": "Medan, Sumatera Utara",
       "harga": "Rp 3.600.000",
       "gambar": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=400&q=80"
-    },
-    {
-      "nama": "Paket Semarang Heritage",
-      "lokasi": "Semarang, Jawa Tengah",
-      "harga": "Rp 1.850.000",
-      "gambar": "https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=400&q=80"
     }
   ]
 }

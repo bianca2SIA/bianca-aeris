@@ -1,20 +1,39 @@
-﻿import { useLocation } from "react-router-dom";
+﻿import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 export default function Header() {
   const location = useLocation();
 
-  const titles = {
-    "/": "Dashboard",
-    "/paket": "Packages",
-    "/booking": "Bookings",
-    "/user": "Travelers",
-    "/paket/1": "Package Details",
+  const getPageTitle = () => {
+    const path = location.pathname;
+
+    if (path === "/") return "Dashboard";
+
+    if (path === "/paket") return "Packages";
+    if (path.startsWith("/paket/")) return "Package Details";
+
+    if (path === "/booking") return "Bookings";
+    if (path.startsWith("/booking/")) return "Booking Details";
+
+    if (path === "/calendar") return "Calendar";
+    if (path === "/travelers") return "Travelers";
+    if (path === "/guides") return "Guides";
+    if (path === "/gallery") return "Gallery";
+    if (path === "/messages") return "Messages";
+    if (path === "/deals") return "Deals";
+    if (path === "/feedback") return "Feedback";
+
+    return "Dashboard";
   };
 
-  const pageTitle = titles[location.pathname] || "Dashboard";
+  const pageTitle = getPageTitle();
+
+  useEffect(() => {
+    document.title = `${pageTitle} - TravelGo.`;
+  }, [pageTitle]);
 
   return (
-    <header className="fixed top-0 left-[230px] right-0 z-40 bg-white border-b border-[#EEF1F5] h-[76px] px-8">
+    <header className="fixed top-0 left-[230px] right-0 z-40 h-[76px] bg-white border-b border-[#EEF1F5] px-8">
       <div className="h-full flex items-center justify-between">
         {/* KIRI */}
         <h1 className="text-[20px] font-bold text-[#1E293B]">
@@ -30,7 +49,7 @@ export default function Header() {
                 material-symbols-outlined
                 absolute
                 left-4
-                top-[80%]
+                top-[75%]
                 -translate-y-1/2
                 text-[#B8C0CC]
                 text-[22px]
@@ -43,7 +62,7 @@ export default function Header() {
               type="text"
               placeholder="Search anything"
               className="
-                w-[260px]
+               w-[180px] xl:w-[260px]
                 h-[46px]
                 bg-[#FAFBFC]
                 border
@@ -52,27 +71,30 @@ export default function Header() {
                 pl-12
                 pr-4
                 text-[14px]
-                text-[#9AA6B2]
+                text-[#596070]
+                placeholder:text-[#9AA6B2]
                 outline-none
                 focus:border-[#6EA8FE]
-                transition
+                focus:shadow-sm
+                transition-all
+                duration-300
               "
             />
           </div>
 
-          {/* NOTIF */}
-          <button className="relative">
+          {/* NOTIFICATION */}
+          <button className="relative w-[42px] h-[42px] rounded-xl flex items-center justify-center hover:bg-[#F4F7FA] transition">
             <span className="material-symbols-outlined text-[24px] text-[#B8C0CC] hover:text-[#6EA8FE]">
               notifications
             </span>
 
-            <span className="absolute top-[2px] right-[2px] h-[8px] w-[8px] rounded-full bg-[#F19999]"></span>
+            <span className="absolute top-[9px] right-[9px] h-[8px] w-[8px] rounded-full bg-[#F19999]"></span>
           </button>
 
           <div className="h-10 border-r border-[#EEF2F6]"></div>
 
           {/* PROFILE */}
-          <div className="flex items-center gap-3 cursor-pointer">
+          <div className="flex items-center gap-3 cursor-pointer group">
             <img
               src="https://randomuser.me/api/portraits/women/44.jpg"
               alt="Admin"
@@ -80,14 +102,14 @@ export default function Header() {
             />
 
             <div>
-              <h3 className="text-[15px] font-semibold text-[#222]">
+              <h3 className="text-[15px] font-semibold text-[#222] group-hover:text-[#6EA8FE] transition">
                 Bianca Bahi
               </h3>
 
               <p className="text-[13px] text-[#AAB2BF]">Admin</p>
             </div>
 
-            <span className="material-symbols-outlined text-[#BAC4CB]">
+            <span className="material-symbols-outlined text-[#BAC4CB] group-hover:text-[#6EA8FE] transition">
               keyboard_arrow_down
             </span>
           </div>
