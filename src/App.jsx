@@ -21,7 +21,8 @@ const Users = React.lazy(() => import("./pertemuan-7/pages/Users"));
 const Messages = React.lazy(() => import("./pertemuan-7/pages/Messages"));
 const Deals = React.lazy(() => import("./pertemuan-7/pages/Deals"));
 const Feedback = React.lazy(() => import("./pertemuan-7/pages/Feedback"));
-
+const GuestLayout = React.lazy(() => import("./pertemuan-7/layouts/GuestLayout"));
+const HomeGuest = React.lazy(() => import("./pertemuan-7/pages/guest/HomeGuest"));
 const Login = React.lazy(() => import("./pertemuan-7/pages/auth/Login"));
 const Register = React.lazy(() => import("./pertemuan-7/pages/auth/Register"));
 
@@ -45,6 +46,14 @@ function App() {
       <ScrollToTop />
 
       <Routes>
+        <Route path="/home" element={<GuestLayout />}>
+    <Route index element={<HomeGuest />} />
+  </Route>
+
+  {/* AUTH */}
+  <Route path="/login" element={<AuthLayout />}>
+    <Route index element={<Login />} />
+  </Route>
         {/* AUTH */}
         <Route path="/login" element={<AuthLayout />}>
           <Route index element={<Login />} />
