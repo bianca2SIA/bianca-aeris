@@ -22,6 +22,7 @@ export default function Header() {
     if (path === "/messages") return "Messages";
     if (path === "/deals") return "Deals";
     if (path === "/feedback") return "Feedback";
+    if (path === "/users") return "Users";
 
     return "Dashboard";
   };

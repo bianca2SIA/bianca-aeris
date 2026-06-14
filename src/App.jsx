@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 
 import MainLayout from "./pertemuan-7/layouts/MainLayout";
 import AuthLayout from "./pertemuan-7/layouts/AuthLayout";
@@ -17,11 +17,13 @@ const BookingDetail = React.lazy(() =>
 
 const Travelers = React.lazy(() => import("./pertemuan-7/pages/Travelers"));
 const Guides = React.lazy(() => import("./pertemuan-7/pages/Guides"));
+const Users = React.lazy(() => import("./pertemuan-7/pages/Users"));
 const Messages = React.lazy(() => import("./pertemuan-7/pages/Messages"));
 const Deals = React.lazy(() => import("./pertemuan-7/pages/Deals"));
 const Feedback = React.lazy(() => import("./pertemuan-7/pages/Feedback"));
 
 const Login = React.lazy(() => import("./pertemuan-7/pages/auth/Login"));
+const Register = React.lazy(() => import("./pertemuan-7/pages/auth/Register"));
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -48,9 +50,17 @@ function App() {
           <Route index element={<Login />} />
         </Route>
 
+        <Route path="/register" element={<AuthLayout />}>
+          <Route index element={<Register />} />
+        </Route>
+
         {/* MAIN CRM */}
         <Route path="/" element={<MainLayout />}>
-          <Route index element={<Dashboard />} />
+          {/* kalau buka localhost:5173/ langsung ke login */}
+          <Route index element={<Navigate to="/login" replace />} />
+
+          {/* DASHBOARD */}
+          <Route path="dashboard" element={<Dashboard />} />
 
           {/* PACKAGES */}
           <Route path="paket" element={<Paket />} />
@@ -63,6 +73,7 @@ function App() {
           {/* MENU SIDEBAR */}
           <Route path="travelers" element={<Travelers />} />
           <Route path="guides" element={<Guides />} />
+          <Route path="users" element={<Users />} />
           <Route path="messages" element={<Messages />} />
           <Route path="deals" element={<Deals />} />
           <Route path="feedback" element={<Feedback />} />

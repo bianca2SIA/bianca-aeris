@@ -1,39 +1,45 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { authAPI } from "../../../services/authAPI.js";
 
 export default function Login() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     setError("");
-    setLoading(true);
 
     if (!email || !password) {
-      setError("Email and password are required");
-      setLoading(false);
+      setError("Email dan password wajib diisi");
       return;
     }
 
-    setTimeout(() => {
-      if (email === "admin@mail.com" && password === "123") {
-        navigate("/");
-      } else {
-        setError("Incorrect email or password");
-      }
+    try {
+      setLoading(true);
+
+      await authAPI.login({
+        email: email,
+        password: password,
+      });
+
+      navigate("/dashboard");
+    } catch (err) {
+      setError("Email atau password salah");
+      console.error(err);
+    } finally {
       setLoading(false);
-    }, 1200);
+    }
   };
 
   return (
     <div className="flex w-full h-screen overflow-hidden font-[Plus_Jakarta_Sans]">
-
       {/* LEFT */}
       <div
         className="hidden lg:flex w-1/2 relative bg-cover bg-center"
@@ -58,13 +64,13 @@ export default function Login() {
       {/* RIGHT */}
       <div className="w-full lg:w-1/2 flex items-center justify-center px-8 lg:px-24 bg-white">
         <div className="w-full max-w-md">
-
           {/* HEADER */}
           <div className="mb-12">
             <div className="flex items-center gap-2 mb-8">
               <span className="material-symbols-outlined text-[var(--primary)] text-3xl">
                 location_on
               </span>
+
               <span className="text-2xl font-bold text-[var(--dark)]">
                 TravelGo.
               </span>
@@ -73,6 +79,7 @@ export default function Login() {
             <h1 className="text-3xl font-bold text-[var(--dark)] mb-2">
               Welcome back
             </h1>
+
             <p className="text-[var(--secondary)]">
               Please enter your details to sign in.
             </p>
@@ -81,31 +88,31 @@ export default function Login() {
           {/* ERROR */}
           {error && (
             <div className="mb-4 p-4 bg-[var(--error)]/20 text-[var(--error)] rounded-lg flex items-center gap-2">
-              <span className="material-symbols-outlined">
-                error
-              </span>
+              <span className="material-symbols-outlined">error</span>
               {error}
             </div>
           )}
 
           {/* FORM */}
           <form onSubmit={handleLogin} className="space-y-6">
-
             {/* EMAIL */}
             <div>
               <label className="block mb-2 text-sm font-medium text-[var(--dark)]">
                 Email Address
               </label>
+
               <div className="relative">
                 <span className="material-symbols-outlined absolute left-3 top-3 text-[var(--secondary)]">
                   mail
                 </span>
+
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="w-full pl-10 pr-4 py-3 bg-white border border-[var(--secondary)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] outline-none"
+                  className="w-full pl-10 pr-4 py-3 bg-white border border-[var(--secondary)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] outline-none disabled:opacity-60"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  disabled={loading}
                 />
               </div>
             </div>
@@ -116,6 +123,7 @@ export default function Login() {
                 <label className="text-sm font-medium text-[var(--dark)]">
                   Password
                 </label>
+
                 <span className="text-[var(--primary)] text-sm cursor-pointer">
                   Forgot?
                 </span>
@@ -125,19 +133,21 @@ export default function Login() {
                 <span className="material-symbols-outlined absolute left-3 top-3 text-[var(--secondary)]">
                   lock
                 </span>
+
                 <input
                   type="password"
                   placeholder="••••••••"
-                className="w-full pl-10 pr-4 py-3 bg-white border border-[var(--secondary)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] outline-none"
+                  className="w-full pl-10 pr-4 py-3 bg-white border border-[var(--secondary)] rounded-lg focus:ring-2 focus:ring-[var(--primary)] outline-none disabled:opacity-60"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  disabled={loading}
                 />
               </div>
             </div>
 
             {/* REMEMBER */}
             <div className="flex items-center gap-2">
-              <input type="checkbox" />
+              <input type="checkbox" disabled={loading} />
               <span className="text-sm text-[var(--secondary)]">
                 Remember me
               </span>
@@ -146,21 +156,23 @@ export default function Login() {
             {/* BUTTON */}
             <button
               type="submit"
-              className="w-full py-3 bg-[var(--primary)] text-white rounded-lg font-semibold hover:opacity-90 transition"
+              disabled={loading}
+              className="w-full py-3 bg-[var(--primary)] text-white rounded-lg font-semibold hover:opacity-90 transition disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {loading ? "Signing in..." : "Sign In"}
             </button>
-
           </form>
 
           {/* FOOTER */}
           <div className="mt-8 text-center text-sm text-[var(--secondary)]">
-            Don't have an account?{" "}
-            <span className="text-[var(--primary)] cursor-pointer">
+            Don&apos;t have an account?{" "}
+            <Link
+              to="/register"
+              className="text-[var(--primary)] cursor-pointer font-semibold"
+            >
               Create account
-            </span>
+            </Link>
           </div>
-
         </div>
       </div>
     </div>

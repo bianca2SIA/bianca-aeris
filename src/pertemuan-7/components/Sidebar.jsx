@@ -2,10 +2,11 @@
 import logo from "../assets/logo.png";
 
 const navItems = [
-  { to: "/", label: "Dashboard", icon: "dashboard" },
+  { to: "/dashboard", label: "Dashboard", icon: "dashboard" },
   { to: "/paket", label: "Packages", icon: "card_travel" },
   { to: "/booking", label: "Bookings", icon: "check_box" },
   { to: "/travelers", label: "Travelers", icon: "work" },
+  { to: "/users", label: "Users", icon: "group" },
   { to: "/guides", label: "Guides", icon: "explore" },
   { to: "/messages", label: "Messages", icon: "chat_bubble", badge: "7" },
   { to: "/deals", label: "Deals", icon: "local_offer" },
