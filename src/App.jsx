@@ -15,10 +15,8 @@ const BookingDetail = React.lazy(() =>
   import("./pertemuan-7/pages/BookingDetail")
 );
 
-const Calendar = React.lazy(() => import("./pertemuan-7/pages/Calendar"));
 const Travelers = React.lazy(() => import("./pertemuan-7/pages/Travelers"));
 const Guides = React.lazy(() => import("./pertemuan-7/pages/Guides"));
-const Gallery = React.lazy(() => import("./pertemuan-7/pages/Gallery"));
 const Messages = React.lazy(() => import("./pertemuan-7/pages/Messages"));
 const Deals = React.lazy(() => import("./pertemuan-7/pages/Deals"));
 const Feedback = React.lazy(() => import("./pertemuan-7/pages/Feedback"));
@@ -63,10 +61,8 @@ function App() {
           <Route path="booking/:kodeBooking" element={<BookingDetail />} />
 
           {/* MENU SIDEBAR */}
-          <Route path="calendar" element={<Calendar />} />
           <Route path="travelers" element={<Travelers />} />
           <Route path="guides" element={<Guides />} />
-          <Route path="gallery" element={<Gallery />} />
           <Route path="messages" element={<Messages />} />
           <Route path="deals" element={<Deals />} />
           <Route path="feedback" element={<Feedback />} />
