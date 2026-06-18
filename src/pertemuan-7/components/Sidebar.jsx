@@ -7,7 +7,7 @@ const navItems = [
   { to: "/booking", label: "Bookings", icon: "check_box" },
   { to: "/travelers", label: "Travelers", icon: "work" },
   { to: "/users", label: "Users", icon: "group" },
-  { to: "/guides", label: "Guides", icon: "explore" },
+  //{ to: "/guides", label: "Guides", icon: "explore" },
   { to: "/messages", label: "Messages", icon: "chat_bubble", badge: "7" },
   { to: "/deals", label: "Deals", icon: "local_offer" },
   { to: "/feedback", label: "Feedback", icon: "thumb_up" },

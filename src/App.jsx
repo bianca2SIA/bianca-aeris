@@ -21,8 +21,15 @@ const Users = React.lazy(() => import("./pertemuan-7/pages/Users"));
 const Messages = React.lazy(() => import("./pertemuan-7/pages/Messages"));
 const Deals = React.lazy(() => import("./pertemuan-7/pages/Deals"));
 const Feedback = React.lazy(() => import("./pertemuan-7/pages/Feedback"));
-const GuestLayout = React.lazy(() => import("./pertemuan-7/layouts/GuestLayout"));
-const HomeGuest = React.lazy(() => import("./pertemuan-7/pages/guest/HomeGuest"));
+
+const GuestLayout = React.lazy(() =>
+  import("./pertemuan-7/layouts/GuestLayout")
+);
+
+const HomeGuest = React.lazy(() =>
+  import("./pertemuan-7/pages/guest/HomeGuest")
+);
+
 const Login = React.lazy(() => import("./pertemuan-7/pages/auth/Login"));
 const Register = React.lazy(() => import("./pertemuan-7/pages/auth/Register"));
 
@@ -46,14 +53,14 @@ function App() {
       <ScrollToTop />
 
       <Routes>
-        <Route path="/home" element={<GuestLayout />}>
-    <Route index element={<HomeGuest />} />
-  </Route>
+        {/* DEFAULT */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
 
-  {/* AUTH */}
-  <Route path="/login" element={<AuthLayout />}>
-    <Route index element={<Login />} />
-  </Route>
+        {/* GUEST */}
+        <Route path="/home" element={<GuestLayout />}>
+          <Route index element={<HomeGuest />} />
+        </Route>
+
         {/* AUTH */}
         <Route path="/login" element={<AuthLayout />}>
           <Route index element={<Login />} />
@@ -63,30 +70,29 @@ function App() {
           <Route index element={<Register />} />
         </Route>
 
-        {/* MAIN CRM */}
-        <Route path="/" element={<MainLayout />}>
-          {/* kalau buka localhost:5173/ langsung ke login */}
-          <Route index element={<Navigate to="/login" replace />} />
+        {/* SEMENTARA MEMBER DIARAHKAN KE ADMIN */}
+        <Route path="/member" element={<Navigate to="/dashboard" replace />} />
 
-          {/* DASHBOARD */}
-          <Route path="dashboard" element={<Dashboard />} />
+        {/* ADMIN */}
+        <Route element={<MainLayout />}>
+          <Route path="/dashboard" element={<Dashboard />} />
 
-          {/* PACKAGES */}
-          <Route path="paket" element={<Paket />} />
-          <Route path="paket/:namaPaket" element={<PaketDetail />} />
+          <Route path="/paket" element={<Paket />} />
+          <Route path="/paket/:namaPaket" element={<PaketDetail />} />
 
-          {/* BOOKINGS */}
-          <Route path="booking" element={<Booking />} />
-          <Route path="booking/:kodeBooking" element={<BookingDetail />} />
+          <Route path="/booking" element={<Booking />} />
+          <Route path="/booking/:kodeBooking" element={<BookingDetail />} />
 
-          {/* MENU SIDEBAR */}
-          <Route path="travelers" element={<Travelers />} />
-          <Route path="guides" element={<Guides />} />
-          <Route path="users" element={<Users />} />
-          <Route path="messages" element={<Messages />} />
-          <Route path="deals" element={<Deals />} />
-          <Route path="feedback" element={<Feedback />} />
+          <Route path="/travelers" element={<Travelers />} />
+          <Route path="/guides" element={<Guides />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/messages" element={<Messages />} />
+          <Route path="/deals" element={<Deals />} />
+          <Route path="/feedback" element={<Feedback />} />
         </Route>
+
+        {/* KALAU URL SALAH */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </Suspense>
   );

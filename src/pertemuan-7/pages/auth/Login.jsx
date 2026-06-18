@@ -12,31 +12,40 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    setError("");
+  setError("");
 
-    if (!email || !password) {
-      setError("Email dan password wajib diisi");
-      return;
-    }
+  if (!email || !password) {
+    setError("Email dan password wajib diisi");
+    return;
+  }
 
-    try {
-      setLoading(true);
+  try {
+    setLoading(true);
 
-      await authAPI.login({
-        email: email,
-        password: password,
-      });
+    const response = await authAPI.login({
+      email: email,
+      password: password,
+    });
 
+    const user = response?.user || response?.data?.user || response?.data || response;
+    const role = user?.role?.toLowerCase();
+
+    if (role === "admin" || email.toLowerCase() === "admin@gmail.com") {
       navigate("/dashboard");
-    } catch (err) {
-      setError("Email atau password salah");
-      console.error(err);
-    } finally {
-      setLoading(false);
+    } else {
+      navigate("/member");
     }
-  };
+  } catch (err) {
+    setError("Email atau password salah");
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+
+};
+  
 
   return (
     <div className="flex w-full h-screen overflow-hidden font-[Plus_Jakarta_Sans]">
