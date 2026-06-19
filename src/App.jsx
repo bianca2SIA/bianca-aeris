@@ -33,6 +33,10 @@ const HomeGuest = React.lazy(() =>
 const Login = React.lazy(() => import("./pertemuan-7/pages/auth/Login"));
 const Register = React.lazy(() => import("./pertemuan-7/pages/auth/Register"));
 
+const MemberDashboard = React.lazy(() =>
+  import("./pertemuan-7/pages/member/MemberDashboard")
+);
+
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -53,8 +57,8 @@ function App() {
       <ScrollToTop />
 
       <Routes>
-        {/* DEFAULT */}
-        <Route path="/" element={<Navigate to="/login" replace />} />
+        {/* DEFAULT KE HALAMAN GUEST */}
+        <Route path="/" element={<Navigate to="/home" replace />} />
 
         {/* GUEST */}
         <Route path="/home" element={<GuestLayout />}>
@@ -70,10 +74,10 @@ function App() {
           <Route index element={<Register />} />
         </Route>
 
-        {/* SEMENTARA MEMBER DIARAHKAN KE ADMIN */}
-        <Route path="/member" element={<Navigate to="/dashboard" replace />} />
+        {/* MEMBER CUSTOMER */}
+        <Route path="/member" element={<MemberDashboard />} />
 
-        {/* ADMIN */}
+        {/* ADMIN CRM */}
         <Route element={<MainLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
 
@@ -91,8 +95,8 @@ function App() {
           <Route path="/feedback" element={<Feedback />} />
         </Route>
 
-        {/* KALAU URL SALAH */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        {/* KALAU URL SALAH, BALIK KE GUEST */}
+        <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
     </Suspense>
   );
