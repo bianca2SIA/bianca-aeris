@@ -37,9 +37,7 @@ export default function Header() {
     <header className="fixed top-0 left-[230px] right-0 z-40 h-[76px] bg-white border-b border-[#EEF1F5] px-8">
       <div className="h-full flex items-center justify-between">
         {/* KIRI */}
-        <h1 className="text-[20px] font-bold text-[#1E293B]">
-          {pageTitle}
-        </h1>
+        <h1 className="text-[20px] font-bold text-[#1E293B]">{pageTitle}</h1>
 
         {/* KANAN */}
         <div className="flex items-center gap-7">

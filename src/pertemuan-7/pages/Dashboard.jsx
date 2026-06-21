@@ -123,7 +123,9 @@ function ambilSemuaPaket() {
     ...(paketData.paketRekomendasi || []),
   ].filter(Boolean);
 
-  return Array.from(new Map(semuaPaket.map((item) => [item.nama, item])).values());
+  return Array.from(
+    new Map(semuaPaket.map((item) => [item.nama, item])).values(),
+  );
 }
 
 function buatHariKalender(tahun, bulanIndex) {
@@ -210,7 +212,9 @@ function StatCard({ item, onClick }) {
           <h2 className="text-[24px] xl:text-[26px] font-bold leading-none truncate">
             {item.value}
           </h2>
-          <p className="text-[11px] text-[#9AA0AA] mt-1 truncate">{item.desc}</p>
+          <p className="text-[11px] text-[#9AA0AA] mt-1 truncate">
+            {item.desc}
+          </p>
         </div>
       </div>
 
@@ -245,7 +249,11 @@ function DashboardChart({ periode, setPeriode, totalPendapatan, onDetail }) {
         </div>
       </div>
 
-      <button type="button" onClick={onDetail} className="relative h-[220px] w-full text-left">
+      <button
+        type="button"
+        onClick={onDetail}
+        className="relative h-[220px] w-full text-left"
+      >
         <div className="absolute left-0 top-0 bottom-8 flex flex-col justify-between text-[12px] text-[#8F96A3]">
           <span>Rp 8Jt</span>
           <span>Rp 6Jt</span>
@@ -325,7 +333,9 @@ function PaketTeratas({ periode, setPeriode, topDestinations, onDetail }) {
 
         <button
           type="button"
-          onClick={() => setPeriode(periode === "Bulan Ini" ? "Tahun Ini" : "Bulan Ini")}
+          onClick={() =>
+            setPeriode(periode === "Bulan Ini" ? "Tahun Ini" : "Bulan Ini")
+          }
           className="h-[34px] px-4 rounded-[8px] bg-[#70A9F8] text-white text-sm font-bold"
         >
           {periode}
@@ -352,7 +362,9 @@ function PaketTeratas({ periode, setPeriode, topDestinations, onDetail }) {
               <p className="font-bold flex items-center gap-2">
                 <span
                   className="w-3 h-3 rounded-sm shrink-0"
-                  style={{ backgroundColor: WARNA_DESTINASI[index] || "#E5F1FF" }}
+                  style={{
+                    backgroundColor: WARNA_DESTINASI[index] || "#E5F1FF",
+                  }}
                 ></span>
                 <span className="line-clamp-1">
                   {item.paket} ({item.persen}%)
@@ -398,7 +410,11 @@ function PaketTravel({ travelPackages, onDetail }) {
             key={item.nama}
             className="bg-white rounded-[12px] p-3 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
           >
-            <button type="button" onClick={() => onDetail(item)} className="w-full text-left">
+            <button
+              type="button"
+              onClick={() => onDetail(item)}
+              className="w-full text-left"
+            >
               <div className="h-[165px] rounded-[10px] overflow-hidden relative mb-3">
                 <img
                   src={item.gambar}
@@ -411,7 +427,9 @@ function PaketTravel({ travelPackages, onDetail }) {
                 </span>
               </div>
 
-              <h4 className="font-bold text-[15px] mb-1 line-clamp-1">{item.nama}</h4>
+              <h4 className="font-bold text-[15px] mb-1 line-clamp-1">
+                {item.nama}
+              </h4>
 
               <p className="text-[#9AA0AA] text-[12px] flex items-center gap-1 mb-3">
                 <FaClock />
@@ -433,7 +451,13 @@ function PaketTravel({ travelPackages, onDetail }) {
   );
 }
 
-function BookingTerbaru({ search, setSearch, bookings, onBookingDetail, onTravelerDetail }) {
+function BookingTerbaru({
+  search,
+  setSearch,
+  bookings,
+  onBookingDetail,
+  onTravelerDetail,
+}) {
   return (
     <div className="bg-white rounded-[14px] p-5 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
       <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 mb-5">
@@ -500,14 +524,16 @@ function BookingTerbaru({ search, setSearch, bookings, onBookingDetail, onTravel
                 <td className="px-4 py-4 text-[13px] text-[#596070]">
                   {formatDurasiPendek(item.durasi)}
                 </td>
-                <td className="px-4 py-4 text-[13px] text-[#596070]">{item.tanggal}</td>
+                <td className="px-4 py-4 text-[13px] text-[#596070]">
+                  {item.tanggal}
+                </td>
                 <td className="px-4 py-4 text-[13px] font-bold text-[#596070]">
                   {item.harga}
                 </td>
                 <td className="px-4 py-4">
                   <span
                     className={`px-3 py-1 rounded-[6px] text-[11px] font-bold whitespace-nowrap ${getStatusStyle(
-                      item.status
+                      item.status,
                     )}`}
                   >
                     {item.status}
@@ -525,7 +551,9 @@ function BookingTerbaru({ search, setSearch, bookings, onBookingDetail, onTravel
             <FaSearch />
           </div>
           <h3 className="font-bold text-[#202436]">Booking tidak ditemukan</h3>
-          <p className="text-[13px] text-[#9AA0AA] mt-1">Coba ubah kata kunci pencarian.</p>
+          <p className="text-[13px] text-[#9AA0AA] mt-1">
+            Coba ubah kata kunci pencarian.
+          </p>
         </div>
       )}
     </div>
@@ -548,11 +576,17 @@ export default function Dashboard() {
   const totalCustomer = travelerData.length;
   const totalPendapatan = bookingList.reduce(
     (total, item) => total + rupiahToNumber(item.harga),
-    0
+    0,
   );
-  const totalDikonfirmasi = bookingList.filter((item) => item.status === "Dikonfirmasi").length;
-  const totalMenunggu = bookingList.filter((item) => item.status === "Menunggu").length;
-  const totalDibatalkan = bookingList.filter((item) => item.status === "Dibatalkan").length;
+  const totalDikonfirmasi = bookingList.filter(
+    (item) => item.status === "Dikonfirmasi",
+  ).length;
+  const totalMenunggu = bookingList.filter(
+    (item) => item.status === "Menunggu",
+  ).length;
+  const totalDibatalkan = bookingList.filter(
+    (item) => item.status === "Dibatalkan",
+  ).length;
 
   const ringkasanPendapatan = {
     totalPendapatan,
@@ -591,7 +625,12 @@ export default function Dashboard() {
 
   const travelPackages = paketUnik.slice(0, 3).map((item, index) => ({
     ...item,
-    label: index === 0 ? "Paket Terbaru" : index === 1 ? "Favorit Customer" : "Rekomendasi",
+    label:
+      index === 0
+        ? "Paket Terbaru"
+        : index === 1
+          ? "Favorit Customer"
+          : "Rekomendasi",
     nama: item.nama,
     durasi: item.durasi || "5 Hari / 4 Malam",
     harga: item.harga || "Rp 0",
@@ -622,7 +661,14 @@ export default function Dashboard() {
     nama: item.nama,
     pesan: `Tertarik dengan ${item.paket}`,
     waktu: ["11:00", "2:30", "9:45", "10:15", "1:20", "10:00", "12:30"][index],
-    icon: index === 0 ? <FaBuilding /> : index === 1 ? <FaGlobeAsia /> : <FaUserCircle />,
+    icon:
+      index === 0 ? (
+        <FaBuilding />
+      ) : index === 1 ? (
+        <FaGlobeAsia />
+      ) : (
+        <FaUserCircle />
+      ),
     badge: String((index % 5) + 1),
   }));
 
@@ -635,10 +681,10 @@ export default function Dashboard() {
         index === 0
           ? "Trip Customer"
           : index === 1
-          ? "Paket Populer"
-          : index === 2
-          ? "Adventure Tour"
-          : "City Highlights",
+            ? "Paket Populer"
+            : index === 2
+              ? "Adventure Tour"
+              : "City Highlights",
       nama: item.paket,
       tanggal: item.tanggal,
       gambar:
@@ -665,8 +711,8 @@ export default function Dashboard() {
       item.status === "Dibatalkan"
         ? `${item.nama} membatalkan booking ${item.paket}.`
         : item.status === "Menunggu"
-        ? `${item.nama} menunggu konfirmasi untuk ${item.paket}.`
-        : `${item.nama} melakukan booking ${item.paket}.`,
+          ? `${item.nama} menunggu konfirmasi untuk ${item.paket}.`
+          : `${item.nama} melakukan booking ${item.paket}.`,
     time: ["9:30 AM", "10:00 AM", "11:15 AM", "12:45 PM", "2:30 PM"][index],
   }));
 
@@ -680,14 +726,14 @@ export default function Dashboard() {
         [item.nama, item.paket, item.tanggal, item.status, item.harga]
           .join(" ")
           .toLowerCase()
-          .includes(keyword)
+          .includes(keyword),
       )
       .slice(0, 5);
   }, [bookingList, bookingSearch]);
 
   const calendarDays = useMemo(
     () => buatHariKalender(calendarYear, calendarMonthIndex),
-    [calendarMonthIndex, calendarYear]
+    [calendarMonthIndex, calendarYear],
   );
 
   function openModal(type, data) {
@@ -702,7 +748,7 @@ export default function Dashboard() {
 
   function getTravelerByName(name) {
     const found = travelerData.find(
-      (item) => item.nama?.toLowerCase() === name?.toLowerCase()
+      (item) => item.nama?.toLowerCase() === name?.toLowerCase(),
     );
 
     if (found) return found;
@@ -710,7 +756,9 @@ export default function Dashboard() {
     return {
       id: Date.now(),
       nama: name || "Customer TravelGo",
-      email: `${String(name || "customer").toLowerCase().replaceAll(" ", "")}@gmail.com`,
+      email: `${String(name || "customer")
+        .toLowerCase()
+        .replaceAll(" ", "")}@gmail.com`,
       hp: "08xxxxxxxxxx",
       alamat: "Indonesia",
       paket: "Belum ada data paket",
@@ -722,14 +770,17 @@ export default function Dashboard() {
 
   function getTravelerBookings(name) {
     return bookingList.filter(
-      (item) => item.nama?.toLowerCase() === name?.toLowerCase()
+      (item) => item.nama?.toLowerCase() === name?.toLowerCase(),
     );
   }
 
   function buildTravelerDetail(name) {
     const traveler = getTravelerByName(name);
     const history = getTravelerBookings(name);
-    const totalTransaksi = history.reduce((total, item) => total + rupiahToNumber(item.harga), 0);
+    const totalTransaksi = history.reduce(
+      (total, item) => total + rupiahToNumber(item.harga),
+      0,
+    );
 
     return {
       ...traveler,
@@ -775,7 +826,8 @@ export default function Dashboard() {
 
   function handlePackageDetail(packageItem) {
     const namaPaket = packageItem.nama || packageItem.paket;
-    const paket = paketUnik.find((item) => item.nama === namaPaket) || packageItem;
+    const paket =
+      paketUnik.find((item) => item.nama === namaPaket) || packageItem;
     const bookings = bookingList.filter((item) => item.paket === namaPaket);
 
     openModal("package", {
@@ -786,7 +838,10 @@ export default function Dashboard() {
       harga: packageItem.harga || paket.harga,
       bookings,
       totalBooking: bookings.length,
-      totalRevenue: bookings.reduce((total, item) => total + rupiahToNumber(item.harga), 0),
+      totalRevenue: bookings.reduce(
+        (total, item) => total + rupiahToNumber(item.harga),
+        0,
+      ),
     });
   }
 
@@ -806,7 +861,9 @@ export default function Dashboard() {
     openModal("trip", {
       ...trip,
       traveler: buildTravelerDetail(trip.nama || trip.namaCustomer),
-      packageData: paketUnik.find((item) => item.nama === trip.paket || item.nama === trip.nama),
+      packageData: paketUnik.find(
+        (item) => item.nama === trip.paket || item.nama === trip.nama,
+      ),
     });
   }
 
@@ -816,7 +873,7 @@ export default function Dashboard() {
 
   function updateBookingStatus(kode, status) {
     const updatedBookings = bookingList.map((item) =>
-      item.kode === kode ? { ...item, status } : item
+      item.kode === kode ? { ...item, status } : item,
     );
 
     setBookingList(updatedBookings);
@@ -858,7 +915,10 @@ export default function Dashboard() {
       ],
     };
 
-    localStorage.setItem("travelgo_selected_message_customer", JSON.stringify(customer));
+    localStorage.setItem(
+      "travelgo_selected_message_customer",
+      JSON.stringify(customer),
+    );
     window.location.href = "/messages";
   }
 
@@ -964,7 +1024,10 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <PaketTravel travelPackages={travelPackages} onDetail={handlePackageDetail} />
+              <PaketTravel
+                travelPackages={travelPackages}
+                onDetail={handlePackageDetail}
+              />
             </div>
 
             <div className="bg-white rounded-[14px] p-5 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
@@ -993,13 +1056,17 @@ export default function Dashboard() {
 
                     <div className="flex-1 overflow-hidden">
                       <div className="flex justify-between gap-2">
-                        <h4 className="font-bold text-[13px] truncate">{item.nama}</h4>
+                        <h4 className="font-bold text-[13px] truncate">
+                          {item.nama}
+                        </h4>
                         <span className="text-[10px] text-[#70A9F8] shrink-0">
                           {item.waktu}
                         </span>
                       </div>
 
-                      <p className="text-[12px] text-[#9AA0AA] truncate">{item.pesan}</p>
+                      <p className="text-[12px] text-[#9AA0AA] truncate">
+                        {item.pesan}
+                      </p>
                     </div>
 
                     <span className="w-[18px] h-[18px] rounded-[5px] bg-[#70A9F8] text-white text-[10px] font-bold flex items-center justify-center shrink-0">
@@ -1070,10 +1137,10 @@ export default function Dashboard() {
                     item.active
                       ? "bg-[#70A9F8] text-white font-bold"
                       : item.trip
-                      ? "text-[#5A91D6] underline underline-offset-4 hover:bg-[#EAF4FF]"
-                      : item.muted
-                      ? "text-[#C6CBD3]"
-                      : "hover:bg-[#F4F5F7]"
+                        ? "text-[#5A91D6] underline underline-offset-4 hover:bg-[#EAF4FF]"
+                        : item.muted
+                          ? "text-[#C6CBD3]"
+                          : "hover:bg-[#F4F5F7]"
                   }`}
                 >
                   {item.day}
@@ -1116,7 +1183,9 @@ export default function Dashboard() {
                       {item.label}
                     </span>
 
-                    <h4 className="font-bold text-[14px] mt-1 line-clamp-1">{item.nama}</h4>
+                    <h4 className="font-bold text-[14px] mt-1 line-clamp-1">
+                      {item.nama}
+                    </h4>
 
                     <div className="flex items-center gap-2 text-[11px] text-[#9AA0AA] mt-1">
                       <FaUsers />
@@ -1160,7 +1229,9 @@ export default function Dashboard() {
                     <p className="text-[13px] leading-5 text-[#596070] font-semibold">
                       {item.text}
                     </p>
-                    <p className="text-[11px] text-[#B0B3BB] mt-1">{item.time}</p>
+                    <p className="text-[11px] text-[#B0B3BB] mt-1">
+                      {item.time}
+                    </p>
                   </div>
                 </button>
               ))}
@@ -1174,9 +1245,15 @@ export default function Dashboard() {
           {modalType === "revenue" && selectedData && (
             <>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                <KartuInfo label="Total Pendapatan" value={formatRupiah(selectedData.totalPendapatan)} />
+                <KartuInfo
+                  label="Total Pendapatan"
+                  value={formatRupiah(selectedData.totalPendapatan)}
+                />
                 <KartuInfo label="Booking" value={selectedData.totalBooking} />
-                <KartuInfo label="Dikonfirmasi" value={selectedData.totalDikonfirmasi} />
+                <KartuInfo
+                  label="Dikonfirmasi"
+                  value={selectedData.totalDikonfirmasi}
+                />
                 <KartuInfo
                   label="Menunggu/Batal"
                   value={`${selectedData.totalMenunggu}/${selectedData.totalDibatalkan}`}
@@ -1184,7 +1261,8 @@ export default function Dashboard() {
               </div>
 
               <div className="bg-[#EAF4FF] rounded-[14px] p-4 text-[13px] leading-6 text-[#596070]">
-                Pendapatan dihitung dari total harga booking pada data dashboard. Filter periode saat ini: <b>{periodePendapatan}</b>.
+                Pendapatan dihitung dari total harga booking pada data
+                dashboard. Filter periode saat ini: <b>{periodePendapatan}</b>.
               </div>
             </>
           )}
@@ -1209,12 +1287,24 @@ export default function Dashboard() {
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <KartuInfo label="Durasi" value={selectedData.durasi || "-"} />
-                    <KartuInfo label="Harga" value={selectedData.harga || "-"} />
-                    <KartuInfo label="Booking" value={`${selectedData.totalBooking || 0} booking`} />
+                    <KartuInfo
+                      label="Durasi"
+                      value={selectedData.durasi || "-"}
+                    />
+                    <KartuInfo
+                      label="Harga"
+                      value={selectedData.harga || "-"}
+                    />
+                    <KartuInfo
+                      label="Booking"
+                      value={`${selectedData.totalBooking || 0} booking`}
+                    />
                   </div>
 
-                  <KartuInfo label="Revenue Paket" value={formatRupiah(selectedData.totalRevenue || 0)} />
+                  <KartuInfo
+                    label="Revenue Paket"
+                    value={formatRupiah(selectedData.totalRevenue || 0)}
+                  />
                 </div>
               </div>
 
@@ -1245,7 +1335,7 @@ export default function Dashboard() {
                 <KartuInfo label="Status">
                   <span
                     className={`inline-flex px-3 py-1 rounded-[6px] text-[12px] font-bold ${getStatusStyle(
-                      selectedData.status
+                      selectedData.status,
                     )}`}
                   >
                     {selectedData.status}
@@ -1259,21 +1349,27 @@ export default function Dashboard() {
               <div className="flex flex-wrap justify-end gap-3">
                 <button
                   type="button"
-                  onClick={() => updateBookingStatus(selectedData.kode, "Menunggu")}
+                  onClick={() =>
+                    updateBookingStatus(selectedData.kode, "Menunggu")
+                  }
                   className="h-[40px] px-4 rounded-[10px] bg-[#EAF4FF] text-[#5A91D6] text-sm font-bold"
                 >
                   Jadikan Menunggu
                 </button>
                 <button
                   type="button"
-                  onClick={() => updateBookingStatus(selectedData.kode, "Dikonfirmasi")}
+                  onClick={() =>
+                    updateBookingStatus(selectedData.kode, "Dikonfirmasi")
+                  }
                   className="h-[40px] px-4 rounded-[10px] bg-[#70A9F8] text-white text-sm font-bold"
                 >
                   Konfirmasi
                 </button>
                 <button
                   type="button"
-                  onClick={() => updateBookingStatus(selectedData.kode, "Dibatalkan")}
+                  onClick={() =>
+                    updateBookingStatus(selectedData.kode, "Dibatalkan")
+                  }
                   className="h-[40px] px-4 rounded-[10px] bg-red-50 text-red-500 text-sm font-bold"
                 >
                   Batalkan
@@ -1291,7 +1387,9 @@ export default function Dashboard() {
 
                 <div>
                   <h3 className="text-[22px] font-bold">{selectedData.nama}</h3>
-                  <p className="text-[13px] text-[#9AA0AA]">{selectedData.email}</p>
+                  <p className="text-[13px] text-[#9AA0AA]">
+                    {selectedData.email}
+                  </p>
                 </div>
               </div>
 
@@ -1301,7 +1399,7 @@ export default function Dashboard() {
                 <KartuInfo label="Level">
                   <span
                     className={`inline-flex px-3 py-1 rounded-[6px] text-[12px] font-bold ${getLevelStyle(
-                      selectedData.level
+                      selectedData.level,
                     )}`}
                   >
                     {selectedData.level}
@@ -1310,16 +1408,25 @@ export default function Dashboard() {
                 <KartuInfo label="Promo">
                   <span
                     className={`inline-flex min-w-[96px] justify-center px-3 py-1 rounded-[6px] text-[12px] font-bold ${getPromoStyle(
-                      selectedData.promo
+                      selectedData.promo,
                     )}`}
                   >
                     {selectedData.promo}
                   </span>
                 </KartuInfo>
                 <KartuInfo label="Paket Terakhir" value={selectedData.paket} />
-                <KartuInfo label="Total Transaksi" value={formatRupiah(selectedData.totalTransaksi)} />
-                <KartuInfo label="Jumlah Booking" value={selectedData.jumlahBooking} />
-                <KartuInfo label="Sumber User" value={selectedData.sourceUser} />
+                <KartuInfo
+                  label="Total Transaksi"
+                  value={formatRupiah(selectedData.totalTransaksi)}
+                />
+                <KartuInfo
+                  label="Jumlah Booking"
+                  value={selectedData.jumlahBooking}
+                />
+                <KartuInfo
+                  label="Sumber User"
+                  value={selectedData.sourceUser}
+                />
               </div>
 
               <div className="bg-white rounded-[14px] border border-[#EEF1F5] overflow-x-auto mb-5">
@@ -1337,17 +1444,26 @@ export default function Dashboard() {
                   <tbody>
                     {selectedData.bookingHistory.length > 0 ? (
                       selectedData.bookingHistory.map((booking) => (
-                        <tr key={booking.id} className="border-b border-[#EEF1F5]">
-                          <td className="px-4 py-3 text-[13px] font-bold">{booking.paket}</td>
-                          <td className="px-4 py-3 text-[13px] text-[#596070]">{booking.tanggal}</td>
-                          <td className="px-4 py-3 text-[13px] text-[#596070]">{booking.pembayaran}</td>
+                        <tr
+                          key={booking.id}
+                          className="border-b border-[#EEF1F5]"
+                        >
+                          <td className="px-4 py-3 text-[13px] font-bold">
+                            {booking.paket}
+                          </td>
+                          <td className="px-4 py-3 text-[13px] text-[#596070]">
+                            {booking.tanggal}
+                          </td>
+                          <td className="px-4 py-3 text-[13px] text-[#596070]">
+                            {booking.pembayaran}
+                          </td>
                           <td className="px-4 py-3 text-[13px] text-[#596070]">
                             {formatRupiah(booking.total)}
                           </td>
                           <td className="px-4 py-3">
                             <span
                               className={`px-3 py-1 rounded-[6px] text-[12px] font-bold ${getStatusStyle(
-                                booking.status
+                                booking.status,
                               )}`}
                             >
                               {booking.status}
@@ -1357,7 +1473,10 @@ export default function Dashboard() {
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="5" className="px-4 py-8 text-center text-[#9AA0AA]">
+                        <td
+                          colSpan="5"
+                          className="px-4 py-8 text-center text-[#9AA0AA]"
+                        >
                           Belum ada riwayat booking.
                         </td>
                       </tr>
@@ -1368,13 +1487,19 @@ export default function Dashboard() {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 <KartuInfo label="Feedback">
-                  <p className="text-[13px] leading-6 text-[#596070]">{selectedData.feedback}</p>
+                  <p className="text-[13px] leading-6 text-[#596070]">
+                    {selectedData.feedback}
+                  </p>
                 </KartuInfo>
                 <KartuInfo label="Komplain">
-                  <p className="text-[13px] leading-6 text-[#596070]">{selectedData.komplain}</p>
+                  <p className="text-[13px] leading-6 text-[#596070]">
+                    {selectedData.komplain}
+                  </p>
                 </KartuInfo>
                 <KartuInfo label="Catatan Admin">
-                  <p className="text-[13px] leading-6 text-[#596070]">{selectedData.catatan}</p>
+                  <p className="text-[13px] leading-6 text-[#596070]">
+                    {selectedData.catatan}
+                  </p>
                 </KartuInfo>
               </div>
 
@@ -1417,11 +1542,14 @@ export default function Dashboard() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <KartuInfo label="Tanggal" value={selectedData.tanggal} />
                   <KartuInfo label="Peserta" value={selectedData.orang} />
-                  <KartuInfo label="Customer" value={selectedData.namaCustomer || selectedData.nama} />
+                  <KartuInfo
+                    label="Customer"
+                    value={selectedData.namaCustomer || selectedData.nama}
+                  />
                   <KartuInfo label="Status">
                     <span
                       className={`inline-flex px-3 py-1 rounded-[6px] text-[12px] font-bold ${getStatusStyle(
-                        selectedData.status
+                        selectedData.status,
                       )}`}
                     >
                       {selectedData.status || "Dikonfirmasi"}
@@ -1457,9 +1585,13 @@ export default function Dashboard() {
                       className="w-[64px] h-[64px] rounded-[10px] object-cover"
                     />
                     <div>
-                      <p className="text-[11px] font-bold text-[#70A9F8]">{trip.label}</p>
+                      <p className="text-[11px] font-bold text-[#70A9F8]">
+                        {trip.label}
+                      </p>
                       <h4 className="font-bold">{trip.nama}</h4>
-                      <p className="text-[12px] text-[#9AA0AA]">{trip.tanggal}</p>
+                      <p className="text-[12px] text-[#9AA0AA]">
+                        {trip.tanggal}
+                      </p>
                     </div>
                   </button>
                 ))}
@@ -1475,9 +1607,15 @@ export default function Dashboard() {
                 </div>
 
                 <div>
-                  <h3 className="font-bold text-[17px] mb-1">Aktivitas Booking</h3>
-                  <p className="text-[14px] leading-6 text-[#596070]">{selectedData.text}</p>
-                  <p className="text-[12px] text-[#9AA0AA] mt-2">Waktu: {selectedData.time}</p>
+                  <h3 className="font-bold text-[17px] mb-1">
+                    Aktivitas Booking
+                  </h3>
+                  <p className="text-[14px] leading-6 text-[#596070]">
+                    {selectedData.text}
+                  </p>
+                  <p className="text-[12px] text-[#9AA0AA] mt-2">
+                    Waktu: {selectedData.time}
+                  </p>
 
                   <button
                     type="button"
@@ -1504,8 +1642,12 @@ export default function Dashboard() {
                     {item.icon}
                   </div>
                   <div>
-                    <p className="text-[13px] font-semibold text-[#596070]">{item.text}</p>
-                    <p className="text-[11px] text-[#9AA0AA] mt-1">{item.time}</p>
+                    <p className="text-[13px] font-semibold text-[#596070]">
+                      {item.text}
+                    </p>
+                    <p className="text-[11px] text-[#9AA0AA] mt-1">
+                      {item.time}
+                    </p>
                   </div>
                 </button>
               ))}

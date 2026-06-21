@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const API_URL = "https://eqearafhxqzupmoewskm.supabase.co/rest/v1/users";
-const API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVxZWFyYWZoeHF6dXBtb2V3c2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMjM1ODAsImV4cCI6MjA5Njc5OTU4MH0.06dvNbdBFdXwqcYcdh4WFt007BBtQGuYOmJJz-qpCuE";
+const API_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVxZWFyYWZoeHF6dXBtb2V3c2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMjM1ODAsImV4cCI6MjA5Njc5OTU4MH0.06dvNbdBFdXwqcYcdh4WFt007BBtQGuYOmJJz-qpCuE";
 
 const headers = {
   apikey: API_KEY,
@@ -17,6 +18,14 @@ export const usersAPI = {
     });
 
     return response.data;
+  },
+
+  async getUserByEmail(email) {
+    const response = await axios.get(`${API_URL}?select=*&email=eq.${email}`, {
+      headers,
+    });
+
+    return response.data[0];
   },
 
   async createUser(data) {

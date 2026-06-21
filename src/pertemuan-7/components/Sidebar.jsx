@@ -7,7 +7,6 @@ const navItems = [
   { to: "/booking", label: "Bookings", icon: "check_box" },
   { to: "/travelers", label: "Travelers", icon: "work" },
   { to: "/users", label: "Users", icon: "group" },
-  //{ to: "/guides", label: "Guides", icon: "explore" },
   { to: "/messages", label: "Messages", icon: "chat_bubble", badge: "7" },
   { to: "/deals", label: "Deals", icon: "local_offer" },
   { to: "/feedback", label: "Feedback", icon: "thumb_up" },
@@ -82,18 +81,13 @@ export default function Sidebar() {
 
       {/* BAWAH */}
       <div className="px-5 pb-8">
-       
-        
-
         {/* LOGOUT */}
         <button
           type="button"
           onClick={handleLogout}
           className="w-full h-[46px] flex items-center gap-4 px-4 rounded-[8px] text-[#9AA0AA] hover:bg-[#FFF1F1] hover:text-[#F06C7A] transition-all duration-300"
         >
-          <span className="material-symbols-outlined text-[22px]">
-            logout
-          </span>
+          <span className="material-symbols-outlined text-[22px]">logout</span>
 
           <span className="text-[15px] font-semibold">Logout</span>
         </button>

@@ -22,7 +22,7 @@ export default function Register() {
     setError("");
     setSuccess("");
 
-    if (!name || !email || !password) {
+    if (name === "" || email === "" || password === "") {
       setError("Nama, email, dan password wajib diisi");
       return;
     }
@@ -35,18 +35,21 @@ export default function Register() {
     try {
       setLoading(true);
 
+      // Semua akun dari Register otomatis menjadi Member
       await authAPI.register({
-        name,
-        email,
-        password,
+        name: name,
+        email: email,
+        password: password,
+        role: "member",
       });
 
+      // Data member untuk halaman Users/Admin
       await usersAPI.createUser({
-        name,
-        email,
-        role: "User",
-        phone,
-        address,
+        name: name,
+        email: email,
+        role: "Member",
+        phone: phone,
+        address: address,
       });
 
       setSuccess("Pendaftaran berhasil. Silakan login.");
@@ -61,14 +64,13 @@ export default function Register() {
         navigate("/login");
       }, 1200);
     } catch (err) {
-      console.error("REGISTER ERROR:", err.response?.data || err);
+      console.error("REGISTER ERROR:", err);
 
       const pesanError =
-        err.response?.data?.msg ||
         err.response?.data?.message ||
-        err.response?.data?.error_description ||
-        err.response?.data?.error ||
-        err.message;
+        err.response?.data?.msg ||
+        err.message ||
+        "Terjadi kesalahan saat mendaftar";
 
       setError(`Pendaftaran gagal: ${pesanError}`);
     } finally {
@@ -86,9 +88,10 @@ export default function Register() {
             "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e')",
         }}
       >
-        <div className="absolute inset-0 bg-[var(--primary)]/20 backdrop-blur-sm"></div>
+        {" "}
+        <div className="absolute inset-0 bg-[var(--primary)]/20 backdrop-blur-sm"></div>{" "}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-
+        ```
         <div className="absolute bottom-12 left-12 text-white max-w-md">
           <h2 className="text-4xl font-bold mb-4 leading-tight">
             Start Your Travel Journey

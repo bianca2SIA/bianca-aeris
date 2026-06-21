@@ -27,8 +27,7 @@ export default function PaketDetail() {
   const paketDasar =
     semuaPaket.find((item) => item.nama === decodedNama) || paketData.paketBaru;
 
-  const detail =
-    paketDetailData[paketDasar.nama] || paketDetailData.default;
+  const detail = paketDetailData[paketDasar.nama] || paketDetailData.default;
 
   return (
     <div className="min-h-[calc(100vh-76px)] bg-[#F4F5F7] px-4 md:px-6 xl:px-8 py-5 xl:py-7 text-[#202436] overflow-x-hidden">
@@ -121,9 +120,7 @@ export default function PaketDetail() {
           </div>
 
           <div className="mt-6 mb-6">
-            <p className="text-[13px] text-[#B0B3BB] font-bold mb-2">
-              Tentang
-            </p>
+            <p className="text-[13px] text-[#B0B3BB] font-bold mb-2">Tentang</p>
             <p className="text-[14px] leading-6 text-[#596070] max-w-[900px]">
               {detail.deskripsi}
             </p>
@@ -235,8 +232,6 @@ export default function PaketDetail() {
           </div>
         </aside>
       </div>
-
-    
     </div>
   );
 }

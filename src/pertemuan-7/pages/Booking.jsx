@@ -42,7 +42,7 @@ function Stars({ value }) {
           <FaStar key={star} className="text-[#FFD85C] text-[15px]" />
         ) : (
           <FaRegStar key={star} className="text-[#D8DDE5] text-[15px]" />
-        )
+        ),
       )}
     </div>
   );
@@ -68,7 +68,8 @@ function rapikanFeedback(data) {
       tipe: item.tipe || (index % 4 === 3 ? "Komplain" : "Feedback"),
       balasan: item.balasan || "",
       archived: item.archived || false,
-      email: item.email || `${nama.toLowerCase().replaceAll(" ", ".")}@gmail.com`,
+      email:
+        item.email || `${nama.toLowerCase().replaceAll(" ", ".")}@gmail.com`,
       hp: item.hp || `08${String(1234567890 + index).slice(0, 10)}`,
       alamat: item.alamat || "Indonesia",
     };
@@ -106,7 +107,7 @@ function cocokDenganPencarian(item, keyword) {
 function buatFileCSV(fileName, header, rows) {
   const csvContent = [header, ...rows]
     .map((row) =>
-      row.map((cell) => `"${String(cell).replaceAll('"', '""')}"`).join(",")
+      row.map((cell) => `"${String(cell).replaceAll('"', '""')}"`).join(","),
     )
     .join("\n");
 
@@ -142,7 +143,9 @@ export default function Feedback() {
   const [replyText, setReplyText] = useState("");
   const [showArchived, setShowArchived] = useState(false);
 
-  const [feedbackList, setFeedbackList] = useState(() => ambilDataAwal(feedbacks));
+  const [feedbackList, setFeedbackList] = useState(() =>
+    ambilDataAwal(feedbacks),
+  );
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(feedbackList));
@@ -192,7 +195,7 @@ export default function Feedback() {
 
   const updateFeedback = (id, dataBaru) => {
     setFeedbackList((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, ...dataBaru } : item))
+      prev.map((item) => (item.id === id ? { ...item, ...dataBaru } : item)),
     );
     setOpenActionId(null);
   };
@@ -369,7 +372,10 @@ export default function Feedback() {
 
             <div className="relative h-full grid grid-cols-12 items-end gap-5">
               {reviewStats.map((item) => (
-                <div key={item.bulan} className="h-full flex flex-col justify-end">
+                <div
+                  key={item.bulan}
+                  className="h-full flex flex-col justify-end"
+                >
                   <div className="flex items-end justify-center gap-2 h-[215px]">
                     <div
                       className="w-[18px] rounded-t-[8px] bg-[#70A9F8] hover:bg-[#5D9AF2] transition-all duration-300"
@@ -643,7 +649,9 @@ export default function Feedback() {
                     <button
                       type="button"
                       onClick={() =>
-                        setOpenActionId(openActionId === item.id ? null : item.id)
+                        setOpenActionId(
+                          openActionId === item.id ? null : item.id,
+                        )
                       }
                       className="w-[30px] h-[30px] rounded-[8px] flex items-center justify-center hover:bg-[#F4F8FF] text-[#8F96A3] hover:text-[#70A9F8] transition"
                     >
@@ -748,7 +756,7 @@ export default function Feedback() {
                 <div className="flex flex-wrap items-center gap-2 mb-3">
                   <span
                     className={`px-2 py-[4px] rounded-[6px] text-[11px] font-bold ${getTypeStyle(
-                      item.tipe
+                      item.tipe,
                     )}`}
                   >
                     {item.tipe}
@@ -756,7 +764,7 @@ export default function Feedback() {
 
                   <span
                     className={`px-2 py-[4px] rounded-[6px] text-[11px] font-bold ${getStatusStyle(
-                      item.status
+                      item.status,
                     )}`}
                   >
                     {item.status}
@@ -764,7 +772,7 @@ export default function Feedback() {
 
                   <span
                     className={`px-2 py-[4px] rounded-[6px] text-[11px] font-bold ${getPriorityStyle(
-                      item.prioritas
+                      item.prioritas,
                     )}`}
                   >
                     {item.prioritas}
@@ -831,22 +839,23 @@ export default function Feedback() {
               Sebelumnya
             </button>
 
-            {Array.from({ length: totalPages || 1 }, (_, index) => index + 1).map(
-              (page) => (
-                <button
-                  key={page}
-                  type="button"
-                  onClick={() => setCurrentPage(page)}
-                  className={`w-[34px] h-[34px] rounded-[8px] font-bold transition ${
-                    currentPage === page
-                      ? "bg-[#70A9F8] text-white shadow-md"
-                      : "bg-[#F4F5F7] hover:bg-[#EAF4FF] hover:text-[#70A9F8]"
-                  }`}
-                >
-                  {page}
-                </button>
-              )
-            )}
+            {Array.from(
+              { length: totalPages || 1 },
+              (_, index) => index + 1,
+            ).map((page) => (
+              <button
+                key={page}
+                type="button"
+                onClick={() => setCurrentPage(page)}
+                className={`w-[34px] h-[34px] rounded-[8px] font-bold transition ${
+                  currentPage === page
+                    ? "bg-[#70A9F8] text-white shadow-md"
+                    : "bg-[#F4F5F7] hover:bg-[#EAF4FF] hover:text-[#70A9F8]"
+                }`}
+              >
+                {page}
+              </button>
+            ))}
 
             <button
               type="button"
@@ -1006,7 +1015,9 @@ export default function Feedback() {
             </div>
 
             <div className="bg-[#F8FBFF] rounded-[12px] p-4 mb-4">
-              <p className="font-bold text-[#202436]">{selectedFeedback.nama}</p>
+              <p className="font-bold text-[#202436]">
+                {selectedFeedback.nama}
+              </p>
               <p className="text-[13px] text-[#9AA0AA] mt-1">
                 {selectedFeedback.paket}
               </p>

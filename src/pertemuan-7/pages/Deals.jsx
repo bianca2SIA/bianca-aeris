@@ -108,7 +108,8 @@ function normalizeDeals(data) {
     status: item.status || "Aktif",
     target: item.target || "Semua Customer",
     terms: item.terms || DEFAULT_TERMS,
-    createdAt: item.createdAt || `2024-07-${String(index + 1).padStart(2, "0")}`,
+    createdAt:
+      item.createdAt || `2024-07-${String(index + 1).padStart(2, "0")}`,
     usedCount: item.usedCount || 10 + index * 3,
     users: item.users || createDefaultUsers(index),
   }));
@@ -149,7 +150,9 @@ function sortDeals(data, sortBy) {
   const sortedData = [...data];
 
   if (sortBy === "Terbaru") {
-    return sortedData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    return sortedData.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+    );
   }
 
   if (sortBy === "Nama") {
@@ -162,7 +165,7 @@ function sortDeals(data, sortBy) {
 
   if (sortBy === "Diskon Terbesar") {
     return sortedData.sort(
-      (a, b) => getDiscountNumber(b.discount) - getDiscountNumber(a.discount)
+      (a, b) => getDiscountNumber(b.discount) - getDiscountNumber(a.discount),
     );
   }
 
@@ -311,8 +314,8 @@ export default function Deals() {
                 ...item,
                 ...payload,
               }
-            : item
-        )
+            : item,
+        ),
       );
     } else {
       setDeals((prev) => [
@@ -340,8 +343,8 @@ export default function Deals() {
               ...item,
               status: newStatus,
             }
-          : item
-      )
+          : item,
+      ),
     );
 
     setOpenActionId(null);
@@ -365,7 +368,9 @@ export default function Deals() {
   };
 
   const deleteDeal = (deal) => {
-    const confirmDelete = confirm(`Yakin ingin menghapus promo "${deal.title}"?`);
+    const confirmDelete = confirm(
+      `Yakin ingin menghapus promo "${deal.title}"?`,
+    );
     if (!confirmDelete) return;
 
     setDeals((prev) => prev.filter((item) => item.id !== deal.id));
@@ -399,7 +404,7 @@ export default function Deals() {
 
     const csvContent = [header, ...rows]
       .map((row) =>
-        row.map((cell) => `"${String(cell).replaceAll('"', '""')}"`).join(",")
+        row.map((cell) => `"${String(cell).replaceAll('"', '""')}"`).join(","),
       )
       .join("\n");
 
@@ -592,7 +597,7 @@ export default function Deals() {
 
               <span
                 className={`absolute right-5 bottom-7 px-3 py-1 rounded-full text-[12px] font-bold shadow-sm ${getStatusStyle(
-                  item.status
+                  item.status,
                 )}`}
               >
                 {item.status}
@@ -759,7 +764,7 @@ export default function Deals() {
               >
                 {page}
               </button>
-            )
+            ),
           )}
 
           <button
@@ -829,7 +834,7 @@ export default function Deals() {
 
                 <span
                   className={`px-3 py-1 rounded-full text-[12px] font-bold ${getStatusStyle(
-                    selectedDeal.status
+                    selectedDeal.status,
                   )}`}
                 >
                   {selectedDeal.status}
@@ -942,7 +947,10 @@ export default function Deals() {
               </button>
             </div>
 
-            <form onSubmit={handleSubmitPromo} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <form
+              onSubmit={handleSubmitPromo}
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
+            >
               <input
                 type="text"
                 name="title"
@@ -967,13 +975,11 @@ export default function Deals() {
                 onChange={handleChange}
                 className="h-[46px] px-4 rounded-[12px] border border-[#E8EDF3] outline-none focus:border-[#70A9F8]"
               >
-                {PROMO_CATEGORIES.map(
-                  (item) => (
-                    <option key={item} value={item}>
-                      {item}
-                    </option>
-                  )
-                )}
+                {PROMO_CATEGORIES.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
               </select>
 
               <select

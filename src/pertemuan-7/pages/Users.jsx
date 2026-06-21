@@ -137,7 +137,8 @@ function normalizeUsers(data) {
 
     return {
       ...user,
-      travelerProfile: item.travelerProfile || createTravelerProfile(user, index),
+      travelerProfile:
+        item.travelerProfile || createTravelerProfile(user, index),
     };
   });
 }
@@ -388,8 +389,8 @@ export default function Users() {
                   statusMember: payload.role === "User" ? "Member" : "Admin",
                 },
               }
-            : user
-        )
+            : user,
+        ),
       );
       showSuccess("Data user berhasil diperbarui");
     } else {
@@ -428,8 +429,8 @@ export default function Users() {
 
     setUsers((prev) =>
       prev.map((item) =>
-        item.id === user.id ? { ...item, status: newStatus } : item
-      )
+        item.id === user.id ? { ...item, status: newStatus } : item,
+      ),
     );
 
     closeActionMenu();
@@ -475,7 +476,7 @@ export default function Users() {
 
     localStorage.setItem(
       "travelgo_selected_message_customer",
-      JSON.stringify(customer)
+      JSON.stringify(customer),
     );
 
     closeActionMenu();
@@ -578,14 +579,21 @@ export default function Users() {
                   <th
                     key={title}
                     className={`px-6 py-4 font-semibold ${
-                      ["w-[23%]", "w-[21%]", "w-[11%]", "w-[13%]", "w-[14%]", "w-[11%]"][index]
+                      [
+                        "w-[23%]",
+                        "w-[21%]",
+                        "w-[11%]",
+                        "w-[13%]",
+                        "w-[14%]",
+                        "w-[11%]",
+                      ][index]
                     }`}
                   >
                     <div className="flex items-center gap-2 hover:text-[#70A9F8] transition">
                       {title} <FaSort className="text-[10px]" />
                     </div>
                   </th>
-                )
+                ),
               )}
 
               <th className="px-6 py-4 font-semibold w-[7%]">Aksi</th>
@@ -630,7 +638,7 @@ export default function Users() {
                 <td className="px-6 py-4">
                   <Badge
                     className={`shadow-sm group-hover:shadow-md transition-all duration-300 ${getRoleStyle(
-                      user.role
+                      user.role,
                     )}`}
                   >
                     {user.role}
@@ -640,7 +648,7 @@ export default function Users() {
                 <td className="px-6 py-4">
                   <Badge
                     className={`min-w-[76px] shadow-sm group-hover:shadow-md transition-all duration-300 ${getStatusStyle(
-                      user.status
+                      user.status,
                     )}`}
                   >
                     {user.status}
@@ -708,25 +716,26 @@ export default function Users() {
               Sebelumnya
             </button>
 
-            {Array.from({ length: totalPages || 1 }, (_, index) => index + 1).map(
-              (page) => (
-                <button
-                  type="button"
-                  key={page}
-                  onClick={() => {
-                    setCurrentPage(page);
-                    closeActionMenu();
-                  }}
-                  className={`w-[34px] h-[34px] rounded-[8px] font-bold transition ${
-                    currentPage === page
-                      ? "bg-[#70A9F8] text-white shadow-md"
-                      : "bg-[#F4F5F7] hover:bg-[#EAF4FF] hover:text-[#70A9F8] text-[#596070]"
-                  }`}
-                >
-                  {page}
-                </button>
-              )
-            )}
+            {Array.from(
+              { length: totalPages || 1 },
+              (_, index) => index + 1,
+            ).map((page) => (
+              <button
+                type="button"
+                key={page}
+                onClick={() => {
+                  setCurrentPage(page);
+                  closeActionMenu();
+                }}
+                className={`w-[34px] h-[34px] rounded-[8px] font-bold transition ${
+                  currentPage === page
+                    ? "bg-[#70A9F8] text-white shadow-md"
+                    : "bg-[#F4F5F7] hover:bg-[#EAF4FF] hover:text-[#70A9F8] text-[#596070]"
+                }`}
+              >
+                {page}
+              </button>
+            ))}
 
             <button
               type="button"
@@ -761,16 +770,25 @@ export default function Users() {
             left: `${actionMenu.x}px`,
           }}
         >
-          <ActionButton icon={<FaEye />} onClick={() => openDetailModal(selectedActionUser)}>
+          <ActionButton
+            icon={<FaEye />}
+            onClick={() => openDetailModal(selectedActionUser)}
+          >
             Lihat Detail
           </ActionButton>
 
-          <ActionButton icon={<FaEdit />} onClick={() => openEditModal(selectedActionUser)}>
+          <ActionButton
+            icon={<FaEdit />}
+            onClick={() => openEditModal(selectedActionUser)}
+          >
             Edit User
           </ActionButton>
 
           {selectedActionUser.role === "User" && (
-            <ActionButton icon={<FaPaperPlane />} onClick={() => handleSendMessage(selectedActionUser)}>
+            <ActionButton
+              icon={<FaPaperPlane />}
+              onClick={() => handleSendMessage(selectedActionUser)}
+            >
               Kirim Pesan
             </ActionButton>
           )}
@@ -784,10 +802,18 @@ export default function Users() {
           </ActionButton>
 
           <ActionButton
-            icon={selectedActionUser.status === "Aktif" ? <FaPowerOff /> : <FaUserCheck />}
+            icon={
+              selectedActionUser.status === "Aktif" ? (
+                <FaPowerOff />
+              ) : (
+                <FaUserCheck />
+              )
+            }
             onClick={() => handleToggleStatus(selectedActionUser)}
           >
-            {selectedActionUser.status === "Aktif" ? "Nonaktifkan Akun" : "Aktifkan Akun"}
+            {selectedActionUser.status === "Aktif"
+              ? "Nonaktifkan Akun"
+              : "Aktifkan Akun"}
           </ActionButton>
 
           <div className="h-[1px] bg-[#EEF1F5] my-2"></div>
@@ -824,7 +850,12 @@ export default function Users() {
   );
 }
 
-function ActionButton({ children, icon, onClick, className = "hover:bg-[#EAF4FF] hover:text-[#70A9F8]" }) {
+function ActionButton({
+  children,
+  icon,
+  onClick,
+  className = "hover:bg-[#EAF4FF] hover:text-[#70A9F8]",
+}) {
   return (
     <button
       type="button"
@@ -837,7 +868,13 @@ function ActionButton({ children, icon, onClick, className = "hover:bg-[#EAF4FF]
   );
 }
 
-function UserFormModal({ selectedUser, dataForm, handleChange, handleSubmit, closeModal }) {
+function UserFormModal({
+  selectedUser,
+  dataForm,
+  handleChange,
+  handleSubmit,
+  closeModal,
+}) {
   return (
     <div className="fixed inset-0 z-[999] bg-black/30 backdrop-blur-sm flex items-center justify-center px-6">
       <div className="w-full max-w-[760px] bg-white rounded-[18px] shadow-2xl p-6 max-h-[90vh] overflow-y-auto">
@@ -862,7 +899,10 @@ function UserFormModal({ selectedUser, dataForm, handleChange, handleSubmit, clo
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form
+          onSubmit={handleSubmit}
+          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+        >
           <input
             type="text"
             name="name"
@@ -915,7 +955,9 @@ function UserFormModal({ selectedUser, dataForm, handleChange, handleSubmit, clo
             name="password"
             value={dataForm.password}
             onChange={handleChange}
-            placeholder={selectedUser ? "Password baru (opsional)" : "Password akun"}
+            placeholder={
+              selectedUser ? "Password baru (opsional)" : "Password akun"
+            }
             className="h-[46px] px-4 rounded-[12px] border border-[#E8EDF3] outline-none focus:border-[#70A9F8]"
           />
 
@@ -949,7 +991,12 @@ function UserFormModal({ selectedUser, dataForm, handleChange, handleSubmit, clo
   );
 }
 
-function UserDetailModal({ user, closeModal, openEditModal, handleSendMessage }) {
+function UserDetailModal({
+  user,
+  closeModal,
+  openEditModal,
+  handleSendMessage,
+}) {
   const profile = user.travelerProfile;
 
   return (
@@ -964,12 +1011,16 @@ function UserDetailModal({ user, closeModal, openEditModal, handleSendMessage })
             />
 
             <div>
-              <h2 className="text-[22px] font-bold text-[#202436]">{user.name}</h2>
+              <h2 className="text-[22px] font-bold text-[#202436]">
+                {user.name}
+              </h2>
               <p className="text-[13px] text-[#9AA0AA]">{user.email}</p>
 
               <div className="flex items-center gap-2 mt-2">
                 <Badge className={getRoleStyle(user.role)}>{user.role}</Badge>
-                <Badge className={`min-w-[76px] ${getStatusStyle(user.status)}`}>
+                <Badge
+                  className={`min-w-[76px] ${getStatusStyle(user.status)}`}
+                >
                   {user.status}
                 </Badge>
               </div>
@@ -987,19 +1038,27 @@ function UserDetailModal({ user, closeModal, openEditModal, handleSendMessage })
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
           <InfoBox title="Nomor HP">
-            <p className="text-[14px] font-bold text-[#202436]">{user.phone || "-"}</p>
+            <p className="text-[14px] font-bold text-[#202436]">
+              {user.phone || "-"}
+            </p>
           </InfoBox>
 
           <InfoBox title="Tanggal Dibuat">
-            <p className="text-[14px] font-bold text-[#202436]">{user.createdAt}</p>
+            <p className="text-[14px] font-bold text-[#202436]">
+              {user.createdAt}
+            </p>
           </InfoBox>
 
           <InfoBox title="Terakhir Login">
-            <p className="text-[14px] font-bold text-[#202436]">{user.lastLogin}</p>
+            <p className="text-[14px] font-bold text-[#202436]">
+              {user.lastLogin}
+            </p>
           </InfoBox>
 
           <InfoBox title="Alamat" className="md:col-span-3">
-            <p className="text-[14px] font-bold text-[#202436]">{user.address || "-"}</p>
+            <p className="text-[14px] font-bold text-[#202436]">
+              {user.address || "-"}
+            </p>
           </InfoBox>
         </div>
 
@@ -1007,25 +1066,35 @@ function UserDetailModal({ user, closeModal, openEditModal, handleSendMessage })
           <>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-5">
               <InfoBox title="Membership">
-                <p className="text-[14px] font-bold text-[#202436]">{profile.statusMember}</p>
+                <p className="text-[14px] font-bold text-[#202436]">
+                  {profile.statusMember}
+                </p>
               </InfoBox>
 
               <InfoBox title="Level">
-                <Badge className={getLevelStyle(profile.level)}>{profile.level}</Badge>
+                <Badge className={getLevelStyle(profile.level)}>
+                  {profile.level}
+                </Badge>
               </InfoBox>
 
               <InfoBox title="Promo">
-                <Badge className={`min-w-[96px] ${getPromoStyle(profile.promo)}`}>
+                <Badge
+                  className={`min-w-[96px] ${getPromoStyle(profile.promo)}`}
+                >
                   {profile.promo}
                 </Badge>
               </InfoBox>
 
               <InfoBox title="Sumber User">
-                <p className="text-[14px] font-bold text-[#202436]">{profile.sourceUser}</p>
+                <p className="text-[14px] font-bold text-[#202436]">
+                  {profile.sourceUser}
+                </p>
               </InfoBox>
 
               <InfoBox title="Paket Terakhir">
-                <p className="text-[14px] font-bold text-[#202436]">{profile.paket}</p>
+                <p className="text-[14px] font-bold text-[#202436]">
+                  {profile.paket}
+                </p>
               </InfoBox>
 
               <InfoBox title="Total Transaksi">
@@ -1105,15 +1174,21 @@ function UserDetailModal({ user, closeModal, openEditModal, handleSendMessage })
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <InfoBox title="Feedback Terakhir">
-                <p className="text-[13px] leading-6 text-[#596070]">{profile.feedback}</p>
+                <p className="text-[13px] leading-6 text-[#596070]">
+                  {profile.feedback}
+                </p>
               </InfoBox>
 
               <InfoBox title="Komplain">
-                <p className="text-[13px] leading-6 text-[#596070]">{profile.komplain}</p>
+                <p className="text-[13px] leading-6 text-[#596070]">
+                  {profile.komplain}
+                </p>
               </InfoBox>
 
               <InfoBox title="Catatan Admin">
-                <p className="text-[13px] leading-6 text-[#596070]">{profile.catatan}</p>
+                <p className="text-[13px] leading-6 text-[#596070]">
+                  {profile.catatan}
+                </p>
               </InfoBox>
             </div>
           </>

@@ -52,14 +52,14 @@ function normalizeMessages(data) {
     unread: item.unread || 0,
     status: item.status || "last seen recently",
     kategori: item.kategori || (index % 2 === 0 ? "Booking" : "Paket Travel"),
-    memberLevel: item.memberLevel || (index % 3 === 0 ? "Gold Member" : "Regular"),
+    memberLevel:
+      item.memberLevel || (index % 3 === 0 ? "Gold Member" : "Regular"),
     lastPackage: item.lastPackage || "Travel Package",
     totalTransaction: item.totalTransaction || 2500000 + index * 750000,
     archived: item.archived || false,
     chat: item.chat || [],
   }));
 }
-
 
 const STORAGE_KEY = "travelgo_messages";
 
@@ -117,7 +117,7 @@ function formatRupiah(value) {
 export default function Messages() {
   const [chatData, setChatData] = useState(() => loadMessages());
   const [selectedChatId, setSelectedChatId] = useState(() =>
-    getSelectedChatId(loadMessages())
+    getSelectedChatId(loadMessages()),
   );
 
   const [search, setSearch] = useState("");
@@ -137,7 +137,8 @@ export default function Messages() {
   const messageInputRef = useRef(null);
   const fileInputRef = useRef(null);
 
-  const currentChat = chatData.find((item) => item.id === selectedChatId) || chatData[0];
+  const currentChat =
+    chatData.find((item) => item.id === selectedChatId) || chatData[0];
 
   const filteredMessages = useMemo(() => {
     let data = chatData;
@@ -176,7 +177,7 @@ export default function Messages() {
 
       data = data.filter((item) => {
         const matchChat = item.chat?.some((chat) =>
-          chat.text?.toLowerCase().includes(keyword)
+          chat.text?.toLowerCase().includes(keyword),
         );
 
         return (
@@ -219,7 +220,7 @@ export default function Messages() {
 
   const updateChat = (chatId, callback) => {
     setChatData((prev) =>
-      prev.map((item) => (item.id === chatId ? callback(item) : item))
+      prev.map((item) => (item.id === chatId ? callback(item) : item)),
     );
   };
 
@@ -317,18 +318,20 @@ export default function Messages() {
     showNotification(
       currentChat.archived
         ? "Chat berhasil dipulihkan"
-        : "Chat berhasil diarsipkan"
+        : "Chat berhasil diarsipkan",
     );
   };
 
   const handleDeleteChat = () => {
     const confirmDelete = confirm(
-      `Yakin ingin menghapus chat dengan ${currentChat.nama}?`
+      `Yakin ingin menghapus chat dengan ${currentChat.nama}?`,
     );
 
     if (!confirmDelete) return;
 
-    const remainingChats = chatData.filter((item) => item.id !== currentChat.id);
+    const remainingChats = chatData.filter(
+      (item) => item.id !== currentChat.id,
+    );
 
     setChatData(remainingChats);
     setSelectedChatId(remainingChats[0]?.id);
@@ -502,7 +505,7 @@ export default function Messages() {
                   ) : (
                     <div
                       className={`w-[46px] h-[46px] rounded-full ${getInitialColor(
-                        index
+                        index,
                       )} text-white flex items-center justify-center text-sm font-bold`}
                     >
                       {item.initial}
@@ -704,7 +707,9 @@ export default function Messages() {
                       <div
                         key={index}
                         className={`flex gap-3 ${
-                          chat.from === "admin" ? "justify-end" : "justify-start"
+                          chat.from === "admin"
+                            ? "justify-end"
+                            : "justify-start"
                         }`}
                       >
                         {chat.from === "customer" && (
@@ -869,13 +874,14 @@ export default function Messages() {
               </button>
             </div>
 
-            <form onSubmit={handleCreateNewMessage} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <form
+              onSubmit={handleCreateNewMessage}
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
+            >
               <input
                 type="text"
                 value={newMessageForm.nama}
-                onChange={(e) =>
-                  handleNewMessageChange("nama", e.target.value)
-                }
+                onChange={(e) => handleNewMessageChange("nama", e.target.value)}
                 placeholder="Nama customer"
                 className="h-[46px] px-4 rounded-[12px] border border-[#E8EDF3] outline-none focus:border-[#70A9F8]"
               />
@@ -893,9 +899,7 @@ export default function Messages() {
               <input
                 type="text"
                 value={newMessageForm.hp}
-                onChange={(e) =>
-                  handleNewMessageChange("hp", e.target.value)
-                }
+                onChange={(e) => handleNewMessageChange("hp", e.target.value)}
                 placeholder="Nomor HP"
                 className="h-[46px] px-4 rounded-[12px] border border-[#E8EDF3] outline-none focus:border-[#70A9F8]"
               />
@@ -981,7 +985,9 @@ export default function Messages() {
                 <h3 className="text-[18px] font-bold text-[#202436]">
                   {currentChat.nama}
                 </h3>
-                <p className="text-[13px] text-[#9AA0AA]">{currentChat.email}</p>
+                <p className="text-[13px] text-[#9AA0AA]">
+                  {currentChat.email}
+                </p>
               </div>
             </div>
 

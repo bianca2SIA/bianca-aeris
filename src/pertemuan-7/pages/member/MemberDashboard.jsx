@@ -1,352 +1,387 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
-  FaUserCircle,
-  FaCrown,
-  FaCalendarCheck,
-  FaWallet,
-  FaMapMarkerAlt,
-  FaPhoneAlt,
-  FaEnvelope,
-  FaEdit,
-  FaTimes,
-  FaEye,
-  FaPaperPlane,
-  FaGift,
-  FaStar,
-  FaRegStar,
-  FaCreditCard,
-  FaHeadset,
-  FaCommentDots,
-  FaCheckCircle,
-  FaSearch,
-  FaChevronDown,
-  FaPlaneDeparture,
-  FaUmbrellaBeach,
-  FaClock,
-  FaShieldAlt,
   FaArrowRight,
+  FaCalendarCheck,
+  FaCheckCircle,
+  FaCommentDots,
+  FaCrown,
+  FaEdit,
+  FaEnvelope,
+  FaEye,
+  FaGift,
+  FaHeadset,
+  FaMapMarkerAlt,
+  FaPaperPlane,
+  FaPhoneAlt,
+  FaPlaneDeparture,
+  FaRegStar,
+  FaSearch,
+  FaStar,
+  FaTimes,
+  FaUserCircle,
+  FaWallet,
 } from "react-icons/fa";
+import paketData from "../../data/paket.json";
 
-const STORAGE = {
-  profile: "travelgo_member_profile",
-  bookings: "travelgo_member_bookings",
-  feedbacks: "travelgo_member_feedbacks",
-  chat: "travelgo_member_cs_chat",
-};
+const defaultImage =
+  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80";
 
-function ambilDataStorage(key, dataAwal) {
-  const dataTersimpan = localStorage.getItem(key);
+function ambilUserLogin() {
+  const dataUser =
+    localStorage.getItem("currentUser") || localStorage.getItem("user");
 
-  if (!dataTersimpan) return dataAwal;
+  if (!dataUser) {
+    return {};
+  }
 
   try {
-    return JSON.parse(dataTersimpan);
+    const user = JSON.parse(dataUser);
+
+    return {
+      id: user.id || user.user_id || "",
+      name:
+        user.name || user.nama || user.user_metadata?.name || "Member TravelGo",
+      email: user.email || "-",
+      phone: user.phone || user.hp || "-",
+      address: user.address || user.alamat || "-",
+    };
+  } catch (error) {
+    return {};
+  }
+}
+
+function ambilStorage(key, dataAwal) {
+  const data = localStorage.getItem(key);
+
+  if (!data) {
+    return dataAwal;
+  }
+
+  try {
+    return JSON.parse(data);
   } catch (error) {
     localStorage.removeItem(key);
     return dataAwal;
   }
 }
 
-function simpanDataStorage(key, data) {
+function simpanStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
 
+function hargaKeAngka(harga) {
+  if (typeof harga === "number") {
+    return harga;
+  }
+
+  return Number(String(harga || 0).replace(/[^\d]/g, "")) || 0;
+}
+
+function formatRupiah(angka) {
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+  }).format(Number(angka || 0));
+}
+
+function formatTanggal(tanggal) {
+  if (!tanggal) {
+    return "-";
+  }
+
+  return new Date(`${tanggal}T00:00:00`).toLocaleDateString("id-ID", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+function ambilRating(rating) {
+  const hasil = String(rating || "4.8").match(/\d+(\.\d+)?/);
+
+  if (!hasil) {
+    return 4.8;
+  }
+
+  return Number(hasil[0]);
+}
+
+function normalisasiPaket(item, index, kategoriDefault) {
+  const gambar = item?.gambar || defaultImage;
+
+  const fasilitasDariAktivitas = Array.isArray(item?.aktivitas)
+    ? item.aktivitas
+    : [];
+
+  const fasilitasDasar = [item?.akomodasi, item?.makan, item?.ekstra].filter(
+    Boolean,
+  );
+
+  return {
+    id:
+      item?.id ||
+      `${kategoriDefault}-${item?.nama || index}`
+        .toLowerCase()
+        .replaceAll(" ", "-"),
+
+    nama: item?.nama || `Paket TravelGo ${index + 1}`,
+
+    lokasi: item?.lokasi || "Indonesia",
+
+    harga: hargaKeAngka(item?.harga),
+
+    durasi: item?.durasi || "3 Hari / 2 Malam",
+
+    gambar,
+
+    rating: ambilRating(item?.rating),
+
+    kategori: item?.kategori || kategoriDefault,
+
+    deskripsi:
+      item?.deskripsi ||
+      "Paket perjalanan TravelGo dengan fasilitas lengkap, itinerary rapi, dan customer service selama perjalanan.",
+
+    fasilitas:
+      fasilitasDariAktivitas.length > 0
+        ? fasilitasDariAktivitas
+        : fasilitasDasar.length > 0
+          ? fasilitasDasar
+          : [
+              "Transport perjalanan",
+              "Hotel nyaman",
+              "Guide lokal",
+              "Customer service",
+            ],
+  };
+}
+
+function ambilDaftarPaket() {
+  const paketTersimpan = ambilStorage("travelgo_packages_final", null);
+
+  if (Array.isArray(paketTersimpan) && paketTersimpan.length > 0) {
+    return paketTersimpan.map((item, index) =>
+      normalisasiPaket(item, index, item.kategori || "Travel"),
+    );
+  }
+
+  const daftarAwal = [
+    {
+      data: paketData?.paketBaru,
+      kategori: "Paket Baru",
+    },
+
+    ...(paketData?.paketUnggulan || []).map((item) => ({
+      data: item,
+      kategori: "Unggulan",
+    })),
+
+    ...(paketData?.paketPopuler || []).map((item) => ({
+      data: item,
+      kategori: "Populer",
+    })),
+
+    ...(paketData?.paketRekomendasi || []).map((item) => ({
+      data: item,
+      kategori: "Rekomendasi",
+    })),
+  ].filter((item) => item.data);
+
+  const paketNormal = daftarAwal.map((item, index) =>
+    normalisasiPaket(item.data, index, item.kategori),
+  );
+
+  return Array.from(
+    new Map(paketNormal.map((paket) => [paket.nama, paket])).values(),
+  );
+}
+
+function styleStatusBooking(status) {
+  if (status === "Dikonfirmasi") {
+    return "bg-[#E9FBEF] text-[#31A05F]";
+  }
+
+  if (status === "Selesai") {
+    return "bg-[#EAF4FF] text-[#5A91D6]";
+  }
+
+  return "bg-[#FFF4D8] text-[#B88700]";
+}
+
+function styleStatusBayar(status) {
+  if (status === "Lunas") {
+    return "bg-[#E9FBEF] text-[#31A05F]";
+  }
+
+  return "bg-[#FFF4D8] text-[#B88700]";
+}
+
 export default function MemberDashboard() {
-  const defaultMember = {
-    id: 1,
-    nama: "Bianca Bahi",
-    email: "bianca@gmail.com",
-    hp: "081234567890",
-    alamat: "Pekanbaru, Riau",
-    statusMember: "Member",
-    level: "Gold",
-    sumberUser: "Website",
-    metodePembayaran: "QRIS",
-    totalTransaksi: 8750000,
-    totalBooking: 3,
-    poin: 860,
-    tanggalBergabung: "18 Juni 2026",
+  const navigate = useNavigate();
+  const userLogin = ambilUserLogin();
+  const kodeUser = userLogin.id || userLogin.email || "member";
+
+  const STORAGE = {
+    profile: `travelgo_member_profile_${kodeUser}`,
+    bookings: `travelgo_member_bookings_${kodeUser}`,
+    feedbacks: `travelgo_member_feedback_${kodeUser}`,
+    chats: `travelgo_member_chat_${kodeUser}`,
   };
 
-  const defaultBookings = [
-    {
-      id: 1,
-      kode: "BKG-TRG-001",
-      paket: "Paket Bali Beach Escape",
-      lokasi: "Bali, Indonesia",
-      tanggal: "12 Juni - 16 Juni 2026",
-      durasi: "5 Hari / 4 Malam",
-      harga: 4500000,
-      jumlahTraveler: 2,
-      metodePembayaran: "QRIS",
-      statusBooking: "Dikonfirmasi",
-      statusPembayaran: "Lunas",
-      catatan:
-        "Booking sudah dikonfirmasi. E-ticket dan detail itinerary akan dikirim melalui customer service.",
-    },
-    {
-      id: 2,
-      kode: "BKG-TRG-002",
-      paket: "Paket Bromo Sunrise Trip",
-      lokasi: "Malang, Jawa Timur",
-      tanggal: "20 Juli - 22 Juli 2026",
-      durasi: "3 Hari / 2 Malam",
-      harga: 2250000,
-      jumlahTraveler: 1,
-      metodePembayaran: "Transfer Bank",
-      statusBooking: "Menunggu",
-      statusPembayaran: "Menunggu Verifikasi",
-      catatan:
-        "Pembayaran sedang menunggu verifikasi admin. Customer service akan menghubungi jika ada data yang kurang.",
-    },
-    {
-      id: 3,
-      kode: "BKG-TRG-003",
-      paket: "Paket Lombok Eksotis",
-      lokasi: "Lombok, Indonesia",
-      tanggal: "8 Mei - 12 Mei 2026",
-      durasi: "5 Hari / 4 Malam",
-      harga: 2000000,
-      jumlahTraveler: 1,
-      metodePembayaran: "E-Wallet",
-      statusBooking: "Selesai",
-      statusPembayaran: "Lunas",
-      catatan:
-        "Perjalanan sudah selesai. Terima kasih sudah menggunakan TravelGo.",
-    },
-  ];
+  const defaultMember = {
+    id: userLogin.id,
+    nama: userLogin.name,
+    email: userLogin.email,
+    hp: userLogin.phone,
+    alamat: userLogin.address,
+    metodePembayaran: "QRIS",
+  };
 
-  const recommendedPackages = [
-    {
-      id: 1,
-      nama: "Paket Labuan Bajo Premium",
-      lokasi: "Labuan Bajo",
-      harga: 6200000,
-      durasi: "4 Hari / 3 Malam",
-      rating: 4.9,
-      kategori: "Rekomendasi Gold",
-      gambar:
-        "https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=900&q=80",
-      deskripsi:
-        "Paket premium untuk menikmati Pulau Padar, Pink Beach, snorkeling, dan sailing trip dengan fasilitas nyaman.",
-      fasilitas: [
-        "Hotel nyaman dekat pelabuhan",
-        "Sailing trip dan dokumentasi",
-        "Transport lokal",
-        "Customer service selama perjalanan",
-      ],
-    },
-    {
-      id: 2,
-      nama: "Paket Jogja Heritage",
-      lokasi: "Yogyakarta",
-      harga: 2800000,
-      durasi: "3 Hari / 2 Malam",
-      rating: 4.7,
-      kategori: "Best Seller",
-      gambar:
-        "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=900&q=80",
-      deskripsi:
-        "Paket city tour budaya, kuliner, dan wisata populer di Yogyakarta dengan jadwal santai.",
-      fasilitas: [
-        "Hotel area kota",
-        "Transport wisata",
-        "Guide lokal",
-        "Kunjungan destinasi heritage",
-      ],
-    },
-    {
-      id: 3,
-      nama: "Paket Bandung Family Trip",
-      lokasi: "Bandung",
-      harga: 2400000,
-      durasi: "3 Hari / 2 Malam",
-      rating: 4.8,
-      kategori: "Family Choice",
-      gambar:
-        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
-      deskripsi:
-        "Paket keluarga untuk menikmati wisata alam, kuliner, dan tempat rekreasi populer di Bandung.",
-      fasilitas: [
-        "Transport private",
-        "Hotel keluarga",
-        "Destinasi ramah keluarga",
-        "Itinerary fleksibel",
-      ],
-    },
-  ];
-
-  const defaultPromos = [
-    {
-      id: 1,
-      nama: "Gold Member Holiday Deal",
-      diskon: "20%",
-      status: "Aktif",
-      berlaku: "Sampai 31 Juli 2026",
-      target: "Khusus Member Gold",
-      kode: "GOLDTRIP20",
-      deskripsi:
-        "Promo khusus member Gold untuk pemesanan paket rekomendasi TravelGo.",
-    },
-    {
-      id: 2,
-      nama: "Weekend Escape",
-      diskon: "10%",
-      status: "Aktif",
-      berlaku: "Sampai 15 Agustus 2026",
-      target: "Semua Member",
-      kode: "WEEKEND10",
-      deskripsi:
-        "Promo perjalanan singkat untuk liburan akhir pekan bersama TravelGo.",
-    },
-  ];
+  const [packages] = useState(() => ambilDaftarPaket());
 
   const [member, setMember] = useState(() =>
-    ambilDataStorage(STORAGE.profile, defaultMember)
+    ambilStorage(STORAGE.profile, defaultMember),
   );
 
   const [bookings, setBookings] = useState(() =>
-    ambilDataStorage(STORAGE.bookings, defaultBookings)
+    ambilStorage(STORAGE.bookings, []),
   );
 
   const [feedbacks, setFeedbacks] = useState(() =>
-    ambilDataStorage(STORAGE.feedbacks, [])
+    ambilStorage(STORAGE.feedbacks, []),
   );
 
-  const [searchBooking, setSearchBooking] = useState("");
-  const [bookingFilter, setBookingFilter] = useState("Semua Booking");
-  const [isBookingFilterOpen, setIsBookingFilterOpen] = useState(false);
+  const [chats, setChats] = useState(() =>
+    ambilStorage(STORAGE.chats, [
+      {
+        from: "cs",
+        text: `Halo ${defaultMember.nama}, ada yang bisa TravelGo bantu?`,
+        time: "Baru saja",
+      },
+    ]),
+  );
 
   const [modalType, setModalType] = useState("");
   const [selectedData, setSelectedData] = useState(null);
   const [notification, setNotification] = useState("");
 
+  const [searchPackage, setSearchPackage] = useState("");
+  const [searchBooking, setSearchBooking] = useState("");
+  const [chatText, setChatText] = useState("");
+
   const [profileForm, setProfileForm] = useState(member);
+
+  const [bookingForm, setBookingForm] = useState({
+    tanggal: "",
+    jumlahTraveler: 1,
+    metodePembayaran: "QRIS",
+    catatan: "",
+  });
+
   const [feedbackForm, setFeedbackForm] = useState({
     jenis: "Feedback",
-    paket: defaultBookings[0]?.paket || "",
+    paket: "",
     pesan: "",
   });
 
-  const pesanAwalCS = [
-    {
-      from: "cs",
-      text: "Halo Bianca, selamat datang di Customer Service TravelGo. Ada yang bisa kami bantu?",
-      time: "Baru saja",
-    },
-  ];
-
-  const [chatText, setChatText] = useState("");
-  const [chatList, setChatList] = useState(() =>
-    ambilDataStorage(STORAGE.chat, pesanAwalCS)
-  );
-
   useEffect(() => {
-    simpanDataStorage(STORAGE.profile, member);
+    simpanStorage(STORAGE.profile, member);
   }, [member]);
 
   useEffect(() => {
-    simpanDataStorage(STORAGE.bookings, bookings);
+    simpanStorage(STORAGE.bookings, bookings);
   }, [bookings]);
 
   useEffect(() => {
-    simpanDataStorage(STORAGE.feedbacks, feedbacks);
+    simpanStorage(STORAGE.feedbacks, feedbacks);
   }, [feedbacks]);
 
   useEffect(() => {
-    simpanDataStorage(STORAGE.chat, chatList);
-  }, [chatList]);
+    simpanStorage(STORAGE.chats, chats);
+  }, [chats]);
 
-  const showNotification = (message) => {
-    setNotification(message);
-    setTimeout(() => setNotification(""), 2600);
+  const tampilkanNotifikasi = (pesan) => {
+    setNotification(pesan);
+
+    setTimeout(() => {
+      setNotification("");
+    }, 2500);
   };
 
-  const formatRupiah = (value) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      minimumFractionDigits: 0,
-    }).format(Number(value || 0));
-  };
-
-  const getStatusStyle = (status) => {
-    if (status === "Dikonfirmasi" || status === "Selesai") {
-      return "bg-[#EAF4FF] text-[#5A91D6]";
-    }
-
-    if (status === "Menunggu") return "bg-[#FFF4D8] text-[#B88700]";
-
-    return "bg-red-50 text-red-500";
-  };
-
-  const getPaymentStyle = (status) => {
-    if (status === "Lunas") return "bg-[#E9FBEF] text-[#31A05F]";
-    if (status === "Refund") return "bg-red-50 text-red-500";
-    return "bg-[#FFF4D8] text-[#B88700]";
-  };
-
-  const getLevelStyle = (level) => {
-    if (level === "Platinum") return "bg-[#D7ECFF] text-[#4B91E8]";
-    if (level === "Gold") return "bg-[#C9A94B] text-white";
-    if (level === "Silver") return "bg-[#E1E1E1] text-[#555B66]";
-    return "bg-[#EAF4FF] text-[#70A9F8]";
-  };
-
-  const filteredBookings = useMemo(() => {
-    let data = bookings;
-
-    if (bookingFilter !== "Semua Booking") {
-      data = data.filter((item) => item.statusBooking === bookingFilter);
-    }
-
-    if (searchBooking.trim() !== "") {
-      const keyword = searchBooking.toLowerCase();
-
-      data = data.filter((item) => {
-        return (
-          item.kode?.toLowerCase().includes(keyword) ||
-          item.paket?.toLowerCase().includes(keyword) ||
-          item.lokasi?.toLowerCase().includes(keyword) ||
-          item.tanggal?.toLowerCase().includes(keyword) ||
-          item.statusBooking?.toLowerCase().includes(keyword) ||
-          item.statusPembayaran?.toLowerCase().includes(keyword)
-        );
-      });
-    }
-
-    return data;
-  }, [bookings, bookingFilter, searchBooking]);
-
-  const nextTrip = bookings.find((item) => item.statusBooking === "Dikonfirmasi");
-  const totalPaidBooking = bookings.filter(
-    (item) => item.statusPembayaran === "Lunas"
-  ).length;
-
-  const openModal = (type, data = null) => {
-    setModalType(type);
+  const bukaModal = (jenis, data = null) => {
     setSelectedData(data);
+    setModalType(jenis);
 
-    if (type === "profile") {
+    if (jenis === "profile") {
       setProfileForm(member);
     }
+
+    if (jenis === "booking") {
+      setBookingForm({
+        tanggal: "",
+        jumlahTraveler: 1,
+        metodePembayaran: "QRIS",
+        catatan: "",
+      });
+    }
   };
 
-  const closeModal = () => {
+  const tutupModal = () => {
     setModalType("");
     setSelectedData(null);
   };
 
-  const handleProfileChange = (e) => {
-    const { name, value } = e.target;
+  const paketTampil = useMemo(() => {
+    const keyword = searchPackage.toLowerCase().trim();
 
-    setProfileForm({
-      ...profileForm,
-      [name]: value,
+    if (!keyword) {
+      return packages;
+    }
+
+    return packages.filter((paket) => {
+      return (
+        paket.nama.toLowerCase().includes(keyword) ||
+        paket.lokasi.toLowerCase().includes(keyword) ||
+        paket.kategori.toLowerCase().includes(keyword)
+      );
     });
-  };
+  }, [packages, searchPackage]);
 
-  const handleSubmitProfile = (e) => {
+  const bookingTampil = useMemo(() => {
+    const keyword = searchBooking.toLowerCase().trim();
+
+    if (!keyword) {
+      return bookings;
+    }
+
+    return bookings.filter((booking) => {
+      return (
+        booking.kode.toLowerCase().includes(keyword) ||
+        booking.paket.toLowerCase().includes(keyword) ||
+        booking.lokasi.toLowerCase().includes(keyword) ||
+        booking.statusBooking.toLowerCase().includes(keyword)
+      );
+    });
+  }, [bookings, searchBooking]);
+
+  const totalTransaksi = bookings.reduce((total, booking) => {
+    return total + Number(booking.harga || 0);
+  }, 0);
+
+  const bookingLunas = bookings.filter((booking) => {
+    return booking.statusPembayaran === "Lunas";
+  }).length;
+
+  const tripBerikutnya = bookings.find((booking) => {
+    return (
+      booking.statusBooking === "Menunggu" ||
+      booking.statusBooking === "Dikonfirmasi"
+    );
+  });
+
+  const simpanProfil = (e) => {
     e.preventDefault();
 
     if (!profileForm.nama || !profileForm.email || !profileForm.hp) {
@@ -354,60 +389,101 @@ export default function MemberDashboard() {
       return;
     }
 
+    const userBaru = {
+      ...userLogin,
+      name: profileForm.nama,
+      email: profileForm.email,
+      phone: profileForm.hp,
+      address: profileForm.alamat,
+    };
+
+    localStorage.setItem("currentUser", JSON.stringify(userBaru));
+
     setMember(profileForm);
-    closeModal();
-    showNotification("Profil member berhasil diperbarui");
+    tutupModal();
+    tampilkanNotifikasi("Profil berhasil diperbarui");
   };
 
-  const handleFeedbackChange = (e) => {
-    const { name, value } = e.target;
-
-    setFeedbackForm({
-      ...feedbackForm,
-      [name]: value,
-    });
-  };
-
-  const handleSubmitFeedback = (e) => {
+  const buatBooking = (e) => {
     e.preventDefault();
 
-    if (!feedbackForm.pesan.trim()) {
-      alert("Isi pesan feedback atau komplain dulu");
+    if (!bookingForm.tanggal) {
+      alert("Pilih tanggal keberangkatan dulu");
       return;
     }
 
-    const newFeedback = {
+    const jumlahTraveler = Number(bookingForm.jumlahTraveler);
+
+    if (jumlahTraveler < 1) {
+      alert("Jumlah traveler minimal 1 orang");
+      return;
+    }
+
+    const bookingBaru = {
       id: Date.now(),
-      ...feedbackForm,
-      status: "Terkirim",
-      tanggal: new Date().toISOString().split("T")[0],
+      kode: `BKG-TRG-${Date.now().toString().slice(-6)}`,
+      userId: userLogin.id || "",
+      namaCustomer: member.nama,
+      emailCustomer: member.email,
+      paket: selectedData.nama,
+      lokasi: selectedData.lokasi,
+      tanggal: formatTanggal(bookingForm.tanggal),
+      durasi: selectedData.durasi,
+      harga: selectedData.harga * jumlahTraveler,
+      jumlahTraveler,
+      metodePembayaran: bookingForm.metodePembayaran,
+      statusBooking: "Menunggu",
+      statusPembayaran: "Menunggu Verifikasi",
+      catatan:
+        bookingForm.catatan ||
+        "Booking berhasil dibuat dan sedang menunggu verifikasi admin.",
     };
 
-    setFeedbacks((prev) => [newFeedback, ...prev]);
+    setBookings((dataLama) => [bookingBaru, ...dataLama]);
+
+    const semuaBooking = ambilStorage("travelgo_all_bookings", []);
+
+    simpanStorage("travelgo_all_bookings", [bookingBaru, ...semuaBooking]);
 
     setFeedbackForm({
       jenis: "Feedback",
-      paket: bookings[0]?.paket || "",
+      paket: bookingBaru.paket,
       pesan: "",
     });
 
-    showNotification(`${newFeedback.jenis} berhasil dikirim ke TravelGo`);
+    tutupModal();
+    tampilkanNotifikasi("Booking berhasil dibuat");
   };
 
-  const handleUsePromo = (promo) => {
-    openModal("promo", promo);
+  const kirimFeedback = (e) => {
+    e.preventDefault();
+
+    if (!feedbackForm.pesan.trim()) {
+      alert("Isi feedback atau komplain dulu");
+      return;
+    }
+
+    const feedbackBaru = {
+      id: Date.now(),
+      jenis: feedbackForm.jenis,
+      paket: feedbackForm.paket || "Umum",
+      pesan: feedbackForm.pesan,
+      tanggal: new Date().toLocaleDateString("id-ID"),
+      status: "Terkirim",
+    };
+
+    setFeedbacks((dataLama) => [feedbackBaru, ...dataLama]);
+
+    setFeedbackForm({
+      jenis: "Feedback",
+      paket: "",
+      pesan: "",
+    });
+
+    tampilkanNotifikasi("Feedback berhasil dikirim");
   };
 
-  const handleConfirmPromo = () => {
-    closeModal();
-    showNotification("Promo berhasil dipilih. Kode promo tersimpan untuk booking berikutnya.");
-  };
-
-  const handleChatCS = () => {
-    openModal("cs");
-  };
-
-  const handleSendChat = (e) => {
+  const kirimChat = (e) => {
     e.preventDefault();
 
     if (!chatText.trim()) {
@@ -422,42 +498,85 @@ export default function MemberDashboard() {
 
     const balasanCS = {
       from: "cs",
-      text: "Terima kasih, pesan kamu sudah diterima. Customer Service TravelGo akan membantu dari halaman member ini.",
+      text: "Pesan kamu sudah diterima. Customer Service TravelGo akan segera membantu.",
       time: "Baru saja",
     };
 
-    setChatList([...chatList, pesanMember, balasanCS]);
+    setChats((dataLama) => [...dataLama, pesanMember, balasanCS]);
     setChatText("");
   };
 
-  const renderStars = (rating) => {
-    const fullStars = Math.floor(Number(rating || 0));
-
+  const PackageCard = ({ paket, popup = false }) => {
     return (
-      <div className="flex items-center gap-1">
-        {[1, 2, 3, 4, 5].map((star) =>
-          star <= fullStars ? (
-            <FaStar key={star} className="text-[#FFD85C] text-sm" />
-          ) : (
-            <FaRegStar key={star} className="text-[#D8DDE5] text-sm" />
-          )
-        )}
-        <span className="text-[#9AA0AA] text-xs ml-1">{rating}</span>
+      <div className="border border-[#EEF1F5] rounded-[16px] overflow-hidden hover:shadow-xl hover:-translate-y-1 transition">
+        <img
+          src={paket.gambar}
+          alt={paket.nama}
+          className={`w-full object-cover ${popup ? "h-[180px]" : "h-[185px]"}`}
+        />
+
+        <div className="p-5">
+          <div className="flex items-center justify-between gap-3 mb-3">
+            <span className="bg-[#EAF4FF] text-[#70A9F8] text-xs font-bold px-3 py-1 rounded-[7px]">
+              {paket.kategori}
+            </span>
+
+            <span className="text-xs font-bold flex items-center gap-1 text-[#B88700]">
+              <FaStar />
+              {paket.rating}
+            </span>
+          </div>
+
+          <h4 className="font-bold text-[16px]">{paket.nama}</h4>
+
+          <p className="text-sm text-[#9AA0AA] flex items-center gap-2 mt-2">
+            <FaMapMarkerAlt />
+            {paket.lokasi}
+          </p>
+
+          {popup && (
+            <p className="text-sm text-[#596070] leading-6 mt-3 line-clamp-2">
+              {paket.deskripsi}
+            </p>
+          )}
+
+          <div className="flex items-end justify-between mt-5">
+            <div>
+              <p className="text-xs text-[#9AA0AA]">Mulai dari</p>
+
+              <p className="text-[17px] font-bold text-[#70A9F8]">
+                {formatRupiah(paket.harga)}
+              </p>
+            </div>
+
+            <p className="text-xs font-bold bg-[#F4F5F7] text-[#596070] px-3 py-2 rounded-[8px]">
+              {paket.durasi}
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => bukaModal("packageDetail", paket)}
+            className="w-full h-10 mt-5 rounded-[10px] bg-[#70A9F8] text-white text-sm font-bold hover:bg-[#5D9AF2] flex items-center justify-center gap-2"
+          >
+            Lihat Paket
+            <FaArrowRight className="text-xs" />
+          </button>
+        </div>
       </div>
     );
   };
 
   return (
-    <div className="min-h-screen bg-[#F4F5F7] text-[#202436] font-[Plus_Jakarta_Sans] overflow-x-hidden">
+    <div className="min-h-screen bg-[#F4F5F7] text-[#202436] font-[Plus_Jakarta_Sans]">
       {notification && (
-        <div className="fixed top-5 right-5 z-[99999] bg-[#202436] text-white px-5 py-3 rounded-[12px] shadow-xl text-sm font-semibold">
+        <div className="fixed top-5 right-5 z-[9999] bg-[#202436] text-white px-5 py-3 rounded-xl shadow-xl text-sm font-semibold">
           {notification}
         </div>
       )}
 
-      {/* TOP NAV MEMBER */}
-      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-[#EEF1F5]">
-        <div className="max-w-[1500px] mx-auto px-4 md:px-6 xl:px-8 h-[76px] flex items-center justify-between gap-4">
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-[#EEF1F5]">
+        <div className="max-w-[1500px] mx-auto px-4 md:px-6 h-[76px] flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-[44px] h-[44px] rounded-[14px] bg-[#EAF4FF] text-[#70A9F8] flex items-center justify-center">
               <FaPlaneDeparture />
@@ -465,17 +584,26 @@ export default function MemberDashboard() {
 
             <div>
               <h1 className="text-[22px] font-bold leading-none">TravelGo.</h1>
+
               <p className="text-[11px] text-[#9AA0AA] font-semibold mt-1">
                 Member Dashboard
               </p>
             </div>
           </div>
 
-          <div className="hidden md:flex items-center gap-3">
+          <div className="flex items-center gap-3">
             <button
               type="button"
-              onClick={handleChatCS}
-              className="h-[40px] px-4 rounded-[10px] bg-[#F4F5F7] text-[#596070] text-sm font-bold hover:bg-[#EAF4FF] hover:text-[#70A9F8] transition flex items-center gap-2"
+              onClick={() => navigate("/home")}
+              className="hidden md:flex h-[40px] px-4 rounded-[10px] bg-[#F4F5F7] text-[#596070] text-sm font-bold hover:bg-[#EAF4FF] hover:text-[#70A9F8] items-center gap-2"
+            >
+              <FaArrowRight className="text-xs rotate-180" />
+              Kembali ke Beranda
+            </button>
+            <button
+              type="button"
+              onClick={() => bukaModal("chat")}
+              className="hidden md:flex h-[40px] px-4 rounded-[10px] bg-[#F4F5F7] text-[#596070] text-sm font-bold hover:bg-[#EAF4FF] hover:text-[#70A9F8] items-center gap-2"
             >
               <FaHeadset className="text-xs" />
               Customer Service
@@ -483,189 +611,164 @@ export default function MemberDashboard() {
 
             <button
               type="button"
-              onClick={() => openModal("profile")}
-              className="h-[42px] px-4 rounded-[12px] bg-[#70A9F8] text-white text-sm font-bold hover:bg-[#5D9AF2] hover:shadow-lg transition flex items-center gap-2"
+              onClick={() => bukaModal("profile")}
+              className="h-[42px] px-4 rounded-[12px] bg-[#70A9F8] text-white text-sm font-bold hover:bg-[#5D9AF2] flex items-center gap-2"
             >
               <FaUserCircle />
-              {member.nama}
+              <span className="hidden md:inline">{member.nama}</span>
             </button>
           </div>
-
-          <button
-            type="button"
-            onClick={() => openModal("profile")}
-            className="md:hidden w-[42px] h-[42px] rounded-[12px] bg-[#70A9F8] text-white flex items-center justify-center"
-          >
-            <FaUserCircle />
-          </button>
         </div>
       </header>
 
-      <main className="max-w-[1500px] mx-auto px-4 md:px-6 xl:px-8 py-6 xl:py-8">
-        {/* WELCOME */}
-        <section className="relative overflow-hidden bg-[#70A9F8] rounded-[18px] p-5 md:p-7 mb-6 text-white shadow-sm">
-          <div className="absolute right-[-90px] top-[-120px] w-[280px] h-[280px] rounded-full bg-white/20"></div>
-          <div className="absolute right-[120px] bottom-[-140px] w-[260px] h-[260px] rounded-full bg-white/10"></div>
+      <main className="max-w-[1500px] mx-auto px-4 md:px-6 py-6 xl:py-8">
+        <section className="relative overflow-hidden bg-[#70A9F8] rounded-[18px] p-6 md:p-8 mb-6 text-white">
+          <div className="absolute right-[-80px] top-[-100px] w-[280px] h-[280px] rounded-full bg-white/20"></div>
+          <div className="absolute right-[120px] bottom-[-150px] w-[280px] h-[280px] rounded-full bg-white/10"></div>
 
-          <div className="relative z-10 grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-6 items-center">
+          <div className="relative grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-6 items-center">
             <div>
-              <p className="inline-flex items-center gap-2 bg-white/20 border border-white/25 rounded-full px-4 py-2 text-[12px] font-bold mb-4">
-                <FaShieldAlt />
+              <p className="inline-flex items-center gap-2 bg-white/20 border border-white/25 rounded-full px-4 py-2 text-xs font-bold mb-4">
+                <FaPlaneDeparture />
                 TravelGo Member Area
               </p>
 
-              <h2 className="text-[28px] md:text-[36px] font-bold leading-tight mb-3">
+              <h2 className="text-[30px] md:text-[38px] font-bold mb-3">
                 Halo, {member.nama}
               </h2>
 
-              <p className="text-white/85 text-[14px] md:text-[15px] leading-7 max-w-[720px]">
-                Cek status booking, promo member, rekomendasi paket, dan kirim
-                feedback ke customer service TravelGo dari satu halaman.
+              <p className="text-white/85 text-sm md:text-[15px] leading-7 max-w-[700px]">
+                Lihat paket travel, buat booking, cek status perjalanan, dan
+                hubungi customer service dari satu halaman.
               </p>
 
               <div className="flex flex-wrap gap-3 mt-6">
                 <button
                   type="button"
-                  onClick={() => openModal("booking", nextTrip || bookings[0])}
-                  className="h-[42px] px-5 rounded-[11px] bg-white text-[#70A9F8] text-sm font-bold hover:shadow-lg hover:-translate-y-1 transition flex items-center gap-2"
+                  onClick={() => bukaModal("allPackages")}
+                  className="h-[42px] px-5 rounded-[11px] bg-white text-[#70A9F8] text-sm font-bold hover:shadow-lg flex items-center gap-2"
                 >
-                  <FaCalendarCheck className="text-xs" />
-                  Cek Booking
+                  <FaPlaneDeparture className="text-xs" />
+                  Lihat Semua Paket
                 </button>
 
                 <button
                   type="button"
-                  onClick={handleChatCS}
-                  className="h-[42px] px-5 rounded-[11px] bg-white/15 border border-white/25 text-white text-sm font-bold hover:bg-white/25 transition flex items-center gap-2"
+                  onClick={() =>
+                    document
+                      .getElementById("booking-saya")
+                      ?.scrollIntoView({ behavior: "smooth" })
+                  }
+                  className="h-[42px] px-5 rounded-[11px] bg-white/15 border border-white/25 text-white text-sm font-bold hover:bg-white/25 flex items-center gap-2"
                 >
-                  <FaHeadset className="text-xs" />
-                  Chat CS
+                  <FaCalendarCheck className="text-xs" />
+                  Riwayat Booking
                 </button>
               </div>
             </div>
 
-            <div className="bg-white/15 backdrop-blur-md border border-white/20 rounded-[16px] p-5">
-              <p className="text-white/75 text-[13px] font-semibold mb-2">
+            <div className="bg-white/15 border border-white/20 rounded-[16px] p-5">
+              <p className="text-white/75 text-sm font-semibold mb-2">
                 Trip Berikutnya
               </p>
 
               <h3 className="text-[19px] font-bold mb-2">
-                {nextTrip?.paket || "Belum ada trip aktif"}
+                {tripBerikutnya?.paket || "Belum ada trip aktif"}
               </h3>
 
-              <p className="text-white/80 text-[13px] flex items-center gap-2 mb-2">
+              <p className="text-white/80 text-sm flex items-center gap-2 mb-2">
                 <FaMapMarkerAlt />
-                {nextTrip?.lokasi || "Pilih paket rekomendasi TravelGo"}
+                {tripBerikutnya?.lokasi || "Pilih paket TravelGo"}
               </p>
 
-              <p className="text-white/80 text-[13px] flex items-center gap-2">
-                <FaClock />
-                {nextTrip?.tanggal || "Belum ada jadwal"}
+              <p className="text-white/80 text-sm flex items-center gap-2">
+                <FaCalendarCheck />
+                {tripBerikutnya?.tanggal || "Belum ada jadwal"}
               </p>
             </div>
           </div>
         </section>
 
-        {/* SUMMARY CARD */}
         <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-6">
-          <button
-            type="button"
-            onClick={() => openModal("profile")}
-            className="bg-white rounded-[16px] p-5 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-left"
-          >
+          <div className="bg-white rounded-[16px] p-5 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <div className="w-[46px] h-[46px] rounded-[12px] bg-[#EAF4FF] text-[#70A9F8] flex items-center justify-center">
                 <FaUserCircle />
               </div>
-              <span className="text-[12px] font-bold text-[#31A05F] bg-[#E9FBEF] px-3 py-1 rounded-[7px]">
-                {member.statusMember}
+
+              <span className="text-xs font-bold bg-[#E9FBEF] text-[#31A05F] px-3 py-1 rounded-[7px]">
+                Aktif
               </span>
             </div>
-            <p className="text-[#9AA0AA] text-[13px] font-semibold">
-              Status Member
-            </p>
-            <h3 className="text-[24px] font-bold mt-1">{member.statusMember}</h3>
-          </button>
 
-          <button
-            type="button"
-            onClick={() => openModal("membership")}
-            className="bg-white rounded-[16px] p-5 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-left"
-          >
+            <p className="text-[#9AA0AA] text-sm">Status Member</p>
+            <h3 className="text-2xl font-bold mt-1">Member</h3>
+          </div>
+
+          <div className="bg-white rounded-[16px] p-5 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <div className="w-[46px] h-[46px] rounded-[12px] bg-[#FFF4D8] text-[#B88700] flex items-center justify-center">
                 <FaCrown />
               </div>
-              <span
-                className={`text-[12px] font-bold px-3 py-1 rounded-[7px] ${getLevelStyle(
-                  member.level
-                )}`}
-              >
-                {member.level}
+
+              <span className="text-xs font-bold bg-[#EAF4FF] text-[#70A9F8] px-3 py-1 rounded-[7px]">
+                Regular
               </span>
             </div>
-            <p className="text-[#9AA0AA] text-[13px] font-semibold">
-              Level Membership
-            </p>
-            <h3 className="text-[24px] font-bold mt-1">{member.level}</h3>
-          </button>
 
-          <button
-            type="button"
-            onClick={() => document.getElementById("booking-saya")?.scrollIntoView({ behavior: "smooth" })}
-            className="bg-white rounded-[16px] p-5 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-left"
-          >
+            <p className="text-[#9AA0AA] text-sm">Level Membership</p>
+            <h3 className="text-2xl font-bold mt-1">Regular</h3>
+          </div>
+
+          <div className="bg-white rounded-[16px] p-5 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <div className="w-[46px] h-[46px] rounded-[12px] bg-[#EAF4FF] text-[#70A9F8] flex items-center justify-center">
                 <FaCalendarCheck />
               </div>
-              <span className="text-[12px] font-bold text-[#70A9F8] bg-[#EAF4FF] px-3 py-1 rounded-[7px]">
-                {totalPaidBooking} Lunas
+
+              <span className="text-xs font-bold bg-[#EAF4FF] text-[#70A9F8] px-3 py-1 rounded-[7px]">
+                {bookingLunas} Lunas
               </span>
             </div>
-            <p className="text-[#9AA0AA] text-[13px] font-semibold">
-              Total Booking
-            </p>
-            <h3 className="text-[24px] font-bold mt-1">{bookings.length}</h3>
-          </button>
 
-          <button
-            type="button"
-            onClick={() => openModal("transaction")}
-            className="bg-white rounded-[16px] p-5 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-left"
-          >
+            <p className="text-[#9AA0AA] text-sm">Total Booking</p>
+            <h3 className="text-2xl font-bold mt-1">{bookings.length}</h3>
+          </div>
+
+          <div className="bg-white rounded-[16px] p-5 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <div className="w-[46px] h-[46px] rounded-[12px] bg-[#EAF4FF] text-[#70A9F8] flex items-center justify-center">
                 <FaWallet />
               </div>
-              <span className="text-[12px] font-bold text-[#70A9F8] bg-[#EAF4FF] px-3 py-1 rounded-[7px]">
-                {member.poin} poin
+
+              <span className="text-xs font-bold bg-[#EAF4FF] text-[#70A9F8] px-3 py-1 rounded-[7px]">
+                {Math.floor(totalTransaksi / 100000)} poin
               </span>
             </div>
-            <p className="text-[#9AA0AA] text-[13px] font-semibold">
-              Total Transaksi
-            </p>
-            <h3 className="text-[22px] font-bold mt-1">
-              {formatRupiah(member.totalTransaksi)}
+
+            <p className="text-[#9AA0AA] text-sm">Total Transaksi</p>
+
+            <h3 className="text-[20px] font-bold mt-1">
+              {formatRupiah(totalTransaksi)}
             </h3>
-          </button>
+          </div>
         </section>
 
-        {/* PROFILE + PROMO */}
-        <section className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_360px] gap-6 mb-6">
-          <div className="bg-white rounded-[16px] p-5 shadow-sm hover:shadow-xl transition-all duration-300">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-5">
+        <section className="grid grid-cols-1 xl:grid-cols-[1fr_360px] gap-6 mb-6">
+          <div className="bg-white rounded-[16px] p-5 shadow-sm">
+            <div className="flex items-center justify-between gap-3 mb-5">
               <div>
                 <h3 className="text-[17px] font-bold">Profil Member</h3>
-                <p className="text-[13px] text-[#9AA0AA] mt-1">
-                  Data akun dan informasi customer TravelGo.
+
+                <p className="text-sm text-[#9AA0AA] mt-1">
+                  Identitas akun yang sedang login.
                 </p>
               </div>
 
               <button
                 type="button"
-                onClick={() => openModal("profile")}
-                className="h-[40px] px-4 rounded-[10px] bg-[#EAF4FF] text-[#70A9F8] text-sm font-bold hover:bg-[#70A9F8] hover:text-white transition flex items-center justify-center gap-2"
+                onClick={() => bukaModal("profile")}
+                className="h-10 px-4 rounded-[10px] bg-[#EAF4FF] text-[#70A9F8] text-sm font-bold hover:bg-[#70A9F8] hover:text-white flex items-center gap-2"
               >
                 <FaEdit className="text-xs" />
                 Edit Profil
@@ -674,253 +777,243 @@ export default function MemberDashboard() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
               <div className="bg-[#F8FBFF] rounded-[14px] p-4">
-                <p className="text-[12px] text-[#9AA0AA] flex items-center gap-2 mb-1">
+                <p className="text-xs text-[#9AA0AA] flex items-center gap-2 mb-1">
                   <FaUserCircle /> Nama
                 </p>
+
                 <p className="font-bold">{member.nama}</p>
               </div>
 
               <div className="bg-[#F8FBFF] rounded-[14px] p-4">
-                <p className="text-[12px] text-[#9AA0AA] flex items-center gap-2 mb-1">
+                <p className="text-xs text-[#9AA0AA] flex items-center gap-2 mb-1">
                   <FaEnvelope /> Email
                 </p>
+
                 <p className="font-bold truncate">{member.email}</p>
               </div>
 
               <div className="bg-[#F8FBFF] rounded-[14px] p-4">
-                <p className="text-[12px] text-[#9AA0AA] flex items-center gap-2 mb-1">
+                <p className="text-xs text-[#9AA0AA] flex items-center gap-2 mb-1">
                   <FaPhoneAlt /> No HP
                 </p>
+
                 <p className="font-bold">{member.hp}</p>
               </div>
 
               <div className="bg-[#F8FBFF] rounded-[14px] p-4 md:col-span-2">
-                <p className="text-[12px] text-[#9AA0AA] flex items-center gap-2 mb-1">
+                <p className="text-xs text-[#9AA0AA] flex items-center gap-2 mb-1">
                   <FaMapMarkerAlt /> Alamat
                 </p>
+
                 <p className="font-bold">{member.alamat}</p>
               </div>
 
               <div className="bg-[#F8FBFF] rounded-[14px] p-4">
-                <p className="text-[12px] text-[#9AA0AA] flex items-center gap-2 mb-1">
-                  <FaCreditCard /> Pembayaran Favorit
+                <p className="text-xs text-[#9AA0AA] flex items-center gap-2 mb-1">
+                  <FaWallet /> Pembayaran Favorit
                 </p>
+
                 <p className="font-bold">{member.metodePembayaran}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-[16px] p-5 shadow-sm hover:shadow-xl transition-all duration-300">
-            <div className="flex items-center justify-between mb-5">
-              <div>
-                <h3 className="text-[17px] font-bold">Promo Member</h3>
-                <p className="text-[13px] text-[#9AA0AA] mt-1">
-                  Promo aktif untuk akunmu.
-                </p>
+          <div className="bg-white rounded-[16px] p-5 shadow-sm">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-[46px] h-[46px] rounded-[12px] bg-[#EAF4FF] text-[#70A9F8] flex items-center justify-center">
+                <FaGift />
               </div>
 
-              <FaGift className="text-[#70A9F8]" />
+              <div>
+                <h3 className="text-[17px] font-bold">Promo Member</h3>
+
+                <p className="text-sm text-[#9AA0AA]">
+                  Promo untuk booking berikutnya.
+                </p>
+              </div>
             </div>
 
             <div className="space-y-3">
-              {defaultPromos.map((promo) => (
-                <div
-                  key={promo.id}
-                  className="rounded-[14px] border border-[#EEF1F5] p-4 hover:border-[#70A9F8] hover:shadow-md transition"
-                >
-                  <div className="flex items-start justify-between gap-3 mb-2">
-                    <div>
-                      <h4 className="font-bold text-[14px]">{promo.nama}</h4>
-                      <p className="text-[12px] text-[#9AA0AA] mt-1">
-                        {promo.berlaku}
-                      </p>
-                    </div>
+              <div className="border border-[#EEF1F5] rounded-[14px] p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="font-bold text-sm">Weekend Escape</p>
 
-                    <span className="bg-[#EAF4FF] text-[#70A9F8] text-[12px] font-bold px-3 py-1 rounded-[7px]">
-                      {promo.diskon}
-                    </span>
+                    <p className="text-xs text-[#9AA0AA] mt-1">
+                      Sampai 15 Agustus 2026
+                    </p>
                   </div>
 
-                  <p className="text-[12px] text-[#596070] leading-5 mb-3">
-                    {promo.deskripsi}
-                  </p>
-
-                  <button
-                    type="button"
-                    onClick={() => handleUsePromo(promo)}
-                    className="w-full h-[36px] rounded-[9px] bg-[#70A9F8] text-white text-[12px] font-bold hover:bg-[#5D9AF2] transition"
-                  >
-                    Gunakan Promo
-                  </button>
+                  <span className="text-sm font-bold bg-[#EAF4FF] text-[#70A9F8] px-3 py-1 rounded-[7px]">
+                    10%
+                  </span>
                 </div>
-              ))}
+
+                <p className="mt-3 text-xs text-[#596070]">
+                  Kode: <b>WEEKEND10</b>
+                </p>
+              </div>
+
+              <div className="border border-[#EEF1F5] rounded-[14px] p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="font-bold text-sm">Member Holiday Deal</p>
+
+                    <p className="text-xs text-[#9AA0AA] mt-1">
+                      Sampai 31 Agustus 2026
+                    </p>
+                  </div>
+
+                  <span className="text-sm font-bold bg-[#EAF4FF] text-[#70A9F8] px-3 py-1 rounded-[7px]">
+                    15%
+                  </span>
+                </div>
+
+                <p className="mt-3 text-xs text-[#596070]">
+                  Kode: <b>TRAVELGO15</b>
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* BOOKING */}
-        <section
-          id="booking-saya"
-          className="bg-white rounded-[16px] p-5 shadow-sm hover:shadow-xl transition-all duration-300 mb-6"
-        >
-          <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 mb-5">
+        <section className="bg-white rounded-[16px] p-5 shadow-sm mb-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
             <div>
-              <h3 className="text-[17px] font-bold">Riwayat Booking Saya</h3>
-              <p className="text-[13px] text-[#9AA0AA] mt-1">
-                Cek status perjalanan dan pembayaran booking TravelGo.
+              <h3 className="text-[17px] font-bold">Daftar Paket Travel</h3>
+
+              <p className="text-sm text-[#9AA0AA] mt-1">
+                Pilihan paket TravelGo untuk perjalanan bibi.
               </p>
             </div>
 
-            <div className="flex flex-col md:flex-row md:items-center gap-3">
-              <div className="w-full md:w-[320px] h-[44px] bg-white rounded-[12px] flex items-center px-4 gap-3 border border-[#EEF1F5] shadow-sm hover:shadow-md focus-within:border-[#70A9F8] focus-within:shadow-md transition-all duration-300">
-                <FaSearch className="text-[#B9C0CA] text-sm shrink-0" />
+            <button
+              type="button"
+              onClick={() => bukaModal("allPackages")}
+              className="h-10 px-4 rounded-[10px] bg-[#EAF4FF] text-[#70A9F8] text-sm font-bold hover:bg-[#70A9F8] hover:text-white flex items-center justify-center gap-2"
+            >
+              Lihat Semua
+              <FaArrowRight className="text-xs" />
+            </button>
+          </div>
 
-                <input
-                  type="text"
-                  value={searchBooking}
-                  onChange={(e) => setSearchBooking(e.target.value)}
-                  placeholder="Cari booking..."
-                  className="
-                    w-full
-                    bg-transparent
-                    border-none
-                    outline-none
-                    ring-0
-                    focus:outline-none
-                    focus:ring-0
-                    focus:border-none
-                    text-sm
-                    placeholder:text-[#B9C0CA]
-                  "
-                />
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+            {packages.slice(0, 3).map((paket) => (
+              <PackageCard key={paket.id} paket={paket} />
+            ))}
+          </div>
 
-              <div className="relative">
-                <button
-                  type="button"
-                  onClick={() => setIsBookingFilterOpen(!isBookingFilterOpen)}
-                  className="h-[44px] min-w-[155px] px-4 bg-white rounded-[12px] flex items-center justify-between gap-2 text-[#596070] border border-[#EEF1F5] shadow-sm hover:border-[#70A9F8] transition-all duration-200 text-sm font-bold"
-                >
-                  {bookingFilter}
-                  <FaChevronDown
-                    className={`text-xs text-[#9AA0AA] transition-transform duration-200 ${
-                      isBookingFilterOpen ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
+          {packages.length === 0 && (
+            <p className="py-10 text-center text-sm text-[#9AA0AA]">
+              Data paket belum tersedia.
+            </p>
+          )}
+        </section>
 
-                {isBookingFilterOpen && (
-                  <div className="absolute right-0 top-[50px] w-[180px] bg-white rounded-[12px] shadow-lg border border-[#E8EDF3] p-2 z-30">
-                    {[
-                      "Semua Booking",
-                      "Dikonfirmasi",
-                      "Menunggu",
-                      "Selesai",
-                      "Dibatalkan",
-                    ].map((item) => (
-                      <button
-                        key={item}
-                        type="button"
-                        onClick={() => {
-                          setBookingFilter(item);
-                          setIsBookingFilterOpen(false);
-                        }}
-                        className={`w-full text-left px-3 py-2 rounded-[8px] text-sm font-semibold transition-all duration-200 ${
-                          bookingFilter === item
-                            ? "bg-[#70A9F8] text-white"
-                            : "text-[#596070] hover:bg-[#F4F8FF] hover:text-[#70A9F8]"
-                        }`}
-                      >
-                        {item}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
+        <section
+          id="booking-saya"
+          className="bg-white rounded-[16px] p-5 shadow-sm mb-6"
+        >
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-5">
+            <div>
+              <h3 className="text-[17px] font-bold">Riwayat Booking Saya</h3>
+
+              <p className="text-sm text-[#9AA0AA] mt-1">
+                Booking baru akan langsung tampil di sini.
+              </p>
+            </div>
+
+            <div className="w-full lg:w-[300px] h-11 rounded-[12px] border border-[#E8EDF3] flex items-center gap-3 px-4">
+              <FaSearch className="text-[#9AA0AA]" />
+
+              <input
+                type="text"
+                value={searchBooking}
+                onChange={(e) => setSearchBooking(e.target.value)}
+                placeholder="Cari booking..."
+                className="w-full bg-transparent !border-none !outline-none !ring-0 focus:!border-none focus:!outline-none focus:!ring-0 text-sm"
+              />
             </div>
           </div>
 
-          <div className="overflow-x-auto rounded-[12px]">
-            <table className="w-full min-w-[830px]">
-              <thead className="bg-[#EAF4FF]">
-                <tr className="text-left text-[12px] text-[#8F96A3]">
-                  <th className="px-4 py-3 font-semibold">Kode</th>
-                  <th className="px-4 py-3 font-semibold">Paket</th>
-                  <th className="px-4 py-3 font-semibold">Tanggal</th>
-                  <th className="px-4 py-3 font-semibold">Harga</th>
-                  <th className="px-4 py-3 font-semibold">Booking</th>
-                  <th className="px-4 py-3 font-semibold">Pembayaran</th>
-                  <th className="px-4 py-3 font-semibold">Aksi</th>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[820px]">
+              <thead className="bg-[#EAF4FF] text-left text-xs text-[#8F96A3]">
+                <tr>
+                  <th className="px-4 py-3">Kode</th>
+                  <th className="px-4 py-3">Paket</th>
+                  <th className="px-4 py-3">Tanggal</th>
+                  <th className="px-4 py-3">Harga</th>
+                  <th className="px-4 py-3">Booking</th>
+                  <th className="px-4 py-3">Pembayaran</th>
+                  <th className="px-4 py-3">Aksi</th>
                 </tr>
               </thead>
 
               <tbody>
-                {filteredBookings.length > 0 ? (
-                  filteredBookings.map((booking) => (
-                    <tr
-                      key={booking.id}
-                      className="border-b border-[#EEF1F5] hover:bg-[#F8FBFF] transition"
-                    >
-                      <td className="px-4 py-4 text-[13px] font-bold">
-                        {booking.kode}
-                      </td>
+                {bookingTampil.map((booking) => (
+                  <tr
+                    key={booking.id}
+                    className="border-b border-[#EEF1F5] hover:bg-[#F8FBFF]"
+                  >
+                    <td className="px-4 py-4 text-sm font-bold">
+                      {booking.kode}
+                    </td>
 
-                      <td className="px-4 py-4">
-                        <p className="text-[13px] font-bold text-[#202436]">
-                          {booking.paket}
-                        </p>
-                        <p className="text-[12px] text-[#9AA0AA]">
-                          {booking.lokasi}
-                        </p>
-                      </td>
+                    <td className="px-4 py-4">
+                      <p className="text-sm font-bold">{booking.paket}</p>
 
-                      <td className="px-4 py-4 text-[13px] text-[#596070]">
-                        {booking.tanggal}
-                      </td>
+                      <p className="text-xs text-[#9AA0AA]">{booking.lokasi}</p>
+                    </td>
 
-                      <td className="px-4 py-4 text-[13px] font-bold text-[#596070]">
-                        {formatRupiah(booking.harga)}
-                      </td>
+                    <td className="px-4 py-4 text-sm text-[#596070]">
+                      {booking.tanggal}
+                    </td>
 
-                      <td className="px-4 py-4">
-                        <span
-                          className={`px-3 py-1 rounded-[6px] text-[12px] font-bold whitespace-nowrap ${getStatusStyle(
-                            booking.statusBooking
-                          )}`}
-                        >
-                          {booking.statusBooking}
-                        </span>
-                      </td>
+                    <td className="px-4 py-4 text-sm font-bold">
+                      {formatRupiah(booking.harga)}
+                    </td>
 
-                      <td className="px-4 py-4">
-                        <span
-                          className={`px-3 py-1 rounded-[6px] text-[12px] font-bold whitespace-nowrap ${getPaymentStyle(
-                            booking.statusPembayaran
-                          )}`}
-                        >
-                          {booking.statusPembayaran}
-                        </span>
-                      </td>
+                    <td className="px-4 py-4">
+                      <span
+                        className={`text-xs font-bold px-3 py-1 rounded-[7px] ${styleStatusBooking(
+                          booking.statusBooking,
+                        )}`}
+                      >
+                        {booking.statusBooking}
+                      </span>
+                    </td>
 
-                      <td className="px-4 py-4">
-                        <button
-                          type="button"
-                          onClick={() => openModal("booking", booking)}
-                          className="h-[34px] px-3 rounded-[8px] bg-[#EAF4FF] text-[#70A9F8] text-[12px] font-bold hover:bg-[#70A9F8] hover:text-white transition flex items-center gap-2"
-                        >
-                          <FaEye className="text-xs" />
-                          Detail
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
+                    <td className="px-4 py-4">
+                      <span
+                        className={`text-xs font-bold px-3 py-1 rounded-[7px] ${styleStatusBayar(
+                          booking.statusPembayaran,
+                        )}`}
+                      >
+                        {booking.statusPembayaran}
+                      </span>
+                    </td>
+
+                    <td className="px-4 py-4">
+                      <button
+                        type="button"
+                        onClick={() => bukaModal("bookingDetail", booking)}
+                        className="h-8 px-3 rounded-[8px] bg-[#EAF4FF] text-[#70A9F8] text-xs font-bold hover:bg-[#70A9F8] hover:text-white flex items-center gap-2"
+                      >
+                        <FaEye />
+                        Detail
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+
+                {bookingTampil.length === 0 && (
                   <tr>
                     <td
                       colSpan="7"
-                      className="px-4 py-10 text-center text-[#9AA0AA] text-sm"
+                      className="text-center py-10 text-sm text-[#9AA0AA]"
                     >
-                      Booking tidak ditemukan.
+                      Belum ada booking. Klik Lihat Semua untuk memilih paket.
                     </td>
                   </tr>
                 )}
@@ -929,118 +1022,44 @@ export default function MemberDashboard() {
           </div>
         </section>
 
-        {/* RECOMMENDATION */}
-        <section className="mb-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-5">
-            <div>
-              <h3 className="text-[17px] font-bold">Paket Rekomendasi</h3>
-              <p className="text-[13px] text-[#9AA0AA] mt-1">
-                Rekomendasi paket berdasarkan level dan riwayat booking kamu.
-              </p>
-            </div>
+        <section className="grid grid-cols-1 xl:grid-cols-[1fr_360px] gap-6">
+          <div className="bg-white rounded-[16px] p-5 shadow-sm">
+            <h3 className="text-[17px] font-bold">Feedback / Komplain</h3>
 
-            <button
-              type="button"
-              onClick={() => showNotification("Rekomendasi paket sudah diperbarui")}
-              className="h-[38px] px-4 rounded-[10px] bg-white text-[#596070] text-sm font-bold hover:bg-[#EAF4FF] hover:text-[#70A9F8] transition"
-            >
-              Refresh Rekomendasi
-            </button>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-            {recommendedPackages.map((paket) => (
-              <div
-                key={paket.id}
-                className="bg-white rounded-[16px] overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-              >
-                <button
-                  type="button"
-                  onClick={() => openModal("package", paket)}
-                  className="block w-full text-left"
-                >
-                  <div className="h-[190px] relative overflow-hidden">
-                    <img
-                      src={paket.gambar}
-                      alt={paket.nama}
-                      className="w-full h-full object-cover hover:scale-105 transition duration-500"
-                    />
-
-                    <span className="absolute left-4 top-4 bg-white/90 text-[#70A9F8] text-[11px] font-bold px-3 py-1 rounded-[7px]">
-                      {paket.kategori}
-                    </span>
-                  </div>
-
-                  <div className="p-5">
-                    <h4 className="font-bold text-[16px] mb-2">{paket.nama}</h4>
-
-                    <p className="text-[13px] text-[#9AA0AA] flex items-center gap-2 mb-2">
-                      <FaMapMarkerAlt />
-                      {paket.lokasi}
-                    </p>
-
-                    {renderStars(paket.rating)}
-
-                    <div className="flex items-center justify-between mt-4">
-                      <div>
-                        <p className="text-[12px] text-[#9AA0AA]">Harga</p>
-                        <p className="text-[16px] font-bold text-[#70A9F8]">
-                          {formatRupiah(paket.harga)}
-                        </p>
-                      </div>
-
-                      <p className="text-[12px] text-[#596070] font-bold bg-[#F4F5F7] px-3 py-2 rounded-[8px]">
-                        {paket.durasi}
-                      </p>
-                    </div>
-                  </div>
-                </button>
-
-                <div className="px-5 pb-5">
-                  <button
-                    type="button"
-                    onClick={() => openModal("package", paket)}
-                    className="w-full h-[40px] rounded-[10px] bg-[#70A9F8] text-white text-sm font-bold hover:bg-[#5D9AF2] transition flex items-center justify-center gap-2"
-                  >
-                    Lihat Paket
-                    <FaArrowRight className="text-xs" />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* FEEDBACK + CS */}
-        <section className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_360px] gap-6">
-          <div className="bg-white rounded-[16px] p-5 shadow-sm hover:shadow-xl transition-all duration-300">
-            <div className="mb-5">
-              <h3 className="text-[17px] font-bold">Feedback / Komplain</h3>
-              <p className="text-[13px] text-[#9AA0AA] mt-1">
-                Kirim masukan atau komplain terkait layanan TravelGo.
-              </p>
-            </div>
+            <p className="text-sm text-[#9AA0AA] mt-1 mb-5">
+              Kirim masukan atau komplain terkait layanan TravelGo.
+            </p>
 
             <form
-              onSubmit={handleSubmitFeedback}
+              onSubmit={kirimFeedback}
               className="grid grid-cols-1 md:grid-cols-2 gap-4"
             >
               <select
-                name="jenis"
                 value={feedbackForm.jenis}
-                onChange={handleFeedbackChange}
-                className="h-[46px] px-4 rounded-[12px] border border-[#E8EDF3] outline-none focus:border-[#70A9F8]"
+                onChange={(e) =>
+                  setFeedbackForm({
+                    ...feedbackForm,
+                    jenis: e.target.value,
+                  })
+                }
+                className="h-[46px] px-4 rounded-[12px] border border-[#E8EDF3] outline-none"
               >
                 <option value="Feedback">Feedback</option>
                 <option value="Komplain">Komplain</option>
               </select>
 
               <select
-                name="paket"
                 value={feedbackForm.paket}
-                onChange={handleFeedbackChange}
-                className="h-[46px] px-4 rounded-[12px] border border-[#E8EDF3] outline-none focus:border-[#70A9F8]"
+                onChange={(e) =>
+                  setFeedbackForm({
+                    ...feedbackForm,
+                    paket: e.target.value,
+                  })
+                }
+                className="h-[46px] px-4 rounded-[12px] border border-[#E8EDF3] outline-none"
               >
+                <option value="">Pilih paket (opsional)</option>
+
                 {bookings.map((booking) => (
                   <option key={booking.id} value={booking.paket}>
                     {booking.paket}
@@ -1049,95 +1068,66 @@ export default function MemberDashboard() {
               </select>
 
               <textarea
-                name="pesan"
                 value={feedbackForm.pesan}
-                onChange={handleFeedbackChange}
-                placeholder="Tulis feedback atau komplain kamu di sini..."
-                className="md:col-span-2 min-h-[110px] px-4 py-3 rounded-[12px] border border-[#E8EDF3] outline-none focus:border-[#70A9F8] resize-none"
+                onChange={(e) =>
+                  setFeedbackForm({
+                    ...feedbackForm,
+                    pesan: e.target.value,
+                  })
+                }
+                placeholder="Tulis feedback atau komplain di sini..."
+                className="md:col-span-2 min-h-[110px] px-4 py-3 rounded-[12px] border border-[#E8EDF3] outline-none resize-none"
               />
 
-              <div className="md:col-span-2 flex flex-col md:flex-row md:items-center justify-between gap-3">
-                <p className="text-[12px] text-[#9AA0AA]">
-                  Total pesan terkirim: <b>{feedbacks.length}</b>
-                </p>
-
+              <div className="md:col-span-2 flex justify-end">
                 <button
                   type="submit"
-                  className="h-[42px] px-5 rounded-[10px] bg-[#70A9F8] text-white text-sm font-bold hover:bg-[#5D9AF2] transition flex items-center justify-center gap-2"
+                  className="h-10 px-5 rounded-[10px] bg-[#70A9F8] text-white text-sm font-bold hover:bg-[#5D9AF2] flex items-center gap-2"
                 >
                   <FaCommentDots className="text-xs" />
-                  Kirim
+                  Kirim Pesan
                 </button>
               </div>
             </form>
 
             {feedbacks.length > 0 && (
               <div className="mt-5 border-t border-[#EEF1F5] pt-4">
-                <h4 className="font-bold text-[14px] mb-3">Pesan Terakhir</h4>
+                <p className="font-bold text-sm mb-3">Pesan Terakhir</p>
 
-                <div className="space-y-3">
-                  {feedbacks.slice(0, 3).map((item) => (
-                    <div
-                      key={item.id}
-                      className="bg-[#F8FBFF] rounded-[12px] p-4"
-                    >
-                      <div className="flex items-center justify-between gap-3 mb-2">
-                        <p className="font-bold text-[13px]">
-                          {item.jenis} • {item.paket}
-                        </p>
-                        <span className="text-[11px] text-[#70A9F8] font-bold">
-                          {item.status}
-                        </span>
-                      </div>
-                      <p className="text-[13px] leading-6 text-[#596070]">
-                        {item.pesan}
-                      </p>
-                    </div>
-                  ))}
-                </div>
+                {feedbacks.slice(0, 2).map((feedback) => (
+                  <div
+                    key={feedback.id}
+                    className="bg-[#F8FBFF] rounded-[12px] p-4 mb-3"
+                  >
+                    <p className="font-bold text-sm">
+                      {feedback.jenis} • {feedback.paket}
+                    </p>
+
+                    <p className="text-sm text-[#596070] mt-2">
+                      {feedback.pesan}
+                    </p>
+                  </div>
+                ))}
               </div>
             )}
           </div>
 
-          <div className="bg-white rounded-[16px] p-5 shadow-sm hover:shadow-xl transition-all duration-300">
-            <div className="w-[54px] h-[54px] rounded-[16px] bg-[#EAF4FF] text-[#70A9F8] flex items-center justify-center text-[22px] mb-4">
+          <div className="bg-white rounded-[16px] p-5 shadow-sm">
+            <div className="w-[52px] h-[52px] rounded-[16px] bg-[#EAF4FF] text-[#70A9F8] flex items-center justify-center text-xl mb-4">
               <FaHeadset />
             </div>
 
-            <h3 className="text-[19px] font-bold mb-2">Butuh Bantuan?</h3>
+            <h3 className="text-[19px] font-bold">Butuh Bantuan?</h3>
 
-            <p className="text-[13px] leading-6 text-[#596070] mb-5">
-              Customer service TravelGo siap membantu pertanyaan booking,
-              pembayaran, promo, dan jadwal perjalanan kamu.
+            <p className="text-sm text-[#596070] leading-6 mt-2 mb-5">
+              Customer service siap membantu pertanyaan booking, pembayaran,
+              promo, dan jadwal perjalanan.
             </p>
-
-            <div className="space-y-3 mb-5">
-              <div className="bg-[#F8FBFF] rounded-[12px] p-4 flex items-center gap-3">
-                <FaCheckCircle className="text-[#70A9F8]" />
-                <span className="text-[13px] font-semibold text-[#596070]">
-                  Bantuan booking dan pembayaran
-                </span>
-              </div>
-
-              <div className="bg-[#F8FBFF] rounded-[12px] p-4 flex items-center gap-3">
-                <FaGift className="text-[#70A9F8]" />
-                <span className="text-[13px] font-semibold text-[#596070]">
-                  Info promo dan membership
-                </span>
-              </div>
-
-              <div className="bg-[#F8FBFF] rounded-[12px] p-4 flex items-center gap-3">
-                <FaUmbrellaBeach className="text-[#70A9F8]" />
-                <span className="text-[13px] font-semibold text-[#596070]">
-                  Rekomendasi paket wisata
-                </span>
-              </div>
-            </div>
 
             <button
               type="button"
-              onClick={handleChatCS}
-              className="w-full h-[44px] rounded-[11px] bg-[#70A9F8] text-white text-sm font-bold hover:bg-[#5D9AF2] hover:shadow-lg transition flex items-center justify-center gap-2"
+              onClick={() => bukaModal("chat")}
+              className="w-full h-11 rounded-[11px] bg-[#70A9F8] text-white text-sm font-bold hover:bg-[#5D9AF2] flex items-center justify-center gap-2"
             >
               <FaPaperPlane className="text-xs" />
               Chat Customer Service
@@ -1146,91 +1136,110 @@ export default function MemberDashboard() {
         </section>
       </main>
 
-      {/* MODAL PROFILE */}
       {modalType === "profile" && (
-        <div className="fixed inset-0 z-[999] bg-black/30 backdrop-blur-sm flex items-center justify-center px-4 md:px-6">
-          <div className="w-full max-w-[720px] bg-white rounded-[18px] shadow-2xl p-6 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-start justify-between mb-5">
+        <div className="fixed inset-0 z-[999] bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-[680px] bg-white rounded-[18px] p-6 max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between gap-4 mb-5">
               <div>
                 <h2 className="text-[22px] font-bold">Edit Profil Member</h2>
-                <p className="text-[13px] text-[#9AA0AA] mt-1">
-                  Ubah data profil member TravelGo.
+
+                <p className="text-sm text-[#9AA0AA] mt-1">
+                  Ubah data profil member.
                 </p>
               </div>
 
               <button
                 type="button"
-                onClick={closeModal}
-                className="w-[36px] h-[36px] rounded-full bg-[#F4F5F7] text-[#596070] flex items-center justify-center hover:bg-red-100 hover:text-red-500 transition"
+                onClick={tutupModal}
+                className="w-9 h-9 rounded-full bg-[#F4F5F7] flex items-center justify-center"
               >
                 <FaTimes />
               </button>
             </div>
 
             <form
-              onSubmit={handleSubmitProfile}
+              onSubmit={simpanProfil}
               className="grid grid-cols-1 md:grid-cols-2 gap-4"
             >
               <input
                 type="text"
-                name="nama"
                 value={profileForm.nama}
-                onChange={handleProfileChange}
+                onChange={(e) =>
+                  setProfileForm({
+                    ...profileForm,
+                    nama: e.target.value,
+                  })
+                }
                 placeholder="Nama lengkap"
-                className="h-[46px] px-4 rounded-[12px] border border-[#E8EDF3] outline-none focus:border-[#70A9F8]"
+                className="h-[46px] px-4 rounded-[12px] border border-[#E8EDF3] outline-none"
               />
 
               <input
                 type="email"
-                name="email"
                 value={profileForm.email}
-                onChange={handleProfileChange}
+                onChange={(e) =>
+                  setProfileForm({
+                    ...profileForm,
+                    email: e.target.value,
+                  })
+                }
                 placeholder="Email"
-                className="h-[46px] px-4 rounded-[12px] border border-[#E8EDF3] outline-none focus:border-[#70A9F8]"
+                className="h-[46px] px-4 rounded-[12px] border border-[#E8EDF3] outline-none"
               />
 
               <input
                 type="text"
-                name="hp"
                 value={profileForm.hp}
-                onChange={handleProfileChange}
+                onChange={(e) =>
+                  setProfileForm({
+                    ...profileForm,
+                    hp: e.target.value,
+                  })
+                }
                 placeholder="Nomor HP"
-                className="h-[46px] px-4 rounded-[12px] border border-[#E8EDF3] outline-none focus:border-[#70A9F8]"
+                className="h-[46px] px-4 rounded-[12px] border border-[#E8EDF3] outline-none"
               />
 
               <select
-                name="metodePembayaran"
                 value={profileForm.metodePembayaran}
-                onChange={handleProfileChange}
-                className="h-[46px] px-4 rounded-[12px] border border-[#E8EDF3] outline-none focus:border-[#70A9F8]"
+                onChange={(e) =>
+                  setProfileForm({
+                    ...profileForm,
+                    metodePembayaran: e.target.value,
+                  })
+                }
+                className="h-[46px] px-4 rounded-[12px] border border-[#E8EDF3] outline-none"
               >
                 <option value="QRIS">QRIS</option>
                 <option value="Transfer Bank">Transfer Bank</option>
                 <option value="E-Wallet">E-Wallet</option>
                 <option value="Kartu Kredit">Kartu Kredit</option>
-                <option value="Virtual Account">Virtual Account</option>
               </select>
 
               <textarea
-                name="alamat"
                 value={profileForm.alamat}
-                onChange={handleProfileChange}
+                onChange={(e) =>
+                  setProfileForm({
+                    ...profileForm,
+                    alamat: e.target.value,
+                  })
+                }
                 placeholder="Alamat"
-                className="md:col-span-2 min-h-[90px] px-4 py-3 rounded-[12px] border border-[#E8EDF3] outline-none focus:border-[#70A9F8] resize-none"
+                className="md:col-span-2 min-h-[90px] px-4 py-3 rounded-[12px] border border-[#E8EDF3] outline-none resize-none"
               />
 
-              <div className="md:col-span-2 flex items-center justify-end gap-3">
+              <div className="md:col-span-2 flex justify-end gap-3">
                 <button
                   type="button"
-                  onClick={closeModal}
-                  className="h-[42px] px-5 rounded-[10px] bg-[#F4F5F7] text-[#596070] text-sm font-bold hover:bg-[#EAF4FF]"
+                  onClick={tutupModal}
+                  className="h-10 px-5 rounded-[10px] bg-[#F4F5F7] text-sm font-bold"
                 >
                   Batal
                 </button>
 
                 <button
                   type="submit"
-                  className="h-[42px] px-5 rounded-[10px] bg-[#70A9F8] text-white text-sm font-bold hover:bg-[#5D9AF2]"
+                  className="h-10 px-5 rounded-[10px] bg-[#70A9F8] text-white text-sm font-bold"
                 >
                   Simpan Profil
                 </button>
@@ -1240,118 +1249,74 @@ export default function MemberDashboard() {
         </div>
       )}
 
-      {/* MODAL BOOKING */}
-      {modalType === "booking" && selectedData && (
-        <div className="fixed inset-0 z-[999] bg-black/30 backdrop-blur-sm flex items-center justify-center px-4 md:px-6">
-          <div className="w-full max-w-[820px] bg-white rounded-[18px] shadow-2xl p-6 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-start justify-between mb-5">
+      {modalType === "allPackages" && (
+        <div className="fixed inset-0 z-[999] bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-[1240px] max-h-[90vh] overflow-y-auto bg-white rounded-[18px] p-5 md:p-6">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
               <div>
-                <h2 className="text-[22px] font-bold">Detail Booking</h2>
-                <p className="text-[13px] text-[#9AA0AA] mt-1">
-                  {selectedData.kode} • {selectedData.paket}
+                <h2 className="text-[22px] font-bold">
+                  Daftar Semua Paket Travel
+                </h2>
+
+                <p className="text-sm text-[#9AA0AA] mt-1">
+                  Pilih paket, lihat detail, lalu buat booking.
                 </p>
               </div>
 
-              <button
-                type="button"
-                onClick={closeModal}
-                className="w-[36px] h-[36px] rounded-full bg-[#F4F5F7] text-[#596070] flex items-center justify-center hover:bg-red-100 hover:text-red-500 transition"
-              >
-                <FaTimes />
-              </button>
-            </div>
+              <div className="flex items-center gap-3">
+                <div className="w-full md:w-[310px] h-11 rounded-[12px] border border-[#E8EDF3] flex items-center gap-3 px-4">
+                  <FaSearch className="text-[#9AA0AA]" />
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
-              <div className="bg-[#F8FBFF] rounded-[14px] p-4">
-                <p className="text-[12px] text-[#9AA0AA]">Kode Booking</p>
-                <p className="font-bold">{selectedData.kode}</p>
-              </div>
+                  <input
+                    type="text"
+                    value={searchPackage}
+                    onChange={(e) => setSearchPackage(e.target.value)}
+                    placeholder="Cari nama atau lokasi..."
+                    className="w-full bg-transparent !border-none !outline-none !ring-0 focus:!border-none focus:!outline-none focus:!ring-0 text-sm"
+                  />
+                </div>
 
-              <div className="bg-[#F8FBFF] rounded-[14px] p-4 md:col-span-2">
-                <p className="text-[12px] text-[#9AA0AA]">Nama Paket</p>
-                <p className="font-bold">{selectedData.paket}</p>
-              </div>
-
-              <div className="bg-[#F8FBFF] rounded-[14px] p-4">
-                <p className="text-[12px] text-[#9AA0AA]">Lokasi</p>
-                <p className="font-bold">{selectedData.lokasi}</p>
-              </div>
-
-              <div className="bg-[#F8FBFF] rounded-[14px] p-4">
-                <p className="text-[12px] text-[#9AA0AA]">Tanggal</p>
-                <p className="font-bold">{selectedData.tanggal}</p>
-              </div>
-
-              <div className="bg-[#F8FBFF] rounded-[14px] p-4">
-                <p className="text-[12px] text-[#9AA0AA]">Durasi</p>
-                <p className="font-bold">{selectedData.durasi}</p>
-              </div>
-
-              <div className="bg-[#F8FBFF] rounded-[14px] p-4">
-                <p className="text-[12px] text-[#9AA0AA]">Harga</p>
-                <p className="font-bold">{formatRupiah(selectedData.harga)}</p>
-              </div>
-
-              <div className="bg-[#F8FBFF] rounded-[14px] p-4">
-                <p className="text-[12px] text-[#9AA0AA]">Status Booking</p>
-                <span
-                  className={`inline-flex px-3 py-1 rounded-[6px] text-[12px] font-bold ${getStatusStyle(
-                    selectedData.statusBooking
-                  )}`}
+                <button
+                  type="button"
+                  onClick={tutupModal}
+                  className="w-10 h-10 shrink-0 rounded-full bg-[#F4F5F7] flex items-center justify-center"
                 >
-                  {selectedData.statusBooking}
-                </span>
-              </div>
-
-              <div className="bg-[#F8FBFF] rounded-[14px] p-4">
-                <p className="text-[12px] text-[#9AA0AA]">Pembayaran</p>
-                <span
-                  className={`inline-flex px-3 py-1 rounded-[6px] text-[12px] font-bold ${getPaymentStyle(
-                    selectedData.statusPembayaran
-                  )}`}
-                >
-                  {selectedData.statusPembayaran}
-                </span>
-              </div>
-
-              <div className="bg-[#F8FBFF] rounded-[14px] p-4 md:col-span-3">
-                <p className="text-[12px] text-[#9AA0AA]">Catatan</p>
-                <p className="text-[13px] leading-6 text-[#596070]">
-                  {selectedData.catatan}
-                </p>
+                  <FaTimes />
+                </button>
               </div>
             </div>
 
-            <div className="flex justify-end gap-3">
-              <button
-                type="button"
-                onClick={handleChatCS}
-                className="h-[42px] px-5 rounded-[10px] bg-[#70A9F8] text-white text-sm font-bold hover:bg-[#5D9AF2] flex items-center gap-2"
-              >
-                <FaPaperPlane className="text-xs" />
-                Tanya CS
-              </button>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+              {paketTampil.map((paket) => (
+                <PackageCard key={paket.id} paket={paket} popup />
+              ))}
             </div>
+
+            {paketTampil.length === 0 && (
+              <p className="text-center py-12 text-sm text-[#9AA0AA]">
+                Paket tidak ditemukan.
+              </p>
+            )}
           </div>
         </div>
       )}
 
-      {/* MODAL PACKAGE */}
-      {modalType === "package" && selectedData && (
-        <div className="fixed inset-0 z-[999] bg-black/30 backdrop-blur-sm flex items-center justify-center px-4 md:px-6">
-          <div className="w-full max-w-[850px] bg-white rounded-[18px] shadow-2xl p-6 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-start justify-between mb-5">
+      {modalType === "packageDetail" && selectedData && (
+        <div className="fixed inset-0 z-[1000] bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-[850px] bg-white rounded-[18px] p-6 max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between gap-4 mb-5">
               <div>
                 <h2 className="text-[22px] font-bold">Detail Paket</h2>
-                <p className="text-[13px] text-[#9AA0AA] mt-1">
-                  Rekomendasi paket untuk member TravelGo.
+
+                <p className="text-sm text-[#9AA0AA] mt-1">
+                  Pilih paket untuk melanjutkan booking.
                 </p>
               </div>
 
               <button
                 type="button"
-                onClick={closeModal}
-                className="w-[36px] h-[36px] rounded-full bg-[#F4F5F7] text-[#596070] flex items-center justify-center hover:bg-red-100 hover:text-red-500 transition"
+                onClick={tutupModal}
+                className="w-9 h-9 rounded-full bg-[#F4F5F7] flex items-center justify-center"
               >
                 <FaTimes />
               </button>
@@ -1365,61 +1330,73 @@ export default function MemberDashboard() {
               />
 
               <div>
-                <span className="inline-flex bg-[#EAF4FF] text-[#70A9F8] text-[12px] font-bold px-3 py-1 rounded-[7px] mb-3">
+                <span className="inline-flex bg-[#EAF4FF] text-[#70A9F8] text-xs font-bold px-3 py-1 rounded-[7px]">
                   {selectedData.kategori}
                 </span>
 
-                <h3 className="text-[24px] font-bold mb-2">
+                <h3 className="text-[24px] font-bold mt-3">
                   {selectedData.nama}
                 </h3>
 
-                <p className="text-[13px] text-[#9AA0AA] flex items-center gap-2 mb-3">
+                <p className="text-sm text-[#9AA0AA] flex items-center gap-2 mt-2">
                   <FaMapMarkerAlt />
                   {selectedData.lokasi}
                 </p>
 
-                {renderStars(selectedData.rating)}
+                <div className="flex items-center gap-1 mt-3 text-[#B88700]">
+                  {[1, 2, 3, 4, 5].map((star) =>
+                    star <= Math.round(selectedData.rating) ? (
+                      <FaStar key={star} className="text-sm" />
+                    ) : (
+                      <FaRegStar key={star} className="text-sm" />
+                    ),
+                  )}
 
-                <p className="text-[14px] leading-7 text-[#596070] mt-4 mb-5">
+                  <span className="text-sm font-bold ml-2">
+                    {selectedData.rating}
+                  </span>
+                </div>
+
+                <p className="text-sm text-[#596070] leading-7 mt-4">
                   {selectedData.deskripsi}
                 </p>
 
-                <div className="grid grid-cols-2 gap-3 mb-5">
-                  <div className="bg-[#F8FBFF] rounded-[12px] p-4">
-                    <p className="text-[12px] text-[#9AA0AA]">Harga</p>
+                <div className="grid grid-cols-2 gap-3 mt-5">
+                  <div className="bg-[#F8FBFF] p-4 rounded-[12px]">
+                    <p className="text-xs text-[#9AA0AA]">Harga</p>
+
                     <p className="font-bold text-[#70A9F8]">
                       {formatRupiah(selectedData.harga)}
                     </p>
                   </div>
 
-                  <div className="bg-[#F8FBFF] rounded-[12px] p-4">
-                    <p className="text-[12px] text-[#9AA0AA]">Durasi</p>
+                  <div className="bg-[#F8FBFF] p-4 rounded-[12px]">
+                    <p className="text-xs text-[#9AA0AA]">Durasi</p>
+
                     <p className="font-bold">{selectedData.durasi}</p>
                   </div>
                 </div>
 
-                <div className="bg-[#F8FBFF] rounded-[12px] p-4 mb-5">
-                  <p className="font-bold text-[14px] mb-2">Fasilitas</p>
-                  <ul className="space-y-2 text-[13px] text-[#596070]">
-                    {selectedData.fasilitas.map((item) => (
-                      <li key={item} className="flex gap-2">
-                        <FaCheckCircle className="text-[#70A9F8] mt-1 shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                <div className="bg-[#F8FBFF] p-4 rounded-[12px] mt-4">
+                  <p className="font-bold text-sm mb-2">Fasilitas</p>
+
+                  {selectedData.fasilitas.map((fasilitas, index) => (
+                    <p
+                      key={`${fasilitas}-${index}`}
+                      className="text-sm text-[#596070] flex gap-2 mt-2"
+                    >
+                      <FaCheckCircle className="text-[#70A9F8] mt-1" />
+                      {fasilitas}
+                    </p>
+                  ))}
                 </div>
 
                 <button
                   type="button"
-                  onClick={() =>
-                    showNotification(
-                      "Paket dipilih. Untuk booking lanjutkan melalui Customer Service."
-                    )
-                  }
-                  className="w-full h-[42px] rounded-[10px] bg-[#70A9F8] text-white text-sm font-bold hover:bg-[#5D9AF2] transition"
+                  onClick={() => bukaModal("booking", selectedData)}
+                  className="w-full h-11 mt-5 rounded-[11px] bg-[#70A9F8] text-white text-sm font-bold hover:bg-[#5D9AF2]"
                 >
-                  Pilih Paket
+                  Booking Sekarang
                 </button>
               </div>
             </div>
@@ -1427,95 +1404,239 @@ export default function MemberDashboard() {
         </div>
       )}
 
-      {/* MODAL PROMO */}
-      {modalType === "promo" && selectedData && (
-        <div className="fixed inset-0 z-[999] bg-black/30 backdrop-blur-sm flex items-center justify-center px-4 md:px-6">
-          <div className="w-full max-w-[520px] bg-white rounded-[18px] shadow-2xl p-6">
-            <div className="flex items-start justify-between mb-5">
+      {modalType === "booking" && selectedData && (
+        <div className="fixed inset-0 z-[1001] bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-[600px] bg-white rounded-[18px] p-6 max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between gap-4 mb-5">
               <div>
-                <h2 className="text-[22px] font-bold">Gunakan Promo</h2>
-                <p className="text-[13px] text-[#9AA0AA] mt-1">
-                  Promo aktif untuk member TravelGo.
+                <h2 className="text-[22px] font-bold">Buat Booking</h2>
+
+                <p className="text-sm text-[#9AA0AA] mt-1">
+                  {selectedData.nama}
                 </p>
               </div>
 
               <button
                 type="button"
-                onClick={closeModal}
-                className="w-[36px] h-[36px] rounded-full bg-[#F4F5F7] text-[#596070] flex items-center justify-center hover:bg-red-100 hover:text-red-500 transition"
+                onClick={tutupModal}
+                className="w-9 h-9 rounded-full bg-[#F4F5F7] flex items-center justify-center"
               >
                 <FaTimes />
               </button>
             </div>
 
-            <div className="bg-[#EAF4FF] rounded-[16px] p-5 mb-5">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="text-[12px] font-bold text-[#70A9F8] mb-1">
-                    {selectedData.target}
-                  </p>
-                  <h3 className="text-[20px] font-bold">{selectedData.nama}</h3>
-                  <p className="text-[13px] text-[#596070] mt-2 leading-6">
-                    {selectedData.deskripsi}
-                  </p>
-                </div>
-
-                <div className="w-[70px] h-[70px] rounded-[16px] bg-white text-[#70A9F8] flex items-center justify-center text-[22px] font-bold shrink-0">
-                  {selectedData.diskon}
-                </div>
-              </div>
-            </div>
-
             <div className="bg-[#F8FBFF] rounded-[14px] p-4 mb-5">
-              <p className="text-[12px] text-[#9AA0AA] mb-1">Kode Promo</p>
-              <p className="text-[22px] font-bold tracking-wider">
-                {selectedData.kode}
+              <p className="font-bold">{selectedData.nama}</p>
+
+              <p className="text-sm text-[#596070] mt-1">
+                {selectedData.lokasi} • {selectedData.durasi}
               </p>
-              <p className="text-[12px] text-[#9AA0AA] mt-2">
-                {selectedData.berlaku}
+
+              <p className="font-bold text-[#70A9F8] mt-2">
+                {formatRupiah(selectedData.harga)} / orang
               </p>
             </div>
 
-            <button
-              type="button"
-              onClick={handleConfirmPromo}
-              className="w-full h-[42px] rounded-[10px] bg-[#70A9F8] text-white text-sm font-bold hover:bg-[#5D9AF2]"
-            >
-              Simpan Promo
-            </button>
+            <form onSubmit={buatBooking} className="space-y-4">
+              <div>
+                <label className="text-sm font-bold block mb-2">
+                  Tanggal Keberangkatan
+                </label>
+
+                <input
+                  type="date"
+                  min={new Date().toISOString().split("T")[0]}
+                  value={bookingForm.tanggal}
+                  onChange={(e) =>
+                    setBookingForm({
+                      ...bookingForm,
+                      tanggal: e.target.value,
+                    })
+                  }
+                  className="w-full h-[46px] px-4 rounded-[12px] border border-[#E8EDF3] outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-bold block mb-2">
+                  Jumlah Traveler
+                </label>
+
+                <input
+                  type="number"
+                  min="1"
+                  value={bookingForm.jumlahTraveler}
+                  onChange={(e) =>
+                    setBookingForm({
+                      ...bookingForm,
+                      jumlahTraveler: e.target.value,
+                    })
+                  }
+                  className="w-full h-[46px] px-4 rounded-[12px] border border-[#E8EDF3] outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-bold block mb-2">
+                  Metode Pembayaran
+                </label>
+
+                <select
+                  value={bookingForm.metodePembayaran}
+                  onChange={(e) =>
+                    setBookingForm({
+                      ...bookingForm,
+                      metodePembayaran: e.target.value,
+                    })
+                  }
+                  className="w-full h-[46px] px-4 rounded-[12px] border border-[#E8EDF3] outline-none"
+                >
+                  <option value="QRIS">QRIS</option>
+                  <option value="Transfer Bank">Transfer Bank</option>
+                  <option value="E-Wallet">E-Wallet</option>
+                  <option value="Kartu Kredit">Kartu Kredit</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="text-sm font-bold block mb-2">
+                  Catatan Tambahan
+                </label>
+
+                <textarea
+                  value={bookingForm.catatan}
+                  onChange={(e) =>
+                    setBookingForm({
+                      ...bookingForm,
+                      catatan: e.target.value,
+                    })
+                  }
+                  placeholder="Contoh: meminta kamar twin bed"
+                  className="w-full min-h-[90px] px-4 py-3 rounded-[12px] border border-[#E8EDF3] outline-none resize-none"
+                />
+              </div>
+
+              <div className="bg-[#EAF4FF] rounded-[12px] p-4">
+                <p className="text-xs text-[#9AA0AA]">
+                  Estimasi Total Pembayaran
+                </p>
+
+                <p className="text-xl font-bold text-[#70A9F8] mt-1">
+                  {formatRupiah(
+                    selectedData.harga *
+                      Number(bookingForm.jumlahTraveler || 1),
+                  )}
+                </p>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full h-11 rounded-[11px] bg-[#70A9F8] text-white text-sm font-bold hover:bg-[#5D9AF2]"
+              >
+                Buat Booking
+              </button>
+            </form>
           </div>
         </div>
       )}
 
-      {/* MODAL CUSTOMER SERVICE */}
-      {modalType === "cs" && (
-        <div className="fixed inset-0 z-[999] bg-black/30 backdrop-blur-sm flex items-center justify-center px-4 md:px-6">
-          <div className="w-full max-w-[760px] bg-white rounded-[18px] shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
-            <div className="p-5 border-b border-[#EEF1F5] flex items-center justify-between">
+      {modalType === "bookingDetail" && selectedData && (
+        <div className="fixed inset-0 z-[1000] bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-[720px] bg-white rounded-[18px] p-6">
+            <div className="flex justify-between gap-4 mb-5">
+              <div>
+                <h2 className="text-[22px] font-bold">Detail Booking</h2>
+
+                <p className="text-sm text-[#9AA0AA] mt-1">
+                  {selectedData.kode}
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={tutupModal}
+                className="w-9 h-9 rounded-full bg-[#F4F5F7] flex items-center justify-center"
+              >
+                <FaTimes />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-[#F8FBFF] p-4 rounded-[12px]">
+                <p className="text-xs text-[#9AA0AA]">Paket</p>
+                <p className="font-bold">{selectedData.paket}</p>
+              </div>
+
+              <div className="bg-[#F8FBFF] p-4 rounded-[12px]">
+                <p className="text-xs text-[#9AA0AA]">Tanggal</p>
+                <p className="font-bold">{selectedData.tanggal}</p>
+              </div>
+
+              <div className="bg-[#F8FBFF] p-4 rounded-[12px]">
+                <p className="text-xs text-[#9AA0AA]">Jumlah Traveler</p>
+
+                <p className="font-bold">{selectedData.jumlahTraveler} orang</p>
+              </div>
+
+              <div className="bg-[#F8FBFF] p-4 rounded-[12px]">
+                <p className="text-xs text-[#9AA0AA]">Total Harga</p>
+
+                <p className="font-bold">{formatRupiah(selectedData.harga)}</p>
+              </div>
+
+              <div className="bg-[#F8FBFF] p-4 rounded-[12px]">
+                <p className="text-xs text-[#9AA0AA]">Status Booking</p>
+
+                <p className="font-bold">{selectedData.statusBooking}</p>
+              </div>
+
+              <div className="bg-[#F8FBFF] p-4 rounded-[12px]">
+                <p className="text-xs text-[#9AA0AA]">Pembayaran</p>
+
+                <p className="font-bold">{selectedData.statusPembayaran}</p>
+              </div>
+
+              <div className="bg-[#F8FBFF] p-4 rounded-[12px] md:col-span-2">
+                <p className="text-xs text-[#9AA0AA]">Catatan</p>
+
+                <p className="text-sm text-[#596070] mt-1">
+                  {selectedData.catatan}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {modalType === "chat" && (
+        <div className="fixed inset-0 z-[1000] bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-[720px] bg-white rounded-[18px] overflow-hidden">
+            <div className="p-5 border-b border-[#EEF1F5] flex justify-between items-center">
               <div className="flex items-center gap-3">
-                <div className="w-[46px] h-[46px] rounded-full bg-[#EAF4FF] text-[#70A9F8] flex items-center justify-center">
+                <div className="w-11 h-11 rounded-full bg-[#EAF4FF] text-[#70A9F8] flex items-center justify-center">
                   <FaHeadset />
                 </div>
 
                 <div>
-                  <h2 className="text-[20px] font-bold">Customer Service</h2>
-                  <p className="text-[13px] text-[#9AA0AA]">
-                    Chat CS tetap di halaman member, tidak masuk ke halaman admin Messages.
+                  <h2 className="font-bold text-[20px]">Customer Service</h2>
+
+                  <p className="text-xs text-[#9AA0AA]">
+                    TravelGo siap membantu
                   </p>
                 </div>
               </div>
 
               <button
                 type="button"
-                onClick={closeModal}
-                className="w-[36px] h-[36px] rounded-full bg-[#F4F5F7] text-[#596070] flex items-center justify-center hover:bg-red-100 hover:text-red-500 transition"
+                onClick={tutupModal}
+                className="w-9 h-9 rounded-full bg-[#F4F5F7] flex items-center justify-center"
               >
                 <FaTimes />
               </button>
             </div>
 
-            <div className="p-5 space-y-3 bg-[#F8FBFF] overflow-y-auto min-h-[340px]">
-              {chatList.map((chat, index) => (
+            <div className="min-h-[320px] max-h-[400px] overflow-y-auto p-5 bg-[#F8FBFF] space-y-3">
+              {chats.map((chat, index) => (
                 <div
                   key={index}
                   className={`flex ${
@@ -1523,17 +1644,18 @@ export default function MemberDashboard() {
                   }`}
                 >
                   <div
-                    className={`max-w-[75%] rounded-[14px] px-4 py-3 text-sm leading-6 ${
+                    className={`max-w-[75%] rounded-[14px] px-4 py-3 text-sm ${
                       chat.from === "member"
                         ? "bg-[#70A9F8] text-white"
                         : "bg-white text-[#596070] border border-[#EEF1F5]"
                     }`}
                   >
                     <p>{chat.text}</p>
+
                     <p
                       className={`text-[10px] mt-1 ${
                         chat.from === "member"
-                          ? "text-white/75"
+                          ? "text-white/70"
                           : "text-[#9AA0AA]"
                       }`}
                     >
@@ -1545,112 +1667,24 @@ export default function MemberDashboard() {
             </div>
 
             <form
-              onSubmit={handleSendChat}
-              className="p-4 border-t border-[#EEF1F5] flex flex-col md:flex-row gap-3"
+              onSubmit={kirimChat}
+              className="p-4 border-t border-[#EEF1F5] flex gap-3"
             >
               <input
                 type="text"
                 value={chatText}
                 onChange={(e) => setChatText(e.target.value)}
-                placeholder="Tulis pesan ke customer service..."
-                className="flex-1 h-[44px] px-4 rounded-[12px] border border-[#E8EDF3] outline-none focus:border-[#70A9F8]"
+                placeholder="Tulis pesan..."
+                className="flex-1 h-11 px-4 rounded-[12px] border border-[#E8EDF3] outline-none"
               />
 
               <button
                 type="submit"
-                className="h-[44px] px-5 rounded-[12px] bg-[#70A9F8] text-white text-sm font-bold hover:bg-[#5D9AF2] flex items-center justify-center gap-2"
+                className="h-11 px-5 rounded-[12px] bg-[#70A9F8] text-white font-bold text-sm"
               >
-                <FaPaperPlane className="text-xs" />
                 Kirim
               </button>
             </form>
-          </div>
-        </div>
-      )}
-
-      {/* MODAL MEMBERSHIP / TRANSACTION */}
-      {["membership", "transaction"].includes(modalType) && (
-        <div className="fixed inset-0 z-[999] bg-black/30 backdrop-blur-sm flex items-center justify-center px-4 md:px-6">
-          <div className="w-full max-w-[620px] bg-white rounded-[18px] shadow-2xl p-6">
-            <div className="flex items-start justify-between mb-5">
-              <div>
-                <h2 className="text-[22px] font-bold">
-                  {modalType === "membership"
-                    ? "Status Membership"
-                    : "Detail Transaksi"}
-                </h2>
-                <p className="text-[13px] text-[#9AA0AA] mt-1">
-                  Ringkasan akun member TravelGo.
-                </p>
-              </div>
-
-              <button
-                type="button"
-                onClick={closeModal}
-                className="w-[36px] h-[36px] rounded-full bg-[#F4F5F7] text-[#596070] flex items-center justify-center hover:bg-red-100 hover:text-red-500 transition"
-              >
-                <FaTimes />
-              </button>
-            </div>
-
-            {modalType === "membership" && (
-              <>
-                <div className="bg-[#EAF4FF] rounded-[16px] p-5 mb-5">
-                  <p className="text-[13px] text-[#70A9F8] font-bold">
-                    Level Saat Ini
-                  </p>
-                  <h3 className="text-[32px] font-bold mt-1">{member.level}</h3>
-                  <p className="text-[13px] text-[#596070] mt-2">
-                    Kamu memiliki {member.poin} poin. Tingkatkan transaksi untuk
-                    naik ke level berikutnya.
-                  </p>
-                </div>
-
-                <div className="space-y-3">
-                  {["Regular", "Silver", "Gold", "Platinum"].map((level) => (
-                    <div
-                      key={level}
-                      className="flex items-center justify-between bg-[#F8FBFF] rounded-[12px] p-4"
-                    >
-                      <span className="font-bold">{level}</span>
-                      <span
-                        className={`text-[12px] font-bold px-3 py-1 rounded-[7px] ${getLevelStyle(
-                          level
-                        )}`}
-                      >
-                        {member.level === level ? "Level Kamu" : "Benefit"}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-
-            {modalType === "transaction" && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-[#F8FBFF] rounded-[14px] p-4">
-                  <p className="text-[12px] text-[#9AA0AA]">Total Transaksi</p>
-                  <p className="text-[20px] font-bold">
-                    {formatRupiah(member.totalTransaksi)}
-                  </p>
-                </div>
-
-                <div className="bg-[#F8FBFF] rounded-[14px] p-4">
-                  <p className="text-[12px] text-[#9AA0AA]">Total Booking</p>
-                  <p className="text-[20px] font-bold">{bookings.length}</p>
-                </div>
-
-                <div className="bg-[#F8FBFF] rounded-[14px] p-4">
-                  <p className="text-[12px] text-[#9AA0AA]">Booking Lunas</p>
-                  <p className="text-[20px] font-bold">{totalPaidBooking}</p>
-                </div>
-
-                <div className="bg-[#F8FBFF] rounded-[14px] p-4">
-                  <p className="text-[12px] text-[#9AA0AA]">Poin Member</p>
-                  <p className="text-[20px] font-bold">{member.poin}</p>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       )}

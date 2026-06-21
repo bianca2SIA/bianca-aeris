@@ -227,7 +227,7 @@ export default function BookingDetail() {
 
               <span
                 className={`inline-block mt-3 px-4 py-2 rounded-[8px] text-[12px] font-bold ${getStatusStyle(
-                  booking.status
+                  booking.status,
                 )}`}
               >
                 {booking.status}
@@ -354,8 +354,6 @@ export default function BookingDetail() {
           </div>
         </aside>
       </div>
-
-    
     </div>
   );
 }

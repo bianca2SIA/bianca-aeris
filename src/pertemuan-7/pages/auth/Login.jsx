@@ -1,51 +1,76 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { authAPI } from "../../../services/authAPI.js";
+import { usersAPI } from "../../../services/usersAPI.js";
 
 export default function Login() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  setError("");
+    setError("");
 
-  if (!email || !password) {
-    setError("Email dan password wajib diisi");
-    return;
-  }
-
-  try {
-    setLoading(true);
-
-    const response = await authAPI.login({
-      email: email,
-      password: password,
-    });
-
-    const user = response?.user || response?.data?.user || response?.data || response;
-    const role = user?.role?.toLowerCase();
-
-    if (role === "admin" || email.toLowerCase() === "admin@gmail.com") {
-      navigate("/dashboard");
-    } else {
-      navigate("/member");
+    if (email === "" || password === "") {
+      setError("Email dan password wajib diisi");
+      return;
     }
-  } catch (err) {
-    setError("Email atau password salah");
-    console.error(err);
-  } finally {
-    setLoading(false);
-  }
 
-};
-  
+    try {
+      setLoading(true);
+
+      const emailLogin = email.trim().toLowerCase();
+
+      // Login ke Supabase Auth
+      await authAPI.login({
+        email: emailLogin,
+        password: password,
+      });
+
+      // Ambil data user dari tabel users
+      const dataUser = await usersAPI.getUserByEmail(emailLogin);
+
+      // Kalau akun ada di Supabase Auth,
+      // tapi belum ada di tabel users
+      if (!dataUser) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        localStorage.removeItem("role");
+        localStorage.removeItem("currentUser");
+
+        setError("Data user tidak ditemukan di tabel users");
+        return;
+      }
+
+      // Simpan role untuk App.jsx
+      localStorage.setItem("role", dataUser.role);
+
+      // Simpan semua identitas user yang login
+      // supaya tampil di MemberDashboard
+      localStorage.setItem("currentUser", JSON.stringify(dataUser));
+
+      // Cek role
+      const role = dataUser.role ? dataUser.role.toLowerCase() : "user";
+
+      // Admin masuk dashboard admin
+      if (role === "admin") {
+        navigate("/dashboard");
+      } else {
+        // User masuk halaman member
+        navigate("/member");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Email atau password salah");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex w-full h-screen overflow-hidden font-[Plus_Jakarta_Sans]">
@@ -64,6 +89,7 @@ export default function Login() {
           <h2 className="text-4xl font-bold mb-4 leading-tight">
             Discover Your Next Adventure
           </h2>
+
           <p className="text-lg opacity-90">
             Explore the world's most beautiful destinations with TravelGo.
           </p>
@@ -157,6 +183,7 @@ export default function Login() {
             {/* REMEMBER */}
             <div className="flex items-center gap-2">
               <input type="checkbox" disabled={loading} />
+
               <span className="text-sm text-[var(--secondary)]">
                 Remember me
               </span>

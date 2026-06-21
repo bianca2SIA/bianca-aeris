@@ -91,7 +91,8 @@ const numberInputs = [
 const normalizeTraveler = (data) => {
   return data.map((item, index) => {
     const paket = item.paket || "Paket TravelGo";
-    const pembayaran = item.paymentMethod || paymentOptions[index % paymentOptions.length];
+    const pembayaran =
+      item.paymentMethod || paymentOptions[index % paymentOptions.length];
 
     return {
       ...item,
@@ -104,14 +105,15 @@ const normalizeTraveler = (data) => {
       statusMember: item.statusMember || "Non-Member",
       level: item.level || "Regular",
       promo: item.promo || "Tidak Aktif",
-      sourceUser: item.sourceUser || sourceOptions[index % sourceOptions.length],
+      sourceUser:
+        item.sourceUser || sourceOptions[index % sourceOptions.length],
       paymentMethod: pembayaran,
       totalTransaksi: item.totalTransaksi || 2500000 + index * 850000,
       jumlahBooking: item.jumlahBooking || index + 1,
       tanggalBergabung:
         item.tanggalBergabung ||
         `2024-${String((index % 9) + 1).padStart(2, "0")}-${String(
-          (index % 25) + 1
+          (index % 25) + 1,
         ).padStart(2, "0")}`,
       catatan:
         item.catatan ||
@@ -221,7 +223,12 @@ function TextInput({ name, type = "text", value, placeholder, onChange }) {
 
 function SelectInput({ name, value, onChange, options }) {
   return (
-    <select name={name} value={value} onChange={onChange} className={inputClass}>
+    <select
+      name={name}
+      value={value}
+      onChange={onChange}
+      className={inputClass}
+    >
       {options.map((item) => (
         <option key={item} value={item}>
           {item}
@@ -291,14 +298,16 @@ export default function User() {
   const currentTravelers = filteredTravelers.slice(startIndex, endIndex);
 
   const selectedActionTraveler = travelerData.find(
-    (item) => item.id === actionMenu.id
+    (item) => item.id === actionMenu.id,
   );
 
   const memberCount = travelerData.filter(
-    (item) => item.statusMember === "Member"
+    (item) => item.statusMember === "Member",
   ).length;
 
-  const promoCount = travelerData.filter((item) => item.promo === "Aktif").length;
+  const promoCount = travelerData.filter(
+    (item) => item.promo === "Aktif",
+  ).length;
 
   const showNotification = (text) => {
     setNotification(text);
@@ -402,7 +411,7 @@ export default function User() {
 
         result = getNewData(item);
         return result;
-      })
+      }),
     );
 
     if (selectedTraveler?.id === id && result) {
@@ -427,8 +436,8 @@ export default function User() {
     if (selectedTraveler) {
       setTravelerData((prev) =>
         prev.map((item) =>
-          item.id === selectedTraveler.id ? { ...item, ...payload } : item
-        )
+          item.id === selectedTraveler.id ? { ...item, ...payload } : item,
+        ),
       );
       showNotification("Data traveler berhasil diperbarui");
     } else {
@@ -460,7 +469,7 @@ export default function User() {
 
   const handleDeleteTraveler = (traveler) => {
     const confirmDelete = confirm(
-      `Yakin ingin menghapus traveler "${traveler.nama}"?`
+      `Yakin ingin menghapus traveler "${traveler.nama}"?`,
     );
 
     if (!confirmDelete) return;
@@ -544,7 +553,7 @@ export default function User() {
 
     localStorage.setItem(
       "travelgo_selected_message_customer",
-      JSON.stringify(selectedCustomer)
+      JSON.stringify(selectedCustomer),
     );
 
     closeActionMenu();
@@ -589,11 +598,30 @@ export default function User() {
       )}
 
       <div className="flex items-center justify-between mb-6 gap-4">
-        <Tabs value={activeTab} onValueChange={handleTabChange} className="w-auto">
+        <Tabs
+          value={activeTab}
+          onValueChange={handleTabChange}
+          className="w-auto"
+        >
           <TabsList className="bg-transparent p-0 h-auto flex gap-4">
-            <TabButton value="semua" icon="groups" label="Semua Customer" total={travelerData.length} />
-            <TabButton value="member" icon="workspace_premium" label="Member" total={memberCount} />
-            <TabButton value="promo" icon="local_offer" label="Promo Aktif" total={promoCount} />
+            <TabButton
+              value="semua"
+              icon="groups"
+              label="Semua Customer"
+              total={travelerData.length}
+            />
+            <TabButton
+              value="member"
+              icon="workspace_premium"
+              label="Member"
+              total={memberCount}
+            />
+            <TabButton
+              value="promo"
+              icon="local_offer"
+              label="Promo Aktif"
+              total={promoCount}
+            />
           </TabsList>
         </Tabs>
 
@@ -663,7 +691,10 @@ export default function User() {
           <thead className="bg-[#EAF4FF]">
             <tr className="text-left text-[13px] text-[#8F96A3]">
               {tableHeaders.map((header) => (
-                <th key={header.label} className={`px-6 py-4 font-semibold ${header.width}`}>
+                <th
+                  key={header.label}
+                  className={`px-6 py-4 font-semibold ${header.width}`}
+                >
                   {header.noSort ? (
                     header.label
                   ) : (
@@ -716,18 +747,22 @@ export default function User() {
                 </td>
                 <td
                   className={`px-6 py-4 text-[14px] font-semibold group-hover:text-[#202436] transition whitespace-nowrap ${getMemberStyle(
-                    traveler.statusMember
+                    traveler.statusMember,
                   )}`}
                 >
                   {traveler.statusMember}
                 </td>
                 <td className="px-6 py-4">
-                  <Badge className={`shadow-sm group-hover:shadow-md transition-all duration-300 ${getLevelStyle(traveler.level)}`}>
+                  <Badge
+                    className={`shadow-sm group-hover:shadow-md transition-all duration-300 ${getLevelStyle(traveler.level)}`}
+                  >
                     {traveler.level}
                   </Badge>
                 </td>
                 <td className="px-6 py-4">
-                  <Badge className={`min-w-[96px] shadow-sm group-hover:shadow-md transition-all duration-300 ${getPromoStyle(traveler.promo)}`}>
+                  <Badge
+                    className={`min-w-[96px] shadow-sm group-hover:shadow-md transition-all duration-300 ${getPromoStyle(traveler.promo)}`}
+                  >
                     {traveler.promo}
                   </Badge>
                 </td>
@@ -750,7 +785,9 @@ export default function User() {
             <div className="w-[54px] h-[54px] rounded-full bg-[#EAF4FF] text-[#70A9F8] flex items-center justify-center mb-3">
               <FaSearch />
             </div>
-            <h3 className="font-bold text-[#202436]">Traveler tidak ditemukan</h3>
+            <h3 className="font-bold text-[#202436]">
+              Traveler tidak ditemukan
+            </h3>
             <p className="text-[13px] text-[#9AA0AA] mt-1">
               Coba ubah keyword pencarian, tab, atau filter level.
             </p>
@@ -761,7 +798,8 @@ export default function User() {
           <div className="flex items-center gap-2">
             <span>Menampilkan</span>
             <button className="h-[34px] px-3 rounded-[8px] bg-[#F4F5F7] font-semibold text-[#596070]">
-              {totalData === 0 ? 0 : startIndex + 1} - {Math.min(endIndex, totalData)}
+              {totalData === 0 ? 0 : startIndex + 1} -{" "}
+              {Math.min(endIndex, totalData)}
             </button>
             <span>dari {totalData} traveler</span>
           </div>
@@ -781,7 +819,10 @@ export default function User() {
               Sebelumnya
             </button>
 
-            {Array.from({ length: totalPages || 1 }, (_, index) => index + 1).map((page) => (
+            {Array.from(
+              { length: totalPages || 1 },
+              (_, index) => index + 1,
+            ).map((page) => (
               <button
                 key={page}
                 type="button"
@@ -906,43 +947,73 @@ function ActionMenu({
       className="fixed w-[240px] bg-white rounded-[14px] shadow-2xl border border-[#E8EDF3] p-2 z-[99999]"
       style={{ top: `${actionMenu.y}px`, left: `${actionMenu.x}px` }}
     >
-      <button type="button" onClick={() => onDetail(traveler)} className={`${itemClass} hover:bg-[#EAF4FF] hover:text-[#70A9F8]`}>
+      <button
+        type="button"
+        onClick={() => onDetail(traveler)}
+        className={`${itemClass} hover:bg-[#EAF4FF] hover:text-[#70A9F8]`}
+      >
         <FaEye className="text-sm shrink-0" />
         <span className="whitespace-nowrap">Lihat Detail</span>
       </button>
 
-      <button type="button" onClick={() => onEdit(traveler)} className={`${itemClass} hover:bg-[#EAF4FF] hover:text-[#70A9F8]`}>
+      <button
+        type="button"
+        onClick={() => onEdit(traveler)}
+        className={`${itemClass} hover:bg-[#EAF4FF] hover:text-[#70A9F8]`}
+      >
         <FaEdit className="text-sm shrink-0" />
         <span className="whitespace-nowrap">Edit Traveler</span>
       </button>
 
-      <button type="button" onClick={() => onMessage(traveler)} className={`${itemClass} hover:bg-[#EAF4FF] hover:text-[#70A9F8]`}>
+      <button
+        type="button"
+        onClick={() => onMessage(traveler)}
+        className={`${itemClass} hover:bg-[#EAF4FF] hover:text-[#70A9F8]`}
+      >
         <FaPaperPlane className="text-sm shrink-0" />
         <span className="whitespace-nowrap">Kirim Pesan</span>
       </button>
 
-      <button type="button" onClick={() => onUpgrade(traveler)} className={`${itemClass} hover:bg-[#FFF4D8] hover:text-[#B88700]`}>
+      <button
+        type="button"
+        onClick={() => onUpgrade(traveler)}
+        className={`${itemClass} hover:bg-[#FFF4D8] hover:text-[#B88700]`}
+      >
         <FaCrown className="text-sm shrink-0" />
         <span className="whitespace-nowrap">Upgrade Level</span>
       </button>
 
-      <button type="button" onClick={() => onPromo(traveler)} className={`${itemClass} hover:bg-[#EAF4FF] hover:text-[#70A9F8]`}>
+      <button
+        type="button"
+        onClick={() => onPromo(traveler)}
+        className={`${itemClass} hover:bg-[#EAF4FF] hover:text-[#70A9F8]`}
+      >
         <FaGift className="text-sm shrink-0" />
         <span className="whitespace-nowrap">
           {traveler.promo === "Aktif" ? "Nonaktifkan Promo" : "Aktifkan Promo"}
         </span>
       </button>
 
-      <button type="button" onClick={() => onMember(traveler)} className={`${itemClass} hover:bg-[#F4F8FF] hover:text-[#70A9F8]`}>
+      <button
+        type="button"
+        onClick={() => onMember(traveler)}
+        className={`${itemClass} hover:bg-[#F4F8FF] hover:text-[#70A9F8]`}
+      >
         <FaUserCheck className="text-sm shrink-0" />
         <span className="whitespace-nowrap">
-          {traveler.statusMember === "Member" ? "Jadikan Non-Member" : "Jadikan Member"}
+          {traveler.statusMember === "Member"
+            ? "Jadikan Non-Member"
+            : "Jadikan Member"}
         </span>
       </button>
 
       <div className="h-[1px] bg-[#EEF1F5] my-2"></div>
 
-      <button type="button" onClick={() => onDelete(traveler)} className={`${itemClass} text-red-500 hover:bg-red-50`}>
+      <button
+        type="button"
+        onClick={() => onDelete(traveler)}
+        className={`${itemClass} text-red-500 hover:bg-red-50`}
+      >
         <FaTrash className="text-sm shrink-0" />
         <span className="whitespace-nowrap">Hapus Traveler</span>
       </button>
@@ -963,12 +1034,18 @@ function DetailModal({ traveler, onClose, onEdit, onMessage }) {
             />
 
             <div>
-              <h2 className="text-[22px] font-bold text-[#202436]">{traveler.nama}</h2>
+              <h2 className="text-[22px] font-bold text-[#202436]">
+                {traveler.nama}
+              </h2>
               <p className="text-[13px] text-[#9AA0AA]">{traveler.email}</p>
 
               <div className="flex items-center gap-2 mt-2">
-                <Badge className={getLevelStyle(traveler.level)}>{traveler.level}</Badge>
-                <Badge className={`min-w-[96px] ${getPromoStyle(traveler.promo)}`}>
+                <Badge className={getLevelStyle(traveler.level)}>
+                  {traveler.level}
+                </Badge>
+                <Badge
+                  className={`min-w-[96px] ${getPromoStyle(traveler.promo)}`}
+                >
                   {traveler.promo}
                 </Badge>
               </div>
@@ -986,35 +1063,53 @@ function DetailModal({ traveler, onClose, onEdit, onMessage }) {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
           <InfoCard title="Nomor HP">
-            <p className="text-[14px] font-bold text-[#202436]">{traveler.hp}</p>
+            <p className="text-[14px] font-bold text-[#202436]">
+              {traveler.hp}
+            </p>
           </InfoCard>
           <InfoCard title="Status Member">
-            <p className="text-[14px] font-bold text-[#202436]">{traveler.statusMember}</p>
+            <p className="text-[14px] font-bold text-[#202436]">
+              {traveler.statusMember}
+            </p>
           </InfoCard>
           <InfoCard title="Sumber User">
-            <p className="text-[14px] font-bold text-[#202436]">{traveler.sourceUser}</p>
+            <p className="text-[14px] font-bold text-[#202436]">
+              {traveler.sourceUser}
+            </p>
           </InfoCard>
           <InfoCard title="Alamat" className="md:col-span-2">
-            <p className="text-[14px] font-bold text-[#202436]">{traveler.alamat}</p>
+            <p className="text-[14px] font-bold text-[#202436]">
+              {traveler.alamat}
+            </p>
           </InfoCard>
           <InfoCard title="Tanggal Bergabung">
-            <p className="text-[14px] font-bold text-[#202436]">{traveler.tanggalBergabung}</p>
+            <p className="text-[14px] font-bold text-[#202436]">
+              {traveler.tanggalBergabung}
+            </p>
           </InfoCard>
           <InfoCard title="Total Transaksi">
-            <p className="text-[14px] font-bold text-[#202436]">{formatRupiah(traveler.totalTransaksi)}</p>
+            <p className="text-[14px] font-bold text-[#202436]">
+              {formatRupiah(traveler.totalTransaksi)}
+            </p>
           </InfoCard>
           <InfoCard title="Jumlah Booking">
-            <p className="text-[14px] font-bold text-[#202436]">{traveler.jumlahBooking} booking</p>
+            <p className="text-[14px] font-bold text-[#202436]">
+              {traveler.jumlahBooking} booking
+            </p>
           </InfoCard>
           <InfoCard title="Pembayaran Terakhir">
-            <p className="text-[14px] font-bold text-[#202436]">{traveler.paymentMethod}</p>
+            <p className="text-[14px] font-bold text-[#202436]">
+              {traveler.paymentMethod}
+            </p>
           </InfoCard>
         </div>
 
         <div className="bg-white rounded-[14px] border border-[#EEF1F5] overflow-hidden mb-5">
           <div className="px-4 py-3 bg-[#EAF4FF] flex items-center gap-2">
             <FaHistory className="text-[#70A9F8]" />
-            <h3 className="text-[15px] font-bold text-[#202436]">Riwayat Booking</h3>
+            <h3 className="text-[15px] font-bold text-[#202436]">
+              Riwayat Booking
+            </h3>
           </div>
 
           <div className="overflow-x-auto">
@@ -1031,11 +1126,22 @@ function DetailModal({ traveler, onClose, onEdit, onMessage }) {
 
               <tbody>
                 {traveler.bookingHistory.map((booking) => (
-                  <tr key={booking.id} className="border-b border-[#EEF1F5] hover:bg-[#F8FBFF] transition">
-                    <td className="px-4 py-3 text-[13px] font-bold text-[#202436]">{booking.paket}</td>
-                    <td className="px-4 py-3 text-[13px] text-[#596070]">{booking.tanggal}</td>
-                    <td className="px-4 py-3 text-[13px] text-[#596070]">{booking.pembayaran}</td>
-                    <td className="px-4 py-3 text-[13px] text-[#596070]">{formatRupiah(booking.total)}</td>
+                  <tr
+                    key={booking.id}
+                    className="border-b border-[#EEF1F5] hover:bg-[#F8FBFF] transition"
+                  >
+                    <td className="px-4 py-3 text-[13px] font-bold text-[#202436]">
+                      {booking.paket}
+                    </td>
+                    <td className="px-4 py-3 text-[13px] text-[#596070]">
+                      {booking.tanggal}
+                    </td>
+                    <td className="px-4 py-3 text-[13px] text-[#596070]">
+                      {booking.pembayaran}
+                    </td>
+                    <td className="px-4 py-3 text-[13px] text-[#596070]">
+                      {formatRupiah(booking.total)}
+                    </td>
                     <td className="px-4 py-3">
                       <span
                         className={`px-3 py-1 rounded-[6px] text-[12px] font-bold whitespace-nowrap ${
@@ -1056,16 +1162,24 @@ function DetailModal({ traveler, onClose, onEdit, onMessage }) {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <InfoCard title="Paket Terakhir">
-            <p className="text-[14px] font-bold text-[#202436]">{traveler.paket}</p>
+            <p className="text-[14px] font-bold text-[#202436]">
+              {traveler.paket}
+            </p>
           </InfoCard>
           <InfoCard title="Feedback Terakhir">
-            <p className="text-[13px] leading-6 text-[#596070]">{traveler.feedback}</p>
+            <p className="text-[13px] leading-6 text-[#596070]">
+              {traveler.feedback}
+            </p>
           </InfoCard>
           <InfoCard title="Komplain">
-            <p className="text-[13px] leading-6 text-[#596070]">{traveler.komplain}</p>
+            <p className="text-[13px] leading-6 text-[#596070]">
+              {traveler.komplain}
+            </p>
           </InfoCard>
           <InfoCard title="Catatan Admin" className="md:col-span-3">
-            <p className="text-[13px] leading-6 text-[#596070]">{traveler.catatan}</p>
+            <p className="text-[13px] leading-6 text-[#596070]">
+              {traveler.catatan}
+            </p>
           </InfoCard>
         </div>
 
@@ -1124,7 +1238,10 @@ function FormModal({ traveler, formData, onChange, onSubmit, onClose }) {
           </button>
         </div>
 
-        <form onSubmit={onSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form
+          onSubmit={onSubmit}
+          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+        >
           {formInputs.map((field) => (
             <TextInput
               key={field.name}

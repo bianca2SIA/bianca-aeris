@@ -5,22 +5,45 @@ import MainLayout from "./pertemuan-7/layouts/MainLayout";
 import AuthLayout from "./pertemuan-7/layouts/AuthLayout";
 import Loading from "./pertemuan-7/components/Loading";
 
-const Dashboard = React.lazy(() => import("./pertemuan-7/pages/Dashboard"));
+const Dashboard = React.lazy(() =>
+  import("./pertemuan-7/pages/Dashboard")
+);
 
-const Paket = React.lazy(() => import("./pertemuan-7/pages/Paket"));
-const PaketDetail = React.lazy(() => import("./pertemuan-7/pages/PaketDetail"));
+const Paket = React.lazy(() =>
+  import("./pertemuan-7/pages/Paket")
+);
 
-const Booking = React.lazy(() => import("./pertemuan-7/pages/Booking"));
+const PaketDetail = React.lazy(() =>
+  import("./pertemuan-7/pages/PaketDetail")
+);
+
+const Booking = React.lazy(() =>
+  import("./pertemuan-7/pages/Booking")
+);
+
 const BookingDetail = React.lazy(() =>
   import("./pertemuan-7/pages/BookingDetail")
 );
 
-const Travelers = React.lazy(() => import("./pertemuan-7/pages/Travelers"));
-const Guides = React.lazy(() => import("./pertemuan-7/pages/Guides"));
-const Users = React.lazy(() => import("./pertemuan-7/pages/Users"));
-const Messages = React.lazy(() => import("./pertemuan-7/pages/Messages"));
-const Deals = React.lazy(() => import("./pertemuan-7/pages/Deals"));
-const Feedback = React.lazy(() => import("./pertemuan-7/pages/Feedback"));
+const Travelers = React.lazy(() =>
+  import("./pertemuan-7/pages/Travelers")
+);
+
+const Users = React.lazy(() =>
+  import("./pertemuan-7/pages/Users")
+);
+
+const Messages = React.lazy(() =>
+  import("./pertemuan-7/pages/Messages")
+);
+
+const Deals = React.lazy(() =>
+  import("./pertemuan-7/pages/Deals")
+);
+
+const Feedback = React.lazy(() =>
+  import("./pertemuan-7/pages/Feedback")
+);
 
 const GuestLayout = React.lazy(() =>
   import("./pertemuan-7/layouts/GuestLayout")
@@ -30,12 +53,36 @@ const HomeGuest = React.lazy(() =>
   import("./pertemuan-7/pages/guest/HomeGuest")
 );
 
-const Login = React.lazy(() => import("./pertemuan-7/pages/auth/Login"));
-const Register = React.lazy(() => import("./pertemuan-7/pages/auth/Register"));
+const Login = React.lazy(() =>
+  import("./pertemuan-7/pages/auth/Login")
+);
+
+const Register = React.lazy(() =>
+  import("./pertemuan-7/pages/auth/Register")
+);
 
 const MemberDashboard = React.lazy(() =>
   import("./pertemuan-7/pages/member/MemberDashboard")
 );
+
+function ProtectedRoute({ children, roleYangBoleh }) {
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (roleYangBoleh === "Admin" && role !== "Admin") {
+    return <Navigate to="/member" replace />;
+  }
+
+  if (roleYangBoleh === "User" && role === "Admin") {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return children;
+}
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -57,45 +104,61 @@ function App() {
       <ScrollToTop />
 
       <Routes>
-        {/* DEFAULT KE HALAMAN GUEST */}
+        {/* HALAMAN AWAL */}
         <Route path="/" element={<Navigate to="/home" replace />} />
 
-        {/* GUEST */}
+        {/* HALAMAN GUEST */}
         <Route path="/home" element={<GuestLayout />}>
           <Route index element={<HomeGuest />} />
         </Route>
 
-        {/* AUTH */}
+        {/* LOGIN */}
         <Route path="/login" element={<AuthLayout />}>
           <Route index element={<Login />} />
         </Route>
 
+        {/* REGISTER */}
         <Route path="/register" element={<AuthLayout />}>
           <Route index element={<Register />} />
         </Route>
 
-        {/* MEMBER CUSTOMER */}
-        <Route path="/member" element={<MemberDashboard />} />
+        {/* HALAMAN MEMBER */}
+        <Route
+          path="/member"
+          element={
+            <ProtectedRoute roleYangBoleh="User">
+              <MemberDashboard />
+            </ProtectedRoute>
+          }
+        />
 
-        {/* ADMIN CRM */}
-        <Route element={<MainLayout />}>
+        {/* HALAMAN ADMIN */}
+        <Route
+          element={
+            <ProtectedRoute roleYangBoleh="Admin">
+              <MainLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route path="/dashboard" element={<Dashboard />} />
 
           <Route path="/paket" element={<Paket />} />
           <Route path="/paket/:namaPaket" element={<PaketDetail />} />
 
           <Route path="/booking" element={<Booking />} />
-          <Route path="/booking/:kodeBooking" element={<BookingDetail />} />
+          <Route
+            path="/booking/:kodeBooking"
+            element={<BookingDetail />}
+          />
 
           <Route path="/travelers" element={<Travelers />} />
-          <Route path="/guides" element={<Guides />} />
           <Route path="/users" element={<Users />} />
           <Route path="/messages" element={<Messages />} />
           <Route path="/deals" element={<Deals />} />
           <Route path="/feedback" element={<Feedback />} />
         </Route>
 
-        {/* KALAU URL SALAH, BALIK KE GUEST */}
+        {/* URL SALAH */}
         <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
     </Suspense>
