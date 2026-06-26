@@ -2,28 +2,28 @@ import BenefitCard from "./BenefitCard";
 
 const BENEFITS = [
   {
-    icon: "bolt",
-    title: "Booking Cepat",
+    icon: "smartphone",
+    title: "Booking Online Mudah",
     description:
-      "Proses pemesanan paket wisata lebih cepat dan terstruktur. Dari konfirmasi hingga pembayaran, semua dikelola dalam satu alur yang efisien.",
-  },
-  {
-    icon: "group",
-    title: "Customer Management",
-    description:
-      "Kelola data pelanggan secara terpusat. Pantau riwayat booking, preferensi, dan hubungi customer dengan mudah langsung dari dashboard.",
+      "Pesan paket wisata favoritmu dalam hitungan menit. Tidak perlu antri, tidak perlu ribet — cukup pilih, isi data, bayar, dan konfirmasi langsung.",
   },
   {
     icon: "card_travel",
-    title: "Paket Wisata",
+    title: "Paket Wisata Terlengkap",
     description:
-      "Tambah, edit, dan kelola ratusan paket wisata dengan mudah. Atur harga, fasilitas, itinerary, dan ketersediaan dalam hitungan detik.",
+      "Temukan 300+ paket wisata terbaik ke berbagai destinasi di Indonesia. Dari wisata alam, budaya, petualangan, hingga bulan madu yang romantis.",
   },
   {
-    icon: "bar_chart",
-    title: "Dashboard Realtime",
+    icon: "groups",
+    title: "Tour Guide Profesional",
     description:
-      "Pantau performa bisnis travel Anda secara real-time. Lihat grafik pendapatan, statistik booking, dan laporan bisnis yang akurat.",
+      "Nikmati perjalanan lebih nyaman bersama pemandu wisata berpengalaman yang siap menemani dan memastikan setiap momen perjalananmu berkesan.",
+  },
+  {
+    icon: "verified",
+    title: "Pembayaran Aman",
+    description:
+      "Setiap transaksi dilindungi enkripsi SSL dan sistem keamanan berlapis. Tersedia berbagai metode pembayaran yang terjamin dan terpercaya.",
   },
 ];
 
@@ -35,21 +35,21 @@ export default function BenefitSection() {
         {/* ── Section heading ── */}
         <div className="text-center mb-12">
           <p className="text-[#4F7DF3] text-[11px] font-black tracking-[0.2em] uppercase mb-3">
-            Kenapa TravelGo CRM?
+            Kenapa Memilih TravelGo?
           </p>
 
           <h2 className="text-[30px] md:text-[40px] font-black text-[#1D3557] leading-tight">
-            Semua yang dibutuhkan bisnis travel{" "}
-            <span className="text-[#4F7DF3]">ada di sini</span>
+            Semua yang kamu butuhkan{" "}
+            <span className="text-[#4F7DF3]">untuk liburan sempurna</span>
           </h2>
 
           <p className="mt-4 text-[#64748B] text-[15px] max-w-xl mx-auto leading-relaxed">
-            Platform CRM yang dirancang khusus untuk kebutuhan operasional
-            perusahaan travel, dari yang kecil hingga skala enterprise.
+            TravelGo hadir sebagai partner liburanmu yang terpercaya — dari
+            memilih destinasi hingga perjalanan selesai dengan aman dan nyaman.
           </p>
         </div>
 
-        {/* ── Cards grid — items-stretch agar tinggi identik ── */}
+        {/* ── Cards grid ── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 items-stretch">
           {BENEFITS.map((benefit, index) => (
             <BenefitCard

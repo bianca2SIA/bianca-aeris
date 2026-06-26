@@ -1,64 +1,78 @@
 /**
- * HomeGuest.jsx — Landing Page PRD V2
+ * HomeGuest.jsx — Landing Page Final Polish
  *
- * Assembler komponen landing page TravelGo CRM.
- * Semua komponen ada di: src/pertemuan-7/components/landing/
+ * 13 section — clean, focused, professional.
  *
- * PRD V1 sections (tidak diubah):
- *   HeroSection, BenefitSection, DashboardPreview, LandingFooter
+ * FLOW (Traveloka-inspired):
+ *  Hero → Search → Paket Wisata ★ → Destinasi
+ *  → Promo → Why Choose → Member Dashboard
+ *  → Admin Preview → Testimoni → FAQ → Contact → CTA → Footer
  *
- * PRD V2 sections (baru):
- *   StatisticsSection, TestimonialsSection, FAQSection,
- *   TrustedSection, CTASection
- *
- * Dilarang:
- *  - Mengubah routing (App.jsx)
- *  - Mengubah GuestLayout.jsx
- *  - Mengubah halaman Admin / MemberDashboard / Login / Register
+ * Tidak diubah: Routing, API, Layout, Login, Register,
+ *               Dashboard Member, Dashboard Admin.
  */
 
-/* ── PRD V1 ── */
-import HeroSection       from "../../components/landing/HeroSection";
-import BenefitSection    from "../../components/landing/BenefitSection";
-import DashboardPreview  from "../../components/landing/DashboardPreview";
-import LandingFooter     from "../../components/landing/LandingFooter";
-
-/* ── PRD V2 ── */
-import StatisticsSection  from "../../components/landing/StatisticsSection";
+import HeroSection         from "../../components/landing/HeroSection";
+import SearchTripSection   from "../../components/landing/SearchTripSection";
+import PackagesSection     from "../../components/landing/PackagesSection";
+import DestinationsSection from "../../components/landing/DestinationsSection";
+import PromoSection        from "../../components/landing/PromoSection";
+import WhyChooseSection    from "../../components/landing/WhyChooseSection";
+import DashboardPreview    from "../../components/landing/DashboardPreview";
+import AdminPreviewSection from "../../components/landing/AdminPreviewSection";
 import TestimonialsSection from "../../components/landing/TestimonialsSection";
-import FAQSection         from "../../components/landing/FAQSection";
-import TrustedSection     from "../../components/landing/TrustedSection";
-import CTASection         from "../../components/landing/CTASection";
+import FAQSection          from "../../components/landing/FAQSection";
+import ContactSection      from "../../components/landing/ContactSection";
+import CTASection          from "../../components/landing/CTASection";
+import FooterPremium       from "../../components/landing/FooterPremium";
+import ScrollProgress      from "../../components/landing/ScrollProgress";
 
 export default function HomeGuest() {
   return (
-    <main className="overflow-x-hidden">
-      {/* 1. Hero — judul CRM + ilustrasi dashboard */}
+    <main className="overflow-x-hidden" id="main-content">
+
+      {/* Utilities */}
+      <ScrollProgress />
+
+      {/* 1. Hero */}
       <HeroSection />
 
-      {/* 2. Benefit — 4 kartu fitur utama */}
-      <BenefitSection />
+      {/* 2. Search Trip */}
+      <SearchTripSection />
 
-      {/* 3. Statistics — angka bisnis yang meyakinkan [PRD V2] */}
-      <StatisticsSection />
+      {/* 3. Paket Wisata ★ — produk utama, tampilkan lebih awal */}
+      <PackagesSection />
 
-      {/* 4. Dashboard Preview — mockup visual admin panel */}
+      {/* 4. Destinasi Populer — setelah paket agar user tahu opsi lokasi */}
+      <DestinationsSection />
+
+      {/* 5. Promo */}
+      <PromoSection />
+
+      {/* 6. Kenapa Memilih TravelGo */}
+      <WhyChooseSection />
+
+      {/* 7. Dashboard Member — preview fitur setelah login */}
       <DashboardPreview />
 
-      {/* 5. Testimonials — feedback dari pengguna nyata [PRD V2] */}
+      {/* 8. Dashboard Admin — sistem CRM internal (mini) */}
+      <AdminPreviewSection />
+
+      {/* 9. Testimoni */}
       <TestimonialsSection />
 
-      {/* 6. FAQ — pertanyaan umum [PRD V2] */}
+      {/* 10. FAQ */}
       <FAQSection />
 
-      {/* 7. Trusted By — logo partner [PRD V2] */}
-      <TrustedSection />
+      {/* 11. Kontak */}
+      <ContactSection />
 
-      {/* 8. CTA — ajakan daftar sebelum footer [PRD V2] */}
+      {/* 12. CTA */}
       <CTASection />
 
-      {/* 9. Footer — logo, copyright, kontak */}
-      <LandingFooter />
+      {/* 13. Footer */}
+      <FooterPremium />
+
     </main>
   );
 }

@@ -1,87 +1,85 @@
-import { useState } from "react";
+import ScrollReveal from "./ScrollReveal";
 import AccordionItem from "./AccordionItem";
+import { useState } from "react";
 
 const FAQS = [
   {
-    question: "Apa itu TravelGo CRM?",
+    question: "Bagaimana cara booking paket wisata di TravelGo?",
     answer:
-      "TravelGo CRM adalah platform Customer Relationship Management yang dirancang khusus untuk bisnis travel. Sistem ini membantu Anda mengelola customer, paket wisata, booking, transaksi, promo, dan laporan bisnis dalam satu dashboard modern yang terintegrasi.",
+      "Pilih paket wisata yang kamu inginkan, klik 'Booking Sekarang', daftar atau login sebagai member, isi data peserta, lakukan pembayaran, dan e-tiket dikirim langsung ke emailmu. Prosesnya hanya 5 menit.",
   },
   {
-    question: "Apakah bisa melakukan booking online melalui TravelGo CRM?",
+    question: "Metode pembayaran apa yang tersedia?",
     answer:
-      "Ya, TravelGo CRM dilengkapi dengan fitur booking online yang memungkinkan customer melakukan pemesanan paket wisata secara langsung. Setiap booking masuk akan tercatat otomatis di dashboard admin dan dapat dikonfirmasi, diproses, atau dibatalkan sesuai kebutuhan.",
+      "TravelGo menerima transfer bank (BCA, Mandiri, BNI, BRI), dompet digital (GoPay, OVO, DANA), kartu kredit/debit, dan QRIS. Semua transaksi dilindungi enkripsi SSL 256-bit.",
   },
   {
-    question: "Apakah tersedia laporan dan analitik bisnis?",
+    question: "Apakah bisa reschedule atau membatalkan booking?",
     answer:
-      "Tentu saja. TravelGo CRM menyediakan dashboard analitik real-time yang menampilkan grafik pendapatan bulanan, statistik booking, paket wisata terpopuler, dan performa customer. Laporan dapat difilter berdasarkan periode waktu tertentu untuk kebutuhan evaluasi bisnis.",
+      "Pembatalan lebih dari 14 hari sebelum keberangkatan mendapat refund 100%. Pembatalan 7–14 hari mendapat refund 50%. Kurang dari 7 hari dikenakan biaya penuh. Reschedule dapat dilakukan maksimal 7 hari sebelum keberangkatan.",
   },
   {
-    question: "Bagaimana sistem membership dan role user bekerja?",
+    question: "Apakah ada promo khusus untuk member TravelGo?",
     answer:
-      "TravelGo CRM menggunakan sistem role-based access. Admin memiliki akses penuh ke seluruh fitur manajemen. Member (customer) memiliki akses ke dashboard booking pribadi, riwayat perjalanan, wishlist paket, dan fitur feedback. Pendaftaran member dilakukan melalui halaman Register.",
+      "Ya! Member TravelGo mendapatkan akses ke flash sale eksklusif, early bird promo, diskon khusus, dan voucher yang tidak tersedia untuk tamu. Daftar gratis dan nikmati semua keuntungan member.",
   },
   {
-    question: "Apakah TravelGo CRM menyediakan fitur promo dan deals?",
+    question: "Apakah tour guide sudah termasuk dalam semua paket?",
     answer:
-      "Ya. Admin dapat membuat dan mengelola promo serta deals langsung dari panel admin. Promo bisa dikategorikan berdasarkan jenis (Flash Sale, Couple, Popular, dll), dilengkapi dengan periode berlaku dan badge diskon. Customer dapat melihat promo aktif di halaman member.",
-  },
-  {
-    question: "Bagaimana cara menghubungi tim support TravelGo CRM?",
-    answer:
-      "Tim support TravelGo CRM tersedia 24/7. Anda dapat menghubungi kami melalui email di hello@travelgo.com atau WhatsApp di +62 706 888 0562. Tersedia juga fitur pesan langsung dari dalam aplikasi yang memungkinkan customer dan admin berkomunikasi secara real-time.",
+      "Tour guide profesional sudah termasuk dalam paket Premium dan Exclusive. Untuk paket Regular, penambahan tour guide tersedia sebagai add-on. Semua tour guide TravelGo bersertifikat dan berpengalaman.",
   },
 ];
 
 export default function FAQSection() {
-  const [openIndex, setOpenIndex] = useState(0); // buka item pertama by default
-
-  const toggle = (i) => setOpenIndex(openIndex === i ? null : i);
+  const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section id="faq" className="py-16 md:py-20 bg-white">
-      <div className="max-w-4xl mx-auto px-5 lg:px-10">
+    <section id="faq" className="py-14 md:py-18 bg-[#F8FAFF]">
+      <div className="max-w-3xl mx-auto px-5 lg:px-10">
 
         {/* Heading */}
-        <div className="text-center mb-12">
-          <p className="text-[#4F7DF3] text-[11px] font-black tracking-[0.2em] uppercase mb-3">
-            Pertanyaan Umum
-          </p>
-          <h2 className="text-[30px] md:text-[40px] font-black text-[#1D3557] leading-tight">
-            Ada yang ingin{" "}
-            <span className="text-[#4F7DF3]">ditanyakan?</span>
-          </h2>
-          <p className="mt-4 text-[#64748B] text-[15px] max-w-lg mx-auto leading-relaxed">
-            Kami menjawab pertanyaan yang paling sering diajukan oleh calon pengguna
-            TravelGo CRM.
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-10">
+            <p className="text-[#4F7DF3] text-[11px] font-black tracking-[0.2em] uppercase mb-3">FAQ</p>
+            <h2 className="text-[28px] md:text-[36px] font-black text-[#1D3557] leading-tight">
+              Pertanyaan yang{" "}
+              <span className="text-[#4F7DF3]">sering ditanyakan</span>
+            </h2>
+          </div>
+        </ScrollReveal>
 
-        {/* Accordion list */}
-        <div className="flex flex-col gap-3">
-          {FAQS.map((faq, i) => (
-            <AccordionItem
-              key={faq.question}
-              question={faq.question}
-              answer={faq.answer}
-              isOpen={openIndex === i}
-              onToggle={() => toggle(i)}
-              index={i}
-            />
-          ))}
-        </div>
+        {/* Accordion — 5 items */}
+        <ScrollReveal delay={80}>
+          <div className="space-y-3">
+            {FAQS.map((faq, i) => (
+              <AccordionItem
+                key={faq.question}
+                question={faq.question}
+                answer={faq.answer}
+                isOpen={openIndex === i}
+                onToggle={() => setOpenIndex(openIndex === i ? -1 : i)}
+                index={i}
+              />
+            ))}
+          </div>
+        </ScrollReveal>
 
-        {/* Bottom CTA hint */}
-        <p className="mt-10 text-center text-[13px] text-[#64748B]">
-          Masih ada pertanyaan?{" "}
-          <a
-            href="mailto:hello@travelgo.com"
-            className="text-[#4F7DF3] font-bold hover:underline"
-          >
-            Hubungi tim kami
-          </a>
-        </p>
+        {/* Bottom link */}
+        <ScrollReveal delay={100}>
+          <p className="mt-7 text-center text-[13px] text-[#64748B]">
+            Masih ada pertanyaan?{" "}
+            <button
+              type="button"
+              onClick={() => {
+                const el = document.getElementById("contact");
+                if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 76, behavior: "smooth" });
+              }}
+              className="text-[#4F7DF3] font-bold hover:underline"
+            >
+              Hubungi travel consultant kami →
+            </button>
+          </p>
+        </ScrollReveal>
       </div>
     </section>
   );

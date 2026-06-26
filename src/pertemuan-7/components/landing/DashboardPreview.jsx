@@ -1,263 +1,204 @@
-/* ─────────────────────────────────────────────
-   DashboardPreview — Mockup visual admin panel
-   Dibuat murni dengan Tailwind, tanpa gambar.
-───────────────────────────────────────────── */
+import ScrollReveal from "./ScrollReveal";
 
-const SIDEBAR_NAV = [
-  { icon: "dashboard", label: "Dashboard", active: true },
-  { icon: "card_travel", label: "Packages", active: false },
-  { icon: "check_box", label: "Bookings", active: false },
-  { icon: "group", label: "Travelers", active: false },
-  { icon: "chat_bubble", label: "Messages", active: false },
-  { icon: "local_offer", label: "Deals", active: false },
+/* ── Member Dashboard Sidebar ────────── */
+const SIDEBAR_ITEMS = [
+  { icon: "dashboard",     label: "Dashboard",      active: true  },
+  { icon: "calendar_month",label: "Booking Saya",   active: false },
+  { icon: "airplane_ticket",label: "Tiket Aktif",   active: false },
+  { icon: "favorite",      label: "Wishlist",        active: false },
+  { icon: "local_offer",   label: "Promo Member",   active: false },
+  { icon: "account_circle",label: "Profil",          active: false },
 ];
 
-const STAT_CARDS = [
-  { label: "Total Booking", value: "1,284", change: "+12%", icon: "calendar_month", bg: "#EEF4FF", color: "#4F7DF3" },
-  { label: "Pendapatan",    value: "Rp 48,6Jt", change: "+24%", icon: "payments",      bg: "#ECFDF5", color: "#10B981" },
-  { label: "Customer Baru", value: "346",    change: "+8%",  icon: "person_add",   bg: "#FFFBEB", color: "#F59E0B" },
-  { label: "Paket Aktif",   value: "28",     change: "+3",   icon: "card_travel",  bg: "#FDF2F8", color: "#EC4899" },
+/* ── Stat cards ─────────────────────── */
+const MEMBER_STATS = [
+  { label: "Booking Aktif",       value: "3",     icon: "calendar_month",  color: "#4F7DF3", bg: "#EEF4FF" },
+  { label: "Perjalanan Selesai",  value: "12",    icon: "check_circle",    color: "#10B981", bg: "#ECFDF5" },
+  { label: "Poin Reward",         value: "1.280", icon: "stars",           color: "#F59E0B", bg: "#FFFBEB" },
+  { label: "Promo Tersedia",      value: "8",     icon: "local_offer",     color: "#EC4899", bg: "#FDF2F8" },
 ];
 
-const BOOKING_ROWS = [
-  { code: "BKG-001", name: "Bianca Bahi",   package: "Bali Beach Escape",    price: "Rp 4.500.000", status: "Dikonfirmasi" },
-  { code: "BKG-002", name: "Ahmad Rizky",   package: "Lombok Eksotis",       price: "Rp 3.750.000", status: "Menunggu"     },
-  { code: "BKG-003", name: "Salsa Amanda",  package: "Bromo Sunrise",        price: "Rp 2.800.000", status: "Dikonfirmasi" },
-  { code: "BKG-004", name: "Fajar Nugroho", package: "Labuan Bajo Premium",  price: "Rp 6.200.000", status: "Dibatalkan"   },
+/* ── Upcoming trips ─────────────────── */
+const UPCOMING = [
+  { dest: "Bali Beach Escape",    date: "12 Jul 2026", days: "3D2N",  status: "Terkonfirmasi", color: "#4F7DF3", icon: "wb_sunny"   },
+  { dest: "Lombok Eksotis",       date: "20 Agu 2026", days: "2D1N",  status: "Menunggu",      color: "#F59E0B", icon: "waves"      },
+  { dest: "Bromo Sunrise Tour",   date: "05 Sep 2026", days: "2D1N",  status: "Terkonfirmasi", color: "#10B981", icon: "landscape"  },
 ];
 
-const CHART_DATA = [
-  { month: "Jan", value: 55 },
-  { month: "Feb", value: 70 },
-  { month: "Mar", value: 45 },
-  { month: "Apr", value: 85 },
-  { month: "Mei", value: 60 },
-  { month: "Jun", value: 95 },
-  { month: "Jul", value: 75 },
+/* ── Favorite destinations ──────────── */
+const FAVORITES = [
+  { name: "Bali",       icon: "wb_sunny",   color: "#4F7DF3" },
+  { name: "Lombok",     icon: "waves",      color: "#10B981" },
+  { name: "Bromo",      icon: "landscape",  color: "#F59E0B" },
+  { name: "Labuan Bajo",icon: "water",      color: "#EC4899" },
 ];
 
-function StatusBadge({ status }) {
-  const styles = {
-    Dikonfirmasi: "bg-[#EEF4FF] text-[#4F7DF3]",
-    Menunggu:     "bg-yellow-50 text-yellow-600",
-    Dibatalkan:   "bg-red-50 text-red-500",
-  };
-  return (
-    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${styles[status] ?? "bg-gray-100 text-gray-500"}`}>
-      {status}
-    </span>
-  );
-}
-
+/* ── Component ──────────────────────── */
 export default function DashboardPreview() {
   return (
-    <section className="py-16 md:py-20 bg-[#1D3557] overflow-hidden">
-      <div className="max-w-6xl mx-auto px-5 lg:px-10">
+    <section id="member" className="py-16 md:py-20 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 lg:px-10">
 
-        {/* ── Heading ── */}
-        <div className="text-center mb-10">
-          <p className="text-[#4F7DF3] text-[11px] font-black tracking-[0.2em] uppercase mb-3">
-            Tampilan Dashboard
-          </p>
-          <h2 className="text-[30px] md:text-[40px] font-black text-white leading-tight">
-            Satu dashboard untuk{" "}
-            <span className="text-[#4F7DF3]">semua operasional</span>
-          </h2>
-          <p className="mt-4 text-white/55 text-[15px] max-w-xl mx-auto leading-relaxed">
-            Antarmuka yang intuitif dan informatif. Semua data bisnis travel
-            Anda tersaji dalam satu layar yang rapi dan mudah dibaca.
-          </p>
-        </div>
+        {/* Heading */}
+        <ScrollReveal>
+          <div className="text-center mb-12">
+            <p className="text-[#4F7DF3] text-[11px] font-black tracking-[0.2em] uppercase mb-3">
+              Dashboard Member
+            </p>
+            <h2 className="text-[30px] md:text-[40px] font-black text-[#1D3557] leading-tight">
+              Kelola{" "}
+              <span className="text-[#4F7DF3]">Perjalanan Anda</span>
+            </h2>
+            <p className="mt-4 text-[#64748B] text-[15px] max-w-xl mx-auto leading-relaxed">
+              Setelah login, pantau semua booking, tiket aktif, wishlist destinasi,
+              dan promo eksklusif member langsung dari dashboard yang intuitif.
+            </p>
+          </div>
+        </ScrollReveal>
 
-        {/* ── Browser frame ── */}
-        <div className="relative">
-          {/* Soft glow */}
-          <div className="absolute inset-x-0 top-6 bottom-0 bg-[#4F7DF3]/15 blur-2xl rounded-3xl pointer-events-none" />
+        {/* Dashboard mockup */}
+        <ScrollReveal delay={100}>
+          <div className="rounded-2xl border border-[#E5E7EB] shadow-xl shadow-[#4F7DF3]/8 overflow-hidden">
 
-          <div className="relative bg-white rounded-2xl shadow-xl border border-white/8 overflow-hidden">
-
-            {/* Browser chrome */}
-            <div className="bg-[#F0F4F8] px-5 py-3 flex items-center gap-3 border-b border-[#E5E7EB]">
-              <div className="flex gap-1.5 flex-shrink-0">
+            {/* Browser bar */}
+            <div className="bg-[#F8FAFF] px-4 py-2.5 flex items-center gap-3 border-b border-[#E5E7EB]">
+              <div className="flex gap-1.5">
                 <div className="w-3 h-3 rounded-full bg-[#FF5F56]" />
                 <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
                 <div className="w-3 h-3 rounded-full bg-[#27C93F]" />
               </div>
-              <div className="flex-1 max-w-xs bg-white rounded-lg px-4 py-1.5 text-[11px] text-gray-400 border border-[#E5E7EB] flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-gray-300 text-[13px]">lock</span>
-                app.travelgo.com/dashboard
+              <div className="flex-1 bg-white rounded-lg px-3 py-1.5 text-[11px] text-gray-400 border border-[#E5E7EB] font-medium max-w-xs mx-auto text-center">
+                travelgo.com/member/dashboard
               </div>
             </div>
 
-            {/* ── Dashboard UI ── */}
-            <div className="flex h-[420px] overflow-hidden">
+            {/* Body: sidebar + main */}
+            <div className="flex min-h-[420px] bg-[#F4F5F7]">
 
-              {/* Sidebar */}
-              <aside className="w-[180px] bg-white border-r border-[#E5E7EB] flex flex-col flex-shrink-0">
-                {/* Logo area */}
-                <div className="px-4 py-4 border-b border-[#E5E7EB] flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-lg bg-[#4F7DF3] flex items-center justify-center flex-shrink-0">
-                    <span className="material-symbols-outlined text-white text-[14px]">flight_takeoff</span>
+              {/* ── Sidebar ── */}
+              <aside className="w-52 bg-[#1D3557] flex-shrink-0 flex flex-col py-5 px-3 hidden md:flex">
+                {/* User info */}
+                <div className="flex items-center gap-2.5 px-2 mb-5">
+                  <div className="w-9 h-9 rounded-xl bg-[#4F7DF3] flex items-center justify-center text-white font-black text-[14px] flex-shrink-0">B</div>
+                  <div>
+                    <p className="text-[12px] font-bold text-white leading-none">Bianca Bahi</p>
+                    <p className="text-[10px] text-white/40 mt-0.5">Gold Member ⭐</p>
                   </div>
-                  <span className="text-[14px] font-black text-[#1D3557]">TravelGo.</span>
                 </div>
 
                 {/* Nav items */}
-                <nav className="px-3 py-3 flex flex-col gap-1 flex-1">
-                  {SIDEBAR_NAV.map((item) => (
+                <nav className="flex flex-col gap-1">
+                  {SIDEBAR_ITEMS.map((item) => (
                     <div
                       key={item.label}
-                      className={`h-8 px-2.5 rounded-xl flex items-center gap-2 transition-colors ${
+                      className={`flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all ${
                         item.active
                           ? "bg-[#4F7DF3] text-white"
-                          : "text-gray-400"
+                          : "text-white/45 hover:text-white hover:bg-white/8"
                       }`}
                     >
-                      <span className="material-symbols-outlined text-[15px]">{item.icon}</span>
-                      <span className="text-[11px] font-semibold">{item.label}</span>
+                      <span className="material-symbols-outlined text-[16px]">{item.icon}</span>
+                      <span className="text-[12px] font-semibold">{item.label}</span>
                     </div>
                   ))}
                 </nav>
 
-                {/* Logout */}
-                <div className="px-3 pb-4">
-                  <div className="h-8 px-2.5 rounded-xl flex items-center gap-2 text-gray-300">
-                    <span className="material-symbols-outlined text-[15px]">logout</span>
-                    <span className="text-[11px] font-semibold">Logout</span>
-                  </div>
+                {/* Member badge */}
+                <div className="mt-auto mx-2 p-3 rounded-xl bg-[#4F7DF3]/15 border border-[#4F7DF3]/20">
+                  <p className="text-[10px] text-[#4F7DF3] font-bold mb-0.5">Poin Reward</p>
+                  <p className="text-[18px] font-black text-white">1.280</p>
+                  <p className="text-[9px] text-white/40">Tukar dengan diskon</p>
                 </div>
               </aside>
 
-              {/* Main content */}
-              <div className="flex-1 bg-[#F4F5F7] flex flex-col min-w-0 overflow-hidden">
-
-                {/* Topbar */}
-                <header className="h-12 bg-white border-b border-[#E5E7EB] px-5 flex items-center justify-between flex-shrink-0">
-                  <p className="text-[14px] font-bold text-[#1E293B]">Dashboard</p>
-                  <div className="flex items-center gap-3">
-                    <div className="h-7 w-36 bg-gray-50 border border-[#E5E7EB] rounded-lg px-3 flex items-center gap-1.5">
-                      <span className="material-symbols-outlined text-gray-300 text-[13px]">search</span>
-                      <span className="text-[10px] text-gray-300">Search...</span>
-                    </div>
-                    <div className="relative">
-                      <span className="material-symbols-outlined text-gray-400 text-[18px]">notifications</span>
-                      <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-red-400" />
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <img
-                        src="https://randomuser.me/api/portraits/women/44.jpg"
-                        className="w-6 h-6 rounded-lg object-cover"
-                        alt="admin"
-                        loading="lazy"
-                      />
-                      <div className="hidden sm:block">
-                        <p className="text-[10px] font-bold text-gray-700 leading-none">Bianca B.</p>
-                        <p className="text-[9px] text-gray-400">Admin</p>
-                      </div>
-                    </div>
+              {/* ── Main content ── */}
+              <main className="flex-1 p-4 space-y-4">
+                {/* Welcome bar */}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-[14px] font-bold text-[#1D3557]">Selamat datang, Bianca! 👋</h3>
+                    <p className="text-[11px] text-[#64748B]">Perjalananmu berikutnya sudah menunggu</p>
                   </div>
-                </header>
+                  <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#EEF4FF] border border-[#4F7DF3]/15">
+                    <span className="material-symbols-outlined text-[#4F7DF3] text-[14px]">stars</span>
+                    <span className="text-[11px] font-bold text-[#4F7DF3]">Gold Member</span>
+                  </div>
+                </div>
 
-                {/* Scrollable body */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-3">
+                {/* Stat cards */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                  {MEMBER_STATS.map((s) => (
+                    <div key={s.label} className="bg-white rounded-xl p-3 border border-[#E5E7EB] shadow-sm">
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: s.bg }}>
+                          <span className="material-symbols-outlined text-[14px]" style={{ color: s.color }}>{s.icon}</span>
+                        </div>
+                      </div>
+                      <p className="text-[9px] text-gray-400 font-semibold">{s.label}</p>
+                      <p className="text-[16px] font-black" style={{ color: s.color }}>{s.value}</p>
+                    </div>
+                  ))}
+                </div>
 
-                  {/* Stat cards */}
-                  <div className="grid grid-cols-4 gap-2.5">
-                    {STAT_CARDS.map((stat) => (
-                      <div key={stat.label} className="bg-white rounded-2xl p-3 shadow-sm border border-[#E5E7EB]/60">
-                        <div className="flex items-start justify-between mb-2">
-                          <div className="w-7 h-7 rounded-xl flex items-center justify-center" style={{ background: stat.bg }}>
-                            <span className="material-symbols-outlined text-[14px]" style={{ color: stat.color }}>{stat.icon}</span>
+                {/* Two column: upcoming + favorites */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+
+                  {/* Upcoming trips */}
+                  <div className="bg-white rounded-xl border border-[#E5E7EB] shadow-sm overflow-hidden">
+                    <div className="px-3 py-2.5 border-b border-[#F1F5F9] flex items-center justify-between">
+                      <p className="text-[11px] font-bold text-[#1D3557]">Perjalanan Mendatang</p>
+                      <span className="text-[9px] text-[#4F7DF3] font-semibold">Lihat Semua</span>
+                    </div>
+                    <div className="divide-y divide-[#F8FAFF]">
+                      {UPCOMING.map((trip) => (
+                        <div key={trip.dest} className="flex items-center gap-3 px-3 py-2.5">
+                          <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: `${trip.color}15` }}>
+                            <span className="material-symbols-outlined text-[15px]" style={{ color: trip.color }}>{trip.icon}</span>
                           </div>
-                          <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full" style={{ background: stat.bg, color: stat.color }}>
-                            {stat.change}
+                          <div className="flex-1 min-w-0">
+                            <p className="text-[10px] font-bold text-[#1D3557] truncate">{trip.dest}</p>
+                            <p className="text-[9px] text-gray-400">{trip.date} · {trip.days}</p>
+                          </div>
+                          <span className={`text-[8px] font-bold px-1.5 py-0.5 rounded-full whitespace-nowrap ${
+                            trip.status === "Menunggu" ? "bg-yellow-50 text-yellow-600" : "bg-[#EEF4FF] text-[#4F7DF3]"
+                          }`}>
+                            {trip.status}
                           </span>
                         </div>
-                        <p className="text-[9px] text-gray-400 font-semibold">{stat.label}</p>
-                        <p className="text-[13px] font-black" style={{ color: stat.color }}>{stat.value}</p>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
 
-                  {/* Chart row */}
-                  <div className="grid grid-cols-3 gap-2.5">
-                    {/* Bar chart */}
-                    <div className="col-span-2 bg-white rounded-2xl p-3.5 shadow-sm border border-[#E5E7EB]/60">
-                      <div className="flex items-center justify-between mb-3">
-                        <p className="text-[11px] font-bold text-gray-700">Pendapatan Bulanan</p>
-                        <span className="text-[9px] font-semibold text-[#4F7DF3] bg-[#EEF4FF] px-2 py-0.5 rounded-lg">2026</span>
-                      </div>
-                      <div className="flex items-end gap-2 h-[72px]">
-                        {CHART_DATA.map((bar, i) => (
-                          <div key={bar.month} className="flex-1 flex flex-col items-center gap-1">
-                            <div
-                              className="w-full rounded-t-md"
-                              style={{
-                                height: `${bar.value}%`,
-                                background: i === CHART_DATA.length - 1 ? "#4F7DF3" : "#EEF4FF",
-                              }}
-                            />
-                            <span className="text-[8px] text-gray-400">{bar.month}</span>
+                  {/* Favorite destinations */}
+                  <div className="bg-white rounded-xl border border-[#E5E7EB] shadow-sm overflow-hidden">
+                    <div className="px-3 py-2.5 border-b border-[#F1F5F9]">
+                      <p className="text-[11px] font-bold text-[#1D3557]">Destinasi Favoritku</p>
+                    </div>
+                    <div className="p-3 grid grid-cols-2 gap-2">
+                      {FAVORITES.map((fav) => (
+                        <div key={fav.name} className="flex items-center gap-2 p-2.5 rounded-lg bg-[#F8FAFF] border border-[#E5E7EB]">
+                          <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: `${fav.color}15` }}>
+                            <span className="material-symbols-outlined text-[13px]" style={{ color: fav.color }}>{fav.icon}</span>
                           </div>
-                        ))}
-                      </div>
+                          <p className="text-[10px] font-bold text-[#1D3557]">{fav.name}</p>
+                          <span className="material-symbols-outlined text-[12px] text-red-400 ml-auto">favorite</span>
+                        </div>
+                      ))}
                     </div>
-
-                    {/* Top packages */}
-                    <div className="bg-white rounded-2xl p-3.5 shadow-sm border border-[#E5E7EB]/60">
-                      <p className="text-[11px] font-bold text-gray-700 mb-3">Paket Teratas</p>
-                      <div className="space-y-2.5">
-                        {["Bali Beach", "Lombok Trip", "Bromo Tour"].map((pkg, i) => (
-                          <div key={pkg} className="flex items-center justify-between">
-                            <div className="flex items-center gap-1.5">
-                              <div className="w-4 h-4 rounded-md flex items-center justify-center text-[8px] font-black text-white bg-[#4F7DF3]">
-                                {i + 1}
-                              </div>
-                              <span className="text-[10px] text-gray-600 font-medium">{pkg}</span>
-                            </div>
-                            <span className="text-[9px] text-[#4F7DF3] font-bold">{[240, 198, 145][i]} bkng</span>
-                          </div>
-                        ))}
+                    {/* Active promo */}
+                    <div className="mx-3 mb-3 p-2.5 rounded-lg bg-gradient-to-r from-[#4F7DF3] to-[#3B6AE8] flex items-center gap-2">
+                      <span className="material-symbols-outlined text-white text-[14px]">local_offer</span>
+                      <div>
+                        <p className="text-[9px] font-black text-white">Promo Gold Member aktif!</p>
+                        <p className="text-[8px] text-white/70">Diskon 10% untuk semua paket</p>
                       </div>
                     </div>
                   </div>
-
-                  {/* Booking table */}
-                  <div className="bg-white rounded-2xl shadow-sm border border-[#E5E7EB]/60 overflow-hidden">
-                    <div className="px-4 py-3 border-b border-[#E5E7EB] flex items-center justify-between">
-                      <p className="text-[11px] font-bold text-gray-700">Booking Terbaru</p>
-                      <span className="text-[10px] font-semibold text-[#4F7DF3]">Lihat Semua</span>
-                    </div>
-                    <table className="w-full text-left">
-                      <thead className="bg-[#F8FAFF]">
-                        <tr>
-                          {["Kode", "Customer", "Paket", "Harga", "Status"].map((col) => (
-                            <th key={col} className="px-4 py-2 text-[9px] font-bold text-gray-400 uppercase tracking-wide">
-                              {col}
-                            </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-[#F1F5F9]">
-                        {BOOKING_ROWS.map((row) => (
-                          <tr key={row.code} className="hover:bg-[#F8FBFF] transition-colors">
-                            <td className="px-4 py-2 text-[10px] font-bold text-[#4F7DF3]">{row.code}</td>
-                            <td className="px-4 py-2 text-[10px] text-gray-700 font-semibold">{row.name}</td>
-                            <td className="px-4 py-2 text-[10px] text-gray-500">{row.package}</td>
-                            <td className="px-4 py-2 text-[10px] font-bold text-gray-700">{row.price}</td>
-                            <td className="px-4 py-2"><StatusBadge status={row.status} /></td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-
                 </div>
-              </div>
+              </main>
             </div>
           </div>
-        </div>
-
+        </ScrollReveal>
       </div>
     </section>
   );
